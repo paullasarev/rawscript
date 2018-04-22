@@ -4,13 +4,14 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const PORT=3000
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
 
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:8080',
+    `webpack-dev-server/client?http://localhost:${PORT}`,
     'webpack/hot/only-dev-server',
     './main.js',
     './assets/scss/main.scss',
@@ -28,6 +29,7 @@ const config = {
     hot: true,
     contentBase: resolve(__dirname, 'build'),
     historyApiFallback: true,
+    port: PORT,
     publicPath: '/'
   },
   
@@ -146,7 +148,7 @@ const config = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     new ExtractTextPlugin({ filename: './styles/style.css', disable: false, allChunks: true }),
     new CopyWebpackPlugin([{ from: 'vendors', to: 'vendors' }]),
-    new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
+    new OpenBrowserPlugin({ url: `http://localhost:${PORT}` }),
     new webpack.HotModuleReplacementPlugin(),
   ],
 };

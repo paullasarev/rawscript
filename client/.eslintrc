@@ -15,11 +15,18 @@
   },
   "rules": {
     "space-before-function-paren": "off",
-    "react/prefer-stateless-function": "warn",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "linebreak-style": "off",
     "global-require": "off",
     "semi": "warn",
+    "react/prop-types": "off",
+    "react/prefer-stateless-function": "off",
+    "jsx-quotes": ["warn", "prefer-single"],
+    "object-curly-newline": "off",
+    "react/jsx-curly-spacing": ["warn", {
+      "when": "always",
+      "allowMultiline": true
+    }],
     "arrow-body-style": "off"
   }
 }
