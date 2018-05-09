@@ -37,10 +37,16 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "cross-env": "5.1.4",
-    "react-dom": "16.3.2",
+    "dcraw": "^1.0.3",
+    "npm": "^6.0.0",
     "react": "16.3.2",
+    "react-dom": "16.3.2",
     "react-hot-loader": "4.1.1",
-    "react-router-dom": "4.2.2"
+    "react-redux": "^5.0.7",
+    "react-router-dom": "4.2.2",
+    "recompose": "^0.27.0",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
