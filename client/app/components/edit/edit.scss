@@ -2,8 +2,18 @@
 
 .edit {
   height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
   &__paper {
-    height: 100%;
-
+    // height: 100%;
+    width: 67%;
+    flex-grow: 4;
+  }
+  &__script {
+    // height: 100%;
+    width: 33%;
+    flex-grow: 2;
   }
 }
