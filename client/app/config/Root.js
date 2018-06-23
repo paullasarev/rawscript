@@ -1,12 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import App from '../components/app/app';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import Edit from '../components/edit/edit';
 
 const Root = () => {
   return (
     <Router>
       <Switch>
-        <Route path='/' component={ App } exact />
+        <Route path='/edit' component={ Edit } exact />
+        <Redirect from='/' to='/edit' />
       </Switch>
     </Router>
   );

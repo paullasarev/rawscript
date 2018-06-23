@@ -14,8 +14,8 @@ export default class Paper extends Component {
         <Image
           className='paper__image'
           img={ img }
-          width={ 40 }
-          height={ 40 }
+          width={ 200 }
+          height={ 200 }
           alt='react'
         />
       </div>
