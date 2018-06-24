@@ -11,6 +11,7 @@
   &__left {
     width: 67%;
     flex-grow: 4;
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -19,6 +20,7 @@
   &__right {
     width: 33%;
     flex-grow: 2;
+    position: relative;
 
     display: flex;
     flex-direction: column;
