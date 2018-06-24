@@ -20,6 +20,7 @@
     "global-require": "off",
     "semi": "warn",
     "react/prop-types": "off",
+    "no-shadow": 0,
     "react/prefer-stateless-function": "off",
     "jsx-quotes": ["warn", "prefer-single"],
     "object-curly-newline": "off",
@@ -27,6 +28,9 @@
       "when": "always",
       "allowMultiline": true
     }],
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-noninteractive-tabindex": 0,
     "arrow-body-style": "off"
   }
 }
