@@ -10,6 +10,8 @@
   ],
 
   "plugins": [
-    "react-hot-loader/babel"
+    "transform-runtime",
+    "react-hot-loader/babel",
+    "syntax-decorators"
   ]
 }

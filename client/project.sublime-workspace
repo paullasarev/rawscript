@@ -1,0 +1,518 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"is",
+				"isRequired"
+			],
+			[
+				"comp",
+				"componentWillReceiveProps\t Life Cycle"
+			],
+			[
+				"componen",
+				"componentDidMount\t Life Cycle"
+			],
+			[
+				"FormInp",
+				"FormInputPassword"
+			],
+			[
+				"FormInpu",
+				"FormInputText"
+			],
+			[
+				"Breadc",
+				"breadcrumbs"
+			],
+			[
+				"a",
+				"PropTypes.array"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"auth",
+				"authWithErrors$\tproperty"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"trans",
+				"transform"
+			],
+			[
+				"cours",
+				"coursesService\tproperty"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "Package Control Messages\n========================\n\nJSX\n---\n\n  JSX 3.0.1\n  =========\n  \n  * add attribute names to JSX tags (#22)\n  * Stop JSX in ternaries being highlighted as a generic type (#28)\n  * Fix issues around whitespace after that opening { (#27)\n  \n  \n  Be sure to make issues (or shout at me) for broken things:\n  https://github.com/allanhortle/JSX/issues\n\n  JSX 3.0.0 - Rewrite\n  ===================\n  \n  * Completely re-written in ST3's new `.sublime-syntax`\n  * Fixed the problems around nesting JSX in JSX (It's way more robust) (Pesky quotes/props wont break everything)\n  * Cleaned up syntax scope naming to be closer to: https://www.sublimetext.com/docs/3/scope_naming.html (Check the readme for more infomation)\n  * Added support for typescript/flow\n  \n  Be sure to make issues (or shout at me) for broken things:\n  https://github.com/allanhortle/JSX/issues\n",
+			"settings":
+			{
+				"buffer_size": 878,
+				"line_ending": "Windows",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 490.0,
+		"last_filter": "ins",
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"prv op",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 549.0
+	},
+	"console":
+	{
+		"height": 427.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/paul/js/rawscript/client",
+		"/C/Users/paul/js/rawscript/client/app",
+		"/C/Users/paul/js/rawscript/client/app/app",
+		"/C/Users/paul/js/rawscript/client/config"
+	],
+	"file_history":
+	[
+		"/C/Users/paul/AppData/Local/lxss/home/paul/projects/ansible-tuto/step-03/hosts",
+		"/C/Users/paul/AppData/Local/lxss/home/paul/projects/ansible-tuto/step-02/README.md",
+		"/C/Users/paul/AppData/Local/lxss/home/paul/projects/ansible-tuto/step-01/README.md",
+		"/C/Users/paul/Downloads/[rutracker.org].t5429633.torrent",
+		"/C/Users/paul/js/r2learn/src/components/courses/course-details.jsx",
+		"/C/Users/paul/js/r2learn/src/actions/courses.js",
+		"/C/Users/paul/js/r2learn/src/reducers/courses.js",
+		"/C/Users/paul/js/r2learn/src/store/store.js",
+		"/C/Users/paul/js/r2learn/src/api/mock.js",
+		"/C/Users/paul/js/r2learn/src/api/web.js",
+		"/C/Users/paul/js/r2learn/src/actions/types.js",
+		"/C/Users/paul/js/r2learn/src/components/courses/courses.jsx",
+		"/C/Users/paul/js/r2learn/src/components/login/login.jsx",
+		"/C/Users/paul/js/r2learn/src/utils/format.js",
+		"/C/Users/paul/js/r2learn/src/components/app/app.jsx",
+		"/C/Users/paul/js/r2learn/src/components/courses/course-details.css",
+		"/C/Users/paul/js/r2learn/src/reducers/app.js",
+		"/C/Users/paul/js/r2learn/src/components/error/error.jsx",
+		"/C/Users/paul/js/r2learn/src/reducers/reducers.js",
+		"/C/Users/paul/js/r2learn/src/entities/auth-user.js",
+		"/C/Users/paul/js/r2learn/src/components/action/action.jsx",
+		"/C/Users/paul/js/r2learn/src/components/action/action.css",
+		"/C/Users/paul/js/r2learn/src/styles/mixins.css",
+		"/C/Users/paul/js/r2learn/src/components/courses/course.jsx",
+		"/C/Users/paul/js/r2learn/src/entities/course.js",
+		"/C/Users/paul/js/r2learn/src/components/courses/course.css",
+		"/C/Users/paul/js/r2learn/src/components/courses/toolbar.jsx",
+		"/C/Users/paul/js/r2learn/src/actions/auth.js",
+		"/C/Users/paul/js/r2learn/src/actions/app.js",
+		"/C/Users/paul/js/r2learn/src/utils/assert.js",
+		"/C/Users/paul/js/r2learn/src/components/courses/search.css",
+		"/C/Users/paul/js/r2learn/src/components/courses/toolbar.css",
+		"/C/Users/paul/js/r2learn/src/components/courses/courses.css",
+		"/C/Users/paul/js/r2learn/src/components/page-sub/page-sub.jsx",
+		"/C/Users/paul/js/r2learn/src/reducers/auth-user.js",
+		"/C/Users/paul/js/r2learn/src/components/error/error.css",
+		"/C/Users/paul/js/r2learn/src/components/header/header.jsx",
+		"/C/Users/paul/js/r2learn/webpack.config.js",
+		"/C/Users/paul/js/r2learn/src/components/courses/courses-test.jsx",
+		"/C/Users/paul/js/r2learn/package.json",
+		"/C/Users/paul/js/r2learn/src/lib/request.js",
+		"/C/Users/paul/js/r2learn/src/reducers/global-error.js",
+		"/C/Users/paul/js/r2learn/src/actions/index.js",
+		"/C/Users/paul/js/r2learn/src/reducers/error.js",
+		"/C/Users/paul/js/r2learn/src/actions/common.js",
+		"/C/Users/paul/js/r2learn/src/components/form/form.jsx",
+		"/C/Users/paul/js/r2learn/src/components/form/form.css",
+		"/C/Users/paul/js/r2learn/src/components/header/breadcrumbs.jsx",
+		"/C/Users/paul/js/r2learn/src/components/login/login.css",
+		"/C/Users/paul/js/r2learn/src/components/footer/footer.jsx",
+		"/C/Users/paul/js/r2learn/src/components/header/user.css",
+		"/C/Users/paul/js/r2learn/src/components/header/logo.css",
+		"/C/Users/paul/js/r2learn/src/components/header/breadcrumbs.css",
+		"/C/Users/paul/js/r2learn/src/entities/user.js",
+		"/C/Users/paul/js/r2learn/src/entities/breadcrumb.js",
+		"/C/Users/paul/js/r2learn/src/styles/variables.css",
+		"/C/Users/paul/js/r2learn/src/components/actions/action.jsx",
+		"/C/Users/paul/js/r2learn/src/components/actions/action.css",
+		"/C/Users/paul/js/r2learn/src/components/app/app.css",
+		"/C/Users/paul/js/r2learn/src/components/footer/footer.css",
+		"/C/Users/paul/js/r2learn/src/stub.html",
+		"/C/Users/paul/js/r2learn/src/components/header/header.css",
+		"/C/Users/paul/AppData/Roaming/Sublime Text 3/Packages/Theme - Default/Default.sublime-theme",
+		"/C/Users/paul/js/a2learn/src/app/entities/user.ts",
+		"/C/Users/paul/js/a2learn/src/app/modules/login/login.component.ts",
+		"/C/Users/paul/js/a2learn/src/app/modules/app/app-header/app-header.component.ts",
+		"/C/Users/paul/js/a2learn/src/app/modules/app/app-header/app-header.component.html",
+		"/C/Users/paul/js/a2learn/src/app/modules/app/app-header/app-header.styles.scss",
+		"/C/Users/paul/js/a2learn/src/app/modules/app/app-header/user.styles.scss",
+		"/C/Users/paul/js/a2learn/src/app/modules/login/login.component.html",
+		"/C/Users/paul/js/a2learn/src/app/modules/app/app.module.ts",
+		"/C/Users/paul/js/a2learn/src/app/modules/app-common/confirm/confirm.styles.scss",
+		"/C/Users/paul/js/a2learn/src/app/modules/courses/course-detail/course-detail.component.html",
+		"/C/Users/paul/js/a2learn/src/app/modules/courses/course-detail/course-detail.component.ts",
+		"/C/Users/paul/js/a2learn/src/app/services/courses-service.ts",
+		"/C/Users/paul/js/a2learn/src/app/styles/variables.scss",
+		"/C/Users/paul/js/a2learn/src/app/modules/courses/courses.component.ts",
+		"/C/Users/paul/js/a2learn/src/app/modules/courses/courses.template.html",
+		"/C/Users/paul/js/a2learn/src/app/modules/courses/courses.module.ts",
+		"/C/Users/paul/js/a2learn/src/app/modules/app-common/app-common.module.ts",
+		"/C/Users/paul/js/a2learn/src/app/modules/app-common/confirm/confirm.component.html",
+		"/C/Users/paul/js/a2learn/src/app/modules/app-common/confirm/confirm.component.ts",
+		"/C/Users/paul/js/a2learn/src/app/modules/courses/course/course.component.ts",
+		"/C/Users/paul/js/a2learn/src/app/styles/colors.scss",
+		"/C/Users/paul/js/a2learn/src/app/modules/login/login.styles.scss",
+		"/C/Users/paul/js/a2learn/src/app/styles/form.scss",
+		"/C/Users/paul/js/a2learn/src/app/modules/courses/course-detail/course-detail.styles.scss",
+		"/C/Users/paul/js/a2learn/package.json",
+		"/C/Users/paul/js/a2learn/src/app/modules/app/app.styles.scss",
+		"/etc/network/interfaces.d/eth0",
+		"/home/paul/js/engo/yo-gulp-angular2/package.json",
+		"/home/paul/.bashrc",
+		"/home/paul/.profile"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 117.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"history.",
+			"form-input-text",
+			"FormGroup",
+			"componentWillReceiveProps",
+			"properties",
+			"willRecieve",
+			"item:",
+			"item",
+			"_READ",
+			"get",
+			"COURSES_CREATE",
+			"this.state.",
+			"class=",
+			"globalError",
+			"COURSES_READ_SUCCESS",
+			"COURSES_READ",
+			"globalError",
+			"someActionCreator",
+			"setError",
+			"assertType",
+			"filter",
+			"onFind",
+			"this.props.course",
+			"this.course",
+			"class=",
+			"}}",
+			"{{",
+			"class=",
+			"COURSES_DELETE",
+			"assertType",
+			"COURSES_SAVE",
+			"COURSES_REMOVE",
+			"COURSES_SAVE",
+			"COURSES_REMOVE",
+			"AUTH_LOGOUT",
+			"action",
+			"APP_SET_TITLE+",
+			"SET_APP_TITLE_ACTION_TYPE",
+			"LOGOUT_ACTION_TYPE",
+			"LOGIN_ACTION_TYPE",
+			"APP_SET_ERROR_ACTION_TYPE",
+			"SET_ERROR_ACTION_TYPE",
+			"page-main",
+			"PageMain",
+			"someActionCreator",
+			"authUser",
+			"page-main",
+			"PageMain",
+			"page-main",
+			"promiseMiddleware",
+			"lib/request",
+			"requestAgent",
+			"superagent",
+			"HtmlWebpackPlugin",
+			"page-",
+			"courses-",
+			"authUser",
+			"class=",
+			"Header",
+			"class=",
+			"action",
+			"form-group",
+			"class",
+			"assets",
+			"placeAssetsInFolder",
+			"auth",
+			"authRequests",
+			"AuthUser",
+			"user",
+			"auth",
+			"action",
+			"Action",
+			"action",
+			"Action",
+			"action",
+			"Providers",
+			"CoursesService",
+			"onDelete",
+			"variables",
+			"variables.scss"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"APP_SET_TITLE",
+			"APP_SET_TITLE+",
+			"AUTH_LOGOUT",
+			"AUTH_LOGIN",
+			"APP_SET_ERROR",
+			"APP_SET_ERROR_ACTION_TYPE"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 878,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								259,
+								259
+							]
+						],
+						"settings":
+						{
+							"auto_indent": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_width": 2,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 69.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 43.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "project.sublime-project",
+	"replace":
+	{
+		"height": 60.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"packa",
+				"package.json"
+			],
+			[
+				"app",
+				"src\\components\\app\\app.jsx"
+			],
+			[
+				"mixi",
+				"src\\styles\\mixins.css"
+			],
+			[
+				"var",
+				"src\\styles\\variables.css"
+			],
+			[
+				"app.",
+				"src\\components\\app\\app.css"
+			],
+			[
+				"varia",
+				"src\\app\\styles\\variables.scss"
+			],
+			[
+				"vari",
+				"src\\app\\styles\\variables.scss"
+			],
+			[
+				"courses-de",
+				"src\\app\\modules\\courses\\course-detail\\course-detail.component.ts"
+			],
+			[
+				"pa",
+				"package.json"
+			],
+			[
+				"coursesser",
+				"src\\app\\services\\courses-service.ts"
+			],
+			[
+				"login.",
+				"src\\app\\modules\\login\\login.component.html"
+			],
+			[
+				"loginsc",
+				"src\\app\\modules\\login\\login.styles.scss"
+			],
+			[
+				"appscs",
+				"src\\app\\modules\\app\\app.styles.scss"
+			],
+			[
+				"loginscs",
+				"src\\app\\modules\\login\\login.styles.scss"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 267.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
