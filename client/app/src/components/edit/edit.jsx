@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
+import { DropTarget } from 'react-dnd';
 
 import './edit.scss';
 
-import Paper from '../paper/paper.jsx';
-import Script from '../script/script.jsx';
-import Console from '../console/console.jsx';
+import Paper from '../paper/paper';
+import Script from '../script/script';
+import Console from '../console/console';
 import Tabs from '../../controls/tabs/tabs';
 import Tab from '../../controls/tabs/tab';
 
-const Edit = () => {
+import { tabsTarget, collectTarget } from '../../controls/tabs/resize';
+
+const Edit = (props) => {
   const [active, setActive] = useState('script');
-  return (
+  const { connectDropTarget } = props;
+  return connectDropTarget(
     <div className='edit'>
       <div className='edit__left'>
         <Paper className='edit__paper edit__top' />
@@ -29,4 +33,4 @@ const Edit = () => {
   );
 };
 
-export default Edit;
+export default DropTarget('tabs', tabsTarget, collectTarget)(Edit);
