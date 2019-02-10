@@ -1,0 +1,51 @@
+@import "../../../assets/scss/variables.scss";
+
+.tabs {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: relative;
+  font-size: 14px;
+  background-color: $color-background;
+  box-sizing: border-box;
+  
+  $border: 1px solid $color-border-tab;
+  $border-radius: 5px;
+  
+  &__header {
+    line-height: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: $border;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  &__title {
+    border-left: $border;
+    border-top: $border;
+    border-bottom: $border;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    padding: 5px 10px;
+    top: 1px;
+    position: relative;
+    cursor: pointer;
+
+    &:last-child{
+      border-right: $border;
+    }
+
+    &--active {
+      border-bottom-color: $color-background;
+    }
+  }
+  &__tab {
+
+  }
+}
+
+.tab {
+  margin: 10px 10px;
+}

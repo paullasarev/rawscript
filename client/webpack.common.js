@@ -2,11 +2,13 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
     app: './app/index.js',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -67,7 +69,7 @@ module.exports = {
         ],
       },
     ]
-  },  
+  }, 
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
