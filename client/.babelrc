@@ -7,6 +7,7 @@
   "plugins": [
     "react-hot-loader/babel",
     [ "@babel/syntax-decorators", { "legacy": true } ],
-    "@babel/transform-regenerator"
+    "@babel/transform-regenerator",
+    "@babel/plugin-proposal-class-properties"
   ]
 }
