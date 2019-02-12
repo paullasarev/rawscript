@@ -5,19 +5,19 @@ export function useHorizontalResize(options) {
     isLeftMargin: true,
     minWidth: 100,
     minGap: 20,
-    ...options
-  }
+    ...options,
+  };
   const { isLeftMargin, minWidth, minGap } = params;
-  
-  const resizeStateRef = useRef({startX:0, isResizing: false});
-  const [state, setState] = useState();
+
+  const resizeStateRef = useRef({ startX: 0, isResizing: false });
+  const [state, setState] = useState(0);
   const resizableRef = useRef();
   const resizerRef = useRef();
 
   const getResizeState = () => resizeStateRef.current;
   const setResizeState = (state) => {
     resizeStateRef.current = state;
-  }
+  };
 
   const setNewSize = (dx) => {
     const { width } = resizableRef.current.getBoundingClientRect();
@@ -31,35 +31,36 @@ export function useHorizontalResize(options) {
     }
     // console.log('setNewSize', {dx, width, newWidth})
     resizableRef.current.style.width = `${newWidth}px`;
-  }
+  };
 
   useEffect(() => {
-    const handleUp = (event) => { 
+    const handleUp = (event) => {
       // console.log('handleUp', getResizeState());
+      const { screenX: endX } = event;
       const { startX, isResizing } = getResizeState();
-      if (isResizing) {           
-        setResizeState({startX, isResizing: false});
+      if (isResizing) {
+        setResizeState({ startX, isResizing: false });
+        setState(endX - startX); // force redraw
       }
     };
     const handleResize = (event) => {
-      const {screenX: endX} = event;
+      const { screenX: endX } = event;
       const { startX, isResizing } = getResizeState();
-      if (isResizing) {           
+      if (isResizing) {
         event.preventDefault();
         event.stopPropagation();
         // console.log('handleResize', { endX, startX, isResizing })
-        setResizeState({startX: endX, isResizing: true})
+        setResizeState({ startX: endX, isResizing: true });
         setNewSize(endX - startX);
-        setState(endX); // force redraw
       }
     };
     const handleDown = (event) => {
-      const {screenX: startX} = event;
+      const { screenX: startX } = event;
       event.preventDefault();
       event.stopPropagation();
       // console.log('handleDown', getResizeState())
-      setResizeState({startX, isResizing: true})
-    }
+      setResizeState({ startX, isResizing: true });
+    };
 
     document.addEventListener('mouseup', handleUp);
     document.addEventListener('mousemove', handleResize);
@@ -75,5 +76,5 @@ export function useHorizontalResize(options) {
 }
 
 export function useHorizontalLeftResize(options) {
-  return useHorizontalResize({...options, isLeftMargin: true});
+  return useHorizontalResize({ ...options, isLeftMargin: true });
 }

@@ -1,33 +1,33 @@
 import React from 'react';
 import { find, map } from 'lodash';
 import classNames from 'classnames';
-//import { DragSource } from 'react-dnd';
+// import { DragSource } from 'react-dnd';
 
 import './tabs.scss';
 
-//import { tabsSource, collectSource } from './resize';
+// import { tabsSource, collectSource } from './resize';
 import { useHorizontalLeftResize } from './use-resize';
 
-const TabHeader = ({name, isActive, setActive}) => {
+const TabHeader = ({ name, isActive, setActive }) => {
   return (
     <div
-      className={classNames('tabs__title', {
+      className={ classNames('tabs__title', {
         'tabs__title--active': isActive,
-      })}
-      onClick={ ()=>setActive(name) }
+      }) }
+      onClick={ () => setActive(name) }
     >
       { name }
     </div>
-  )
-}
+  );
+};
 
-export const Tabs  = (props) => {
+export const Tabs = (props) => {
   const { children, active, setActive } = props;
 
-  const activeTab = find(children, { props: {name: active}});
-  const headers = map(children, ({props:{name}}) => (
-    <TabHeader {...{name, isActive: name === active, key:name, setActive}} />
-  ))
+  const activeTab = find(children, { props: { name: active } });
+  const headers = map(children, ({ props: { name } }) => (
+    <TabHeader { ...{ name, isActive: name === active, key: name, setActive } } />
+  ));
 
   const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize();
 
@@ -45,9 +45,9 @@ export const Tabs  = (props) => {
         { activeTab }
       </div>
       <div
-        className={classNames('tabs__resizer',{
-          'tabs__resizer--dragging': isResizing
-        })}
+        className={ classNames('tabs__resizer', {
+          'tabs__resizer--dragging': isResizing,
+        }) }
         ref={ resizerRef }
       />
     </div>
@@ -55,4 +55,3 @@ export const Tabs  = (props) => {
 };
 
 export default Tabs;
-
