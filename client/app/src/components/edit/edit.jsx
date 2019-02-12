@@ -9,12 +9,12 @@ import Console from '../console/console';
 import Tabs from '../../controls/tabs/tabs';
 import Tab from '../../controls/tabs/tab';
 
-import { tabsTarget, collectTarget } from '../../controls/tabs/resize';
+// import { tabsTarget, collectTarget } from '../../controls/tabs/resize';
 
 const Edit = (props) => {
   const [active, setActive] = useState('script');
-  const { connectDropTarget } = props;
-  return connectDropTarget(
+  // const { connectDropTarget } = props;
+  return (
     <div className='edit'>
       <div className='edit__left'>
         <Paper className='edit__paper edit__top' />
@@ -33,4 +33,5 @@ const Edit = (props) => {
   );
 };
 
-export default DropTarget('tabs', tabsTarget, collectTarget)(Edit);
+// export default DropTarget('tabs', tabsTarget, collectTarget)(Edit);
+export default Edit;
