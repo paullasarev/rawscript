@@ -29,11 +29,18 @@ export const Tabs  = (props) => {
   ))
 
   const MIN_WIDTH = 100;
+  const MIN_GAP = 20;
   // const [isResizing, setResizing] = useState(false);
   const resizing = useRef();
-  const [startX, setStartX] = useState(0);
+  const [resizeStateRef, setResizeStateRef] = useState({state: {startX:0, isResizing: false}});
   // const [endX, setEndX] = useState(0);
   const tabsEl = useRef();
+
+  const getResizeState = () => resizeStateRef.state;
+  const setResizeState = (state) => {
+    resizeStateRef.state = state;
+    setResizeStateRef(resizeStateRef);
+  }
 
   const setNewSize = (dx) => {
     const { width } = tabsEl.current.getBoundingClientRect();
@@ -41,34 +48,42 @@ export const Tabs  = (props) => {
     if (newWidth < MIN_WIDTH) {
       newWidth = MIN_WIDTH;
     }
+    const maxWidth = window.innerWidth - MIN_GAP;
+    if (newWidth > maxWidth) {
+      newWidth = maxWidth;
+    }
     console.log('setNewSize', {dx, width, newWidth})
     tabsEl.current.style.width = `${newWidth}px`;
   }
 
   useEffect(() => {
+    // const getResizeState = () => resizeState;
     const handleUp = (event) => { 
-      const isResizing = resizing.current;
-      console.log('handleUp', {isResizing});
-      event.preventDefault();
-      event.stopPropagation();
+      //const isResizing = resizing.current;
+      console.log('handleUp', getResizeState());
+      // event.preventDefault();
+      // event.stopPropagation();
       //setResizing(false);
-      resizing.current = false;
+      //resizing.current = false;
+      setResizeState({startX:0, isResizing: false});
     };
     const handleResize = (event) => {
-      const {screenX} = event;
-      const isResizing = resizing.current;
-      event.preventDefault();
-      event.stopPropagation();
-      const endX = screenX;
+      const {screenX: endX} = event;
+      // const isResizing = resizing.current;
+      // console.log('handleResize', resizeState);
+      const { startX, isResizing } = getResizeState();
       if (isResizing) {           
+        event.preventDefault();
+        event.stopPropagation();
         console.log('handleResize', { endX, startX, isResizing })
+        setResizeState({startX: endX, isResizing: true})
         setNewSize(endX - startX);
       }
     };
-    console.log('useEffect', {resizing});
+    // console.log('useEffect', resizeState);
   
-    document.addEventListener('mouseup', handleUp, true);
-    document.addEventListener('mousemove', handleResize, true);
+    document.addEventListener('mouseup', handleUp);
+    document.addEventListener('mousemove', handleResize);
     return () => {
       document.removeEventListener('mouseup', handleUp);
       document.removeEventListener('mousemove', handleResize);
@@ -78,14 +93,15 @@ export const Tabs  = (props) => {
   );
 
   const onResizerMouseDown = (event) => {
-    const {screenX} = event;
+    const {screenX: startX} = event;
     event.preventDefault();
     event.stopPropagation();
-    setStartX(screenX);
+    // setStartX(screenX);
+    console.log('onResizerMouseDown', getResizeState())
+    setResizeState({startX, isResizing: true})
     // setResizing(true);
-    const isResizing = resizing.current;
-    resizing.current = true;
-    console.log('onResizerMouseDown', {screenX, isResizing})
+    // const isResizing = resizing.current;
+    // resizing.current = true;
   }
 
   // const onResizerMouseMove = ({screenX}) => {
@@ -99,7 +115,8 @@ export const Tabs  = (props) => {
   //   setResizing(false);
   // }
 
-  const isResizing = resizing.current;
+//  const isResizing = resizing.current;
+  const { isResizing } = getResizeState();
   return (
     <div
       className='tabs'
