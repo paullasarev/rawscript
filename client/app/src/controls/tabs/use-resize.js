@@ -71,7 +71,7 @@ export function useHorizontalResize(options) {
     };
   }, []);
 
-  return { resizableRef, resizerRef, getResizeState, isResizing: getResizeState().isResizing };
+  return { resizableRef, resizerRef, isResizing: getResizeState().isResizing };
 }
 
 export function useHorizontalLeftResize(options) {
