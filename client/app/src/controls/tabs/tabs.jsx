@@ -29,7 +29,7 @@ export const Tabs = (props) => {
     <TabHeader { ...{ name, isActive: name === active, key: name, setActive } } />
   ));
 
-  const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize();
+  const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize({redrawOnResize: true});
 
   // console.log('render', { isResizing })
 

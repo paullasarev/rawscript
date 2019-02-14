@@ -5,22 +5,25 @@ export function useHorizontalResize(options) {
     isLeftMargin: true,
     minWidth: 100,
     minGap: 20,
+    redrawOnResize: false,
     ...options,
   };
-  const { isLeftMargin, minWidth, minGap } = params;
+  const { isLeftMargin, minWidth, minGap, redrawOnResize } = params;
 
-  const resizeStateRef = useRef({ startX: 0, isResizing: false });
-  const [state, setState] = useState(0);
+  const resizeStateRef = useRef({ startX: 0, isResizing: false, width: 0 });
+  const [, setState] = useState(0);
   const resizableRef = useRef();
   const resizerRef = useRef();
+  const requestRef = useRef(0);
 
-  const getResizeState = () => resizeStateRef.current;
-  const setResizeState = (state) => {
-    resizeStateRef.current = state;
+  const setWidth = (newWidth) => {
+    window.cancelAnimationFrame(requestRef.current);
+    requestRef.current = window.requestAnimationFrame(() => {
+      resizableRef.current.style.width = `${newWidth}px`;
+    });
   };
 
-  const setNewSize = (dx) => {
-    const { width } = resizableRef.current.getBoundingClientRect();
+  const setNewSize = (width, dx) => {
     let newWidth = isLeftMargin ? width - dx : width + dx;
     if (newWidth < minWidth) {
       newWidth = minWidth;
@@ -29,13 +32,16 @@ export function useHorizontalResize(options) {
     if (newWidth > maxWidth) {
       newWidth = maxWidth;
     }
-    // console.log('setNewSize', {dx, width, newWidth})
-    resizableRef.current.style.width = `${newWidth}px`;
+    setWidth(newWidth);
   };
 
   useEffect(() => {
+    const getResizeState = () => resizeStateRef.current;
+    const setResizeState = (state) => {
+      resizeStateRef.current = state;
+    };
+
     const handleUp = (event) => {
-      // console.log('handleUp', getResizeState());
       const { screenX: endX } = event;
       const { startX, isResizing } = getResizeState();
       if (isResizing) {
@@ -45,21 +51,22 @@ export function useHorizontalResize(options) {
     };
     const handleResize = (event) => {
       const { screenX: endX } = event;
-      const { startX, isResizing } = getResizeState();
+      const { startX, isResizing, width } = getResizeState();
       if (isResizing) {
         event.preventDefault();
         event.stopPropagation();
-        // console.log('handleResize', { endX, startX, isResizing })
-        setResizeState({ startX: endX, isResizing: true });
-        setNewSize(endX - startX);
+        setNewSize(width, endX - startX);
+        if (redrawOnResize) {
+          setState(endX - startX); // force redraw
+        }
       }
     };
     const handleDown = (event) => {
       const { screenX: startX } = event;
       event.preventDefault();
       event.stopPropagation();
-      // console.log('handleDown', getResizeState())
-      setResizeState({ startX, isResizing: true });
+      const { width } = resizableRef.current.getBoundingClientRect();
+      setResizeState({ startX, isResizing: true, width });
     };
 
     document.addEventListener('mouseup', handleUp);
@@ -72,7 +79,7 @@ export function useHorizontalResize(options) {
     };
   }, []);
 
-  return { resizableRef, resizerRef, isResizing: getResizeState().isResizing };
+  return { resizableRef, resizerRef, isResizing: resizeStateRef.current.isResizing };
 }
 
 export function useHorizontalLeftResize(options) {
