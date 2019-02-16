@@ -2,10 +2,10 @@ import React from 'react';
 
 import './tabs.scss';
 
-export const Tab = ({children}) => {
+const Tab = ({ children }) => {
   return (
     <div className='tab'>
-      {children}
+      { children }
     </div>
   );
 }

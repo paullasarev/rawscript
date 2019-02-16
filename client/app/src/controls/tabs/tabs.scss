@@ -2,7 +2,7 @@
 
 .tabs {
   height: 100%;
-  width: 100%;
+  width: 280px;
   display: block;
   position: relative;
   font-size: 14px;
@@ -10,10 +10,10 @@
   box-sizing: border-box;
   
   $border: 1px solid $color-border-tab;
+  $border-bold: 2px solid $color-border-tab;
   $border-radius: 5px;
   
   &__header {
-    line-height: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -23,11 +23,11 @@
     padding-right: 5px;
   }
   &__title {
-    border-left: $border;
+    border-left: $border-bold;
     border-top: $border;
     border-bottom: $border;
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius * 2;
+    // border-top-right-radius: $border-radius;
     padding: 5px 10px;
     top: 1px;
     position: relative;

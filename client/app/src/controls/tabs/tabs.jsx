@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { find, map } from 'lodash';
 import classNames from 'classnames';
 // import { DragSource } from 'react-dnd';
@@ -14,7 +14,7 @@ const TabHeader = ({ name, isActive, setActive }) => {
       className={ classNames('tabs__title', {
         'tabs__title--active': isActive,
       }) }
-      onClick={ () => setActive(name) }
+      onClick={ (e) => { e.stopPropagation(); setActive(name); } }
     >
       { name }
     </div>
@@ -22,14 +22,14 @@ const TabHeader = ({ name, isActive, setActive }) => {
 };
 
 export const Tabs = (props) => {
-  const { children, active, setActive } = props;
+  const { children, active, setActive, setShow } = props;
 
   const activeTab = find(children, { props: { name: active } });
   const headers = map(children, ({ props: { name } }) => (
     <TabHeader { ...{ name, isActive: name === active, key: name, setActive } } />
   ));
 
-  const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize({redrawOnResize: true});
+  const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize({ redrawOnResize: true });
 
   // console.log('render', { isResizing })
 
@@ -38,7 +38,7 @@ export const Tabs = (props) => {
       className='tabs'
       ref={ resizableRef }
     >
-      <div className='tabs__header'>
+      <div className='tabs__header' onClick={ useCallback(() => setShow()) }>
         {headers}
       </div>
       <div className='tabs__tab'>

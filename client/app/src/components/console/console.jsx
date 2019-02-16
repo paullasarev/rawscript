@@ -6,8 +6,8 @@ import classNames from 'classnames';
 import './console.scss';
 
 import { run } from './actions';
-import ButtonBar from '../../controls/buttons/button-bar.jsx';
-import Button from '../../controls/buttons/button.jsx';
+import ButtonBar from '../../controls/buttons/button-bar';
+import Button from '../../controls/buttons/button';
 
 const Console = (props) => {
   const { className, text, run } = props;

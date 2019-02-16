@@ -13,7 +13,11 @@
     "mocha": true,
     "es6": true
   },
+  "plugins": [
+    "react-hooks"
+  ],
   "rules": {
+    "max-len": ["warn", { "code": 150 }],
     "space-before-function-paren": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "linebreak-style": "off",
@@ -32,6 +36,8 @@
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/no-noninteractive-tabindex": 0,
     "arrow-body-style": "off",
+    "import/no-named-as-default": 0,
+    "no-unused-vars": ["off", { "args": "all" }],
     "react-hooks/rules-of-hooks": "error"
   }
 }
