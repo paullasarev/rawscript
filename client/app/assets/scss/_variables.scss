@@ -4,6 +4,7 @@ $color-button-border:  #3aeb1c;
 $color-button-background: #99bbcc;
 $color-border-tab: #16b5d1;
 $color-background: #f3f3f3;
+$color-arrow: #a8a8a8;
 
 @mixin background-image($img:file, $x:0, $y:0) {
   background-image: url(./images/#{$img});

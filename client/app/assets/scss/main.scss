@@ -1,11 +1,14 @@
 @import './variables.scss';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 html, #root {
   height: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
   height: 100%;
   margin: 0;
   color: $color-text-black;
+  font-family: 'Roboto', sans-serif;
 }

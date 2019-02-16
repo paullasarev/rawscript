@@ -18,27 +18,37 @@
     flex-direction: row;
     align-items: center;
     border-bottom: $border;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
+    // padding-top: 5px;
+    // padding-left: 5px;
+    // padding-right: 5px;
   }
   &__title {
-    border-left: $border-bold;
-    border-top: $border;
-    border-bottom: $border;
-    border-top-left-radius: $border-radius * 2;
-    // border-top-right-radius: $border-radius;
+    // border-left: $border-bold;
+    // border-top: $border;
+    // border-bottom: $border;
+    // border-top-left-radius: $border-radius * 2;
     padding: 5px 10px;
     top: 1px;
     position: relative;
+    margin-bottom: 2px;
     cursor: pointer;
 
-    &:last-child{
-      border-right: $border;
-    }
+    // &:last-child{
+    //   border-right: $border;
+    // }
 
     &--active {
-      border-bottom-color: $color-background;
+      // border-bottom-color: $color-background;
+      &:after {
+        width: 100%;
+        bottom: -1px;
+        left: 0;
+        height: 2px;
+        display: block;
+        content: '';
+        position: absolute;
+        border-bottom: 2px solid $color-border-tab;
+      }
     }
   }
   &__tab {
