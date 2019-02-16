@@ -3,11 +3,13 @@ import { isUndefined } from 'lodash';
 import {
   EDIT_SET_SHOW_SIDEBAR,
   EDIT_SET_ACTIVE_TAB,
+  EDIT_SET_SIDEBAR_WIDTH,
 } from './actions';
 
 const initialState = {
   showSidebar: true,
   activeTab: 'script',
+  sidebarWidth: 280,
 };
 
 export default function reducer(state = initialState, action) {
@@ -23,6 +25,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         activeTab: action.payload,
+      };
+    }
+    case EDIT_SET_SIDEBAR_WIDTH: {
+      return {
+        ...state,
+        sidebarWidth: action.payload,
       };
     }
     default:

@@ -22,14 +22,17 @@ const TabHeader = ({ name, isActive, setActive }) => {
 };
 
 export const Tabs = (props) => {
-  const { children, active, setActive, setShow } = props;
+  const { children, active, setActive, setShow, width, setWidth } = props;
 
   const activeTab = find(children, { props: { name: active } });
   const headers = map(children, ({ props: { name } }) => (
     <TabHeader { ...{ name, isActive: name === active, key: name, setActive } } />
   ));
 
-  const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize({ redrawOnResize: true });
+  const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize({
+    redrawOnResize: false,
+    setWidth,
+  });
 
   // console.log('render', { isResizing })
 
@@ -37,6 +40,7 @@ export const Tabs = (props) => {
     <div
       className='tabs'
       ref={ resizableRef }
+      style={ { width } }
     >
       <div className='tabs__header' onClick={ useCallback(() => setShow()) }>
         {headers}

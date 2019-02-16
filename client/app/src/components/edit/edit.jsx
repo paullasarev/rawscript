@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 
 import './edit.scss';
 
-import { setShowSidebar, setActiveTab } from './actions';
+import { setShowSidebar, setActiveTab, setSidebarWidth } from './actions';
+// import withAccessor from '../../common/with-accessor';
 
 import Paper from '../paper/paper';
 import Script from '../script/script';
@@ -19,6 +20,8 @@ const Edit = (props) => {
     setActiveTab,
     showSidebar,
     setShowSidebar,
+    sidebarWidth,
+    setSidebarWidth,
   } = props;
 
   return (
@@ -34,6 +37,8 @@ const Edit = (props) => {
             active: activeTab,
             setActive: setActiveTab,
             setShow: setShowSidebar,
+            width: sidebarWidth,
+            setWidth: setSidebarWidth,
           } }
           >
             <Tab name='script'>
@@ -49,10 +54,14 @@ const Edit = (props) => {
   );
 };
 
-export default connect(state => ({
-  showSidebar: state.edit.showSidebar,
-  activeTab: state.edit.activeTab,
-}), dispatch => bindActionCreators({
-  setShowSidebar,
-  setActiveTab,
-}, dispatch))(Edit);
+export default compose(
+  connect(state => ({
+    showSidebar: state.edit.showSidebar,
+    activeTab: state.edit.activeTab,
+    sidebarWidth: state.edit.sidebarWidth,
+  }), dispatch => bindActionCreators({
+    setShowSidebar,
+    setActiveTab,
+    setSidebarWidth,
+  }, dispatch)),
+)(Edit);

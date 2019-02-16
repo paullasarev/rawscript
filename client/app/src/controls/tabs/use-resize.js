@@ -8,7 +8,7 @@ export function useHorizontalResize(options) {
     redrawOnResize: false,
     ...options,
   };
-  const { isLeftMargin, minWidth, minGap, redrawOnResize } = params;
+  const { isLeftMargin, minWidth, minGap, redrawOnResize, setWidth } = params;
 
   const resizeStateRef = useRef({ startX: 0, isResizing: false, width: 0 });
   const [, setState] = useState(0);
@@ -16,14 +16,17 @@ export function useHorizontalResize(options) {
   const resizerRef = useRef();
   const requestRef = useRef(0);
 
-  const setWidth = (newWidth) => {
+  const setRefWidth = (newWidth, force) => {
     window.cancelAnimationFrame(requestRef.current);
     requestRef.current = window.requestAnimationFrame(() => {
       resizableRef.current.style.width = `${newWidth}px`;
     });
+    if (setWidth && force) {
+      setWidth(newWidth);
+    }
   };
 
-  const setNewSize = (width, dx) => {
+  const setNewSize = (width, dx, force = false) => {
     let newWidth = isLeftMargin ? width - dx : width + dx;
     if (newWidth < minWidth) {
       newWidth = minWidth;
@@ -32,7 +35,7 @@ export function useHorizontalResize(options) {
     if (newWidth > maxWidth) {
       newWidth = maxWidth;
     }
-    setWidth(newWidth);
+    setRefWidth(newWidth, force);
   };
 
   useEffect(() => {
@@ -43,9 +46,10 @@ export function useHorizontalResize(options) {
 
     const handleUp = (event) => {
       const { screenX: endX } = event;
-      const { startX, isResizing } = getResizeState();
+      const { startX, isResizing, width } = getResizeState();
       if (isResizing) {
         setResizeState({ startX, isResizing: false });
+        setNewSize(width, endX - startX, true);
         setState(endX - startX); // force redraw
       }
     };
