@@ -41,11 +41,13 @@ const Edit = (props) => {
             setWidth: setSidebarWidth,
           } }
           >
-            <Tab name='script'>
+            <Tab name='Script'>
               <Script />
             </Tab>
-            <Tab name='console'>
+            <Tab name='Console'>
               <Console />
+            </Tab>
+            <Tab name='Files'>
             </Tab>
           </Tabs>
         </Sidebar>

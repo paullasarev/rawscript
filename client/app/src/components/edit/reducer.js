@@ -8,7 +8,7 @@ import {
 
 const initialState = {
   showSidebar: true,
-  activeTab: 'script',
+  activeTab: 'Script',
   sidebarWidth: 280,
 };
 

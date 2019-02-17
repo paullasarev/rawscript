@@ -13,32 +13,35 @@
   $border-bold: 2px solid $color-border-tab;
   $border-radius: 5px;
   
+  &__more {
+    position: absolute;
+    right: 38px;
+    top: 0;
+    @include background-image('chevron-double-right.svg', 10px, 30px);
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+  }
+
   &__header {
     display: flex;
     flex-direction: row;
     align-items: center;
     border-bottom: $border;
-    // padding-top: 5px;
-    // padding-left: 5px;
-    // padding-right: 5px;
   }
   &__title {
-    // border-left: $border-bold;
-    // border-top: $border;
-    // border-bottom: $border;
-    // border-top-left-radius: $border-radius * 2;
     padding: 5px 10px;
     top: 1px;
     position: relative;
     margin-bottom: 2px;
     cursor: pointer;
 
-    // &:last-child{
-    //   border-right: $border;
-    // }
+    &:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
 
     &--active {
-      // border-bottom-color: $color-background;
       &:after {
         width: 100%;
         bottom: -1px;

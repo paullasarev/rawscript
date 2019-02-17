@@ -37,6 +37,7 @@
     "jsx-a11y/no-noninteractive-tabindex": 0,
     "arrow-body-style": "off",
     "import/no-named-as-default": 0,
+    "import/prefer-default-export": 0,
     "no-unused-vars": ["off", { "args": "all" }],
     "react-hooks/rules-of-hooks": "error"
   }
