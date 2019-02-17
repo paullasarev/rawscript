@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import './paper.scss';
+import img from 'images/react_logo_512x512.png';
 
-import Image from '../image/image.jsx';
-import img from '../../../assets/images/react_logo_512x512.png';
+import Image from '../image/image';
+// import img from '../../../assets/images/react_logo_512x512.png';
 
 export default class Paper extends Component {
   render() {

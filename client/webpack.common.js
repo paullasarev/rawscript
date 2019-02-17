@@ -4,11 +4,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
+  context: path.resolve(__dirname, 'app'),
   entry: {
-    app: './app/index.js',
+    app: './index.js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      images: path.resolve(__dirname, 'app/assets/images/'),
+    },
   },
   module: {
     rules: [
@@ -22,12 +26,12 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-            // fallback to style-loader in development
-            // process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
-            'style-loader',
-            "css-loader",
-            "sass-loader"
-        ]
+          // fallback to style-loader in development
+          // process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -38,8 +42,8 @@ module.exports = {
               limit: 8192,
               mimetype: 'image/png',
               name: 'images/[name].[ext]',
-            }
-          }
+            },
+          },
         ],
       },
       {
@@ -51,8 +55,8 @@ module.exports = {
               limit: 8192,
               mimetype: 'application/font-woff',
               name: 'fonts/[name].[ext]',
-            }
-          }
+            },
+          },
         ],
       },
       {
@@ -64,21 +68,21 @@ module.exports = {
               limit: 8192,
               mimetype: 'image/svg+xml',
               name: 'images/[name].[ext]',
-            }
-          }
+            },
+          },
         ],
       },
-    ]
-  }, 
+    ],
+  },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Development',
-      template: 'app/index.html'
-    })
+      template: './index.html'
+    }),
   ],
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  }
+    path: path.resolve(__dirname, 'dist'),
+  },
 };

@@ -19,7 +19,7 @@ const Sidebar = ({ className, show, setShow, children }) => {
         onClick={ useCallback((e) => { setShow(!show); }, [show]) }
       >
         <div className='sidebar__tag-label'>
-          { '>' }
+          {/* { '>' } */}
         </div>
       </div>
       { children }
