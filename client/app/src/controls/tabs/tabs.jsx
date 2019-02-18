@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { find, map } from 'lodash';
 import classNames from 'classnames';
-// import { DragSource } from 'react-dnd';
 
 import './tabs.scss';
 
-// import { tabsSource, collectSource } from './resize';
+import Tab from './tab';
+
 import { useHorizontalLeftResize } from './use-resize';
 import { useMaxHeader } from './use-max-header';
+import { useDragDrop } from './use-drag-drop';
 
-const TabHeader = ({ name, isActive, setActive, visible }) => {
+const TabHeader = ({ name, title, isActive, setActive, visible, ...props }) => {
   return (
     <div
       className={ classNames('tabs__title', {
@@ -17,8 +18,9 @@ const TabHeader = ({ name, isActive, setActive, visible }) => {
       }) }
       onClick={ (e) => { e.stopPropagation(); setActive(name); } }
       style={ { visibility: visible ? 'visible' : 'hidden' } }
+      { ...props }
     >
-      { name }
+      { title }
     </div>
   );
 };
@@ -26,17 +28,22 @@ const TabHeader = ({ name, isActive, setActive, visible }) => {
 const HEADER_GAP = 50;
 
 export const Tabs = (props) => {
-  const { children, active, setActive, setShow, width, setWidth } = props;
+  const { tabs, tabsComponents, active, setActive, setShow, width, setWidth, moveTab } = props;
 
   const { headerRef, lastVisible, headersCount } = useMaxHeader(HEADER_GAP);
   const showMore = headersCount && (lastVisible < headersCount);
+  const { dragProps, dropProps } = useDragDrop('tabs', moveTab);
 
-  const activeTab = find(children, { props: { name: active } });
-  const headers = map(children, ({ props: { name } }, index) => {
+  const activeTab = tabsComponents[active];
+  const headers = map(tabs, (name, index) => {
+    const tabComponent = tabsComponents[name];
     return (
       <TabHeader
         { ...{ name, isActive: name === active, key: name, setActive } }
         visible={ index < lastVisible }
+        title={ tabComponent.title }
+        { ...dragProps(name) }
+        { ...dropProps(name) }
       />
     );
   });
@@ -46,7 +53,8 @@ export const Tabs = (props) => {
     setWidth,
   });
 
-  console.log('render', { lastVisible, headersCount })
+  // console.log('render', { lastVisible, headersCount })
+  const TabComponent = activeTab ? activeTab.component : null;
 
   return (
     <div
@@ -58,12 +66,15 @@ export const Tabs = (props) => {
         className='tabs__header'
         onClick={ useCallback(() => setShow()) }
         ref={ headerRef }
+        { ...dropProps('') }
       >
         {headers}
       </div>
       { showMore && <div className='tabs__more' /> }
       <div className='tabs__tab'>
-        { activeTab }
+        <Tab>
+          { TabComponent ? <TabComponent /> : null }
+        </Tab>
       </div>
       <div
         className={ classNames('tabs__resizer', {

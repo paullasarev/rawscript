@@ -4,15 +4,19 @@ import { bindActionCreators, compose } from 'redux';
 
 import './edit.scss';
 
-import { setShowSidebar, setActiveTab, setSidebarWidth } from './actions';
-// import withAccessor from '../../common/with-accessor';
+import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab } from './actions';
 
 import Paper from '../paper/paper';
 import Script from '../script/script';
 import Console from '../console/console';
 import Tabs from '../../controls/tabs/tabs';
-import Tab from '../../controls/tabs/tab';
 import Sidebar from '../../controls/sidebar/sidebar';
+
+const tabsComponents = {
+  script: { component: Script, title: 'Script' },
+  console: { component: Console, title: 'Console' },
+  file: { component: null, title: 'File' },
+};
 
 const Edit = (props) => {
   const {
@@ -22,6 +26,8 @@ const Edit = (props) => {
     setShowSidebar,
     sidebarWidth,
     setSidebarWidth,
+    moveTab,
+    tabs,
   } = props;
 
   return (
@@ -39,17 +45,11 @@ const Edit = (props) => {
             setShow: setShowSidebar,
             width: sidebarWidth,
             setWidth: setSidebarWidth,
+            moveTab,
+            tabs,
+            tabsComponents,
           } }
-          >
-            <Tab name='Script'>
-              <Script />
-            </Tab>
-            <Tab name='Console'>
-              <Console />
-            </Tab>
-            <Tab name='Files'>
-            </Tab>
-          </Tabs>
+          />
         </Sidebar>
       </div>
     </div>
@@ -59,11 +59,13 @@ const Edit = (props) => {
 export default compose(
   connect(state => ({
     showSidebar: state.edit.showSidebar,
-    activeTab: state.edit.activeTab,
     sidebarWidth: state.edit.sidebarWidth,
+    activeTab: state.edit.activeTab,
+    tabs: state.edit.tabs,
   }), dispatch => bindActionCreators({
     setShowSidebar,
     setActiveTab,
     setSidebarWidth,
+    moveTab,
   }, dispatch)),
 )(Edit);
