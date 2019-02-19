@@ -1,34 +1,36 @@
+import { useEffect, useRef } from 'react';
 import { memoize } from 'lodash';
 
 export function useDragDrop(typeId, onDrop) {
-  const type = `custom/${typeId}`;
-  const dragProps = memoize((srcId) => {
-    return {
-      draggable: true,
-      onDragStart: (e) => {
-        e.dataTransfer.setData(type, `${srcId}`);
-      },
-    };
-  });
+  const funcs = useRef({ dragProps: () => ({}), dropProps: () => ({}) });
 
-  const dropProps = memoize((dstId) => {
-    return {
-      onDragOver: (e) => {
-        if ([...e.dataTransfer.types].includes(type)) {
+  useEffect(() => {
+    const type = `custom/${typeId}`;
+    funcs.current.dragProps = memoize((srcId) => {
+      return {
+        draggable: true,
+        onDragStart: (e) => {
+          e.dataTransfer.setData(type, `${srcId}`);
+        },
+      };
+    });
+
+    funcs.current.dropProps = memoize((dstId) => {
+      return {
+        onDragOver: (e) => {
+          if ([...e.dataTransfer.types].includes(type)) {
+            e.preventDefault();
+          }
+        },
+        onDrop: (e) => {
           e.preventDefault();
-        }
-      },
-      onDrop: (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const srcId = e.dataTransfer.getData(type);
-        onDrop(`${srcId}`, `${dstId}`);
-      },
-    };
-  });
+          e.stopPropagation();
+          const srcId = e.dataTransfer.getData(type);
+          onDrop(`${srcId}`, `${dstId}`);
+        },
+      };
+    });
+  }, [typeId, onDrop]);
 
-  return {
-    dragProps,
-    dropProps,
-  };
+  return funcs.current;
 }

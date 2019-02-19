@@ -53,14 +53,14 @@ export default function reducer(state = initialState, action) {
       }
       let tabs = oldTabs;
       const srcIndex = oldTabs.indexOf(srcId);
+      tabs = [...oldTabs];
+      const el = tabs[srcIndex];
+      tabs.splice(srcIndex, 1);
       if (isEmpty(dstId)) {
-        tabs = [...oldTabs];
-        const el = tabs[srcIndex];
-        tabs.splice(srcIndex, 1);
         tabs.push(el);
       } else {
         const dstIndex = oldTabs.indexOf(dstId);
-        tabs = swap(oldTabs, srcIndex, dstIndex);
+        tabs.splice(dstIndex, 0, el);
       }
       return {
         ...state,
