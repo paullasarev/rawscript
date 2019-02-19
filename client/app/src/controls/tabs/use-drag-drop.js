@@ -22,6 +22,11 @@ export function useDragDrop(typeId, onDrop) {
             e.preventDefault();
           }
         },
+        onDragEnter: (e) => {
+          if ([...e.dataTransfer.types].includes(type)) {
+            e.preventDefault();
+          }
+        },
         onDrop: (e) => {
           e.preventDefault();
           e.stopPropagation();

@@ -1,11 +1,14 @@
 import '@babel/polyfill';
+import { polyfill } from 'mobile-drag-drop';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import './assets/scss/main.scss';
 
-import App from './src/app/app.jsx';
+import App from './src/app/app';
+
+polyfill();
 
 const render = (Component) => {
   ReactDOM.render(
