@@ -16,8 +16,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 function logMiddleware({ getState }) {
   return next => (action) => {
+    const result = next(action);
     console.log({ [action.type]: { action: action.payload, state: getState() } });
-    return next(action);
+    return result;
   };
 }
 
@@ -36,15 +37,11 @@ if (isDev) {
 }
 
 const store = createStore(persistedReducer, enhancer);
-const persistor = persistStore(store)
+const persistor = persistStore(store);
 
 export default function configureStore() {
-  // return createStore(rootReducer, applyMiddleware(...middlewares));
-  // const sagaMiddleware = createSagaMiddleware({ rootSaga });
   return {
     store: {
-    // ...createStore(rootReducer),
-    // ...createStore(rootReducer, applyMiddleware(sagaMiddleware)),
       ...store,
       runSaga: sagaMiddleware.run,
     },

@@ -16,11 +16,9 @@ const Sidebar = ({ className, show, setShow, children }) => {
           'sidebar__tag--collapsed': !show,
           'sidebar__tag--expanded': show,
         }) }
-        onClick={ useCallback((e) => { setShow(!show); }, [show]) }
+        onClick={ useCallback(() => { setShow(!show); }, [show]) }
       >
-        <div className='sidebar__tag-label'>
-          {/* { '>' } */}
-        </div>
+        <div className='sidebar__tag-label' />
       </div>
       { children }
     </div>
