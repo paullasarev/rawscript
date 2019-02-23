@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { isUndefined } from 'lodash';
 
 export function useHorizontalResize(options) {
   const params = {
@@ -38,6 +39,20 @@ export function useHorizontalResize(options) {
     setRefWidth(newWidth, force);
   };
 
+  function getScreenX(event, touchType, preventDefault = false) {
+    const { type, changedTouches } = event;
+    let result = 0;
+    if (type === touchType && changedTouches.length) {
+      result = changedTouches[0].screenX;
+    } else {
+      result = event.screenX;
+      if (preventDefault) {
+        event.preventDefault();
+      }
+    }
+    return result;
+  }
+
   useEffect(() => {
     const getResizeState = () => resizeStateRef.current;
     const setResizeState = (state) => {
@@ -45,7 +60,7 @@ export function useHorizontalResize(options) {
     };
 
     const handleUp = (event) => {
-      const { screenX: endX } = event;
+      const endX = getScreenX(event, 'touchend');
       const { startX, isResizing, width } = getResizeState();
       if (isResizing) {
         setResizeState({ startX, isResizing: false });
@@ -54,10 +69,9 @@ export function useHorizontalResize(options) {
       }
     };
     const handleResize = (event) => {
-      const { screenX: endX } = event;
       const { startX, isResizing, width } = getResizeState();
+      const endX = getScreenX(event, 'touchmove', true);
       if (isResizing) {
-        event.preventDefault();
         event.stopPropagation();
         setNewSize(width, endX - startX);
         if (redrawOnResize) {
@@ -66,7 +80,7 @@ export function useHorizontalResize(options) {
       }
     };
     const handleDown = (event) => {
-      const { screenX: startX } = event;
+      const startX = getScreenX(event, 'touchstart');
       event.preventDefault();
       event.stopPropagation();
       const { width } = resizableRef.current.getBoundingClientRect();
@@ -74,12 +88,18 @@ export function useHorizontalResize(options) {
     };
 
     document.addEventListener('mouseup', handleUp);
+    document.addEventListener('touchend', handleUp);
     document.addEventListener('mousemove', handleResize);
+    document.addEventListener('touchmove', handleResize);
     resizerRef.current.addEventListener('mousedown', handleDown);
+    resizerRef.current.addEventListener('touchstart', handleDown);
     return () => {
       document.removeEventListener('mouseup', handleUp);
+      document.removeEventListener('touchend', handleUp);
       document.removeEventListener('mousemove', handleResize);
+      document.removeEventListener('touchmove', handleResize);
       resizerRef.current.removeEventListener('mousedown', handleDown);
+      resizerRef.current.removeEventListener('touchstart', handleDown);
     };
   }, []);
 

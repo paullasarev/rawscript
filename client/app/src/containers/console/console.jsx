@@ -6,14 +6,14 @@ import classNames from 'classnames';
 import './console.scss';
 
 import { run } from './actions';
-import ButtonBar from '../../controls/buttons/button-bar';
-import Button from '../../controls/buttons/button';
+import ButtonBar from '../../components/buttons/button-bar';
+import Button from '../../components/buttons/button';
 
 const Console = (props) => {
   const { className, text, run } = props;
   return (
     <div className={ classNames('console', className) }>
-      <ButtonBar className='console__buttons' >
+      <ButtonBar className='console__buttons'>
         <Button text='Run' action={ run } arg='run' />
       </ButtonBar>
       <div className='console__text'>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react';
 
 import configureStore from './configure-store';
-import Edit from '../components/edit/edit';
+import Edit from '../containers/edit/edit';
 
 const { store, persistor } = configureStore();
 

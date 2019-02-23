@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
 import app from './reducer';
-import console from '../components/console/reducer';
-import script from '../components/script/reducer';
-import edit from '../components/edit/reducer';
+import console from '../containers/console/reducer';
+import script from '../containers/script/reducer';
+import edit from '../containers/edit/reducer';
 
 const rootReducer = combineReducers({
   app,

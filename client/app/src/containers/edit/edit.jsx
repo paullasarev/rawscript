@@ -9,8 +9,8 @@ import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab } from './action
 import Paper from '../paper/paper';
 import Script from '../script/script';
 import Console from '../console/console';
-import Tabs from '../../controls/tabs/tabs';
-import Sidebar from '../../controls/sidebar/sidebar';
+import Tabs from '../../components/tabs/tabs';
+import Sidebar from '../../components/sidebar/sidebar';
 
 const tabsComponents = {
   script: { component: Script, title: 'Script' },
