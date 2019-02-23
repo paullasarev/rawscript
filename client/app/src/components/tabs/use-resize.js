@@ -1,6 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { isUndefined } from 'lodash';
 
+function getScreenX(event, touchType, preventDefault = false) {
+  const { type, changedTouches } = event;
+  let result = 0;
+  if (type === touchType && changedTouches.length) {
+    result = changedTouches[0].screenX;
+  } else {
+    result = event.screenX;
+    if (preventDefault) {
+      event.preventDefault();
+    }
+  }
+  return result;
+}
+
 export function useHorizontalResize(options) {
   const params = {
     isLeftMargin: true,
@@ -39,20 +53,6 @@ export function useHorizontalResize(options) {
     setRefWidth(newWidth, force);
   };
 
-  function getScreenX(event, touchType, preventDefault = false) {
-    const { type, changedTouches } = event;
-    let result = 0;
-    if (type === touchType && changedTouches.length) {
-      result = changedTouches[0].screenX;
-    } else {
-      result = event.screenX;
-      if (preventDefault) {
-        event.preventDefault();
-      }
-    }
-    return result;
-  }
-
   useEffect(() => {
     const getResizeState = () => resizeStateRef.current;
     const setResizeState = (state) => {
@@ -60,9 +60,9 @@ export function useHorizontalResize(options) {
     };
 
     const handleUp = (event) => {
-      const endX = getScreenX(event, 'touchend');
       const { startX, isResizing, width } = getResizeState();
       if (isResizing) {
+        const endX = getScreenX(event, 'touchend');
         setResizeState({ startX, isResizing: false });
         setNewSize(width, endX - startX, true);
         setState(endX - startX); // force redraw
@@ -70,8 +70,8 @@ export function useHorizontalResize(options) {
     };
     const handleResize = (event) => {
       const { startX, isResizing, width } = getResizeState();
-      const endX = getScreenX(event, 'touchmove', true);
       if (isResizing) {
+        const endX = getScreenX(event, 'touchmove', true);
         event.stopPropagation();
         setNewSize(width, endX - startX);
         if (redrawOnResize) {

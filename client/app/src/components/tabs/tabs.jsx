@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { find, map } from 'lodash';
 import classNames from 'classnames';
 
@@ -64,7 +64,7 @@ export const Tabs = (props) => {
     >
       <div
         className='tabs__header'
-        onClick={ useCallback(() => setShow()) }
+        // onClick={ useCallback(() => setShow()) }
         ref={ headerRef }
         { ...dropProps('') }
       >
