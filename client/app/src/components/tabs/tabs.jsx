@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
-import { find, map } from 'lodash';
+import React, { useCallback, useState } from 'react';
+import { map, slice } from 'lodash/fp';
+import { compose } from 'redux';
 import classNames from 'classnames';
 
 import './tabs.scss';
 
 import Tab from './tab';
+import Dropdown from '../dropdown/dropdown';
 
 import { useHorizontalLeftResize } from './use-resize';
 import { useMaxHeader } from './use-max-header';
@@ -26,16 +28,17 @@ const TabHeader = ({ name, title, isActive, setActive, visible, ...props }) => {
 };
 
 const HEADER_GAP = 50;
+const mapIndex = map.convert({ cap: false });
 
 export const Tabs = (props) => {
-  const { tabs, tabsComponents, active, setActive, setShow, width, setWidth, moveTab } = props;
+  const { tabs, tabsComponents, active, setActive, setShow, width, setWidth, moveTab, showTab } = props;
 
   const { headerRef, lastVisible, headersCount } = useMaxHeader(HEADER_GAP);
   const showMore = headersCount && (lastVisible < headersCount);
   const { dragProps, dropProps } = useDragDrop('tabs', moveTab);
 
   const activeTab = tabsComponents[active];
-  const headers = map(tabs, (name, index) => {
+  const headers = mapIndex((name, index) => {
     const tabComponent = tabsComponents[name];
     return (
       <TabHeader
@@ -46,15 +49,21 @@ export const Tabs = (props) => {
         { ...dropProps(name) }
       />
     );
-  });
+  })(tabs);
 
   const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize({
     redrawOnResize: true,
     setWidth,
   });
 
-  // console.log('render', { lastVisible, headersCount })
   const TabComponent = activeTab ? activeTab.component : null;
+
+  const [showMorePopup, setShowMorePopup] = useState(false);
+  const hiddenTabs = compose(
+    map(({ title, name }) => ({ title, value: name })),
+    map(name => tabsComponents[name]),
+    slice(lastVisible, undefined),
+  )(tabs);
 
   return (
     <div
@@ -70,7 +79,15 @@ export const Tabs = (props) => {
       >
         {headers}
       </div>
-      { showMore && <div className='tabs__more' /> }
+      { showMore && (
+        <div
+          className='tabs__more'
+          onClick={ setShowMorePopup }
+        />
+      ) }
+      { showMorePopup && (
+        <Dropdown items={ hiddenTabs } onSelect={ showTab } />
+      )}
       <div className='tabs__tab'>
         <Tab>
           { TabComponent ? <TabComponent /> : null }

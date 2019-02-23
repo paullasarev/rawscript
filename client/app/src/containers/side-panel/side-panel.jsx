@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 
-import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab } from './actions';
+import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab, showTab } from './actions';
 
 import Script from '../script/script';
 import Console from '../console/console';
@@ -10,9 +10,9 @@ import Tabs from '../../components/tabs/tabs';
 import Sidebar from '../../components/sidebar/sidebar';
 
 const tabsComponents = {
-  script: { component: Script, title: 'Script' },
-  console: { component: Console, title: 'Console' },
-  file: { component: null, title: 'File' },
+  script: { name: 'script', component: Script, title: 'Script' },
+  console: { name: 'console', component: Console, title: 'Console' },
+  file: { name: 'file', component: null, title: 'File' },
 };
 
 const SidePanel = (props) => {
@@ -24,6 +24,7 @@ const SidePanel = (props) => {
     sidebarWidth,
     setSidebarWidth,
     moveTab,
+    showTab,
     tabs,
   } = props;
 
@@ -38,6 +39,7 @@ const SidePanel = (props) => {
         width: sidebarWidth,
         setWidth: setSidebarWidth,
         moveTab,
+        showTab,
         tabs,
         tabsComponents,
       } }
@@ -57,5 +59,6 @@ export default compose(
     setActiveTab,
     setSidebarWidth,
     moveTab,
+    showTab,
   }, dispatch)),
 )(SidePanel);
