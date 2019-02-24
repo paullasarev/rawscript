@@ -15,7 +15,7 @@ function getScreenX(event, touchType, preventDefault = false) {
   return result;
 }
 
-export function useHorizontalResize(options) {
+export function useHorizontalResize(setWidth, options) {
   const params = {
     isLeftMargin: true,
     minWidth: 100,
@@ -23,7 +23,7 @@ export function useHorizontalResize(options) {
     redrawOnResize: false,
     ...options,
   };
-  const { isLeftMargin, minWidth, minGap, redrawOnResize, setWidth } = params;
+  const { isLeftMargin, minWidth, minGap, redrawOnResize } = params;
 
   const resizeStateRef = useRef({ startX: 0, isResizing: false, width: 0 });
   const [, setState] = useState(0);
@@ -106,6 +106,6 @@ export function useHorizontalResize(options) {
   return { resizableRef, resizerRef, isResizing: resizeStateRef.current.isResizing };
 }
 
-export function useHorizontalLeftResize(options) {
-  return useHorizontalResize({ ...options, isLeftMargin: true });
+export function useHorizontalLeftResize(setWidth, options) {
+  return useHorizontalResize(setWidth, { ...options, isLeftMargin: true });
 }

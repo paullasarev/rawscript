@@ -35,9 +35,12 @@ export function moveTab(srcId, dstId) {
   };
 }
 
-export function showTab(value) {
+export function showTab(tabId, lastVisible) {
   return {
     type: SIDE_PANEL_SHOW_TAB,
-    payload: value,
+    payload: {
+      tabId,
+      lastVisible,
+    },
   };
 }

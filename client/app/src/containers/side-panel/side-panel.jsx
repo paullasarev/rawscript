@@ -35,7 +35,6 @@ const SidePanel = (props) => {
       <Tabs { ...{
         active: activeTab,
         setActive: setActiveTab,
-        setShow: setShowSidebar,
         width: sidebarWidth,
         setWidth: setSidebarWidth,
         moveTab,

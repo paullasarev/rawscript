@@ -12,6 +12,9 @@ import { useHorizontalLeftResize } from './use-resize';
 import { useMaxHeader } from './use-max-header';
 import { useDragDrop } from './use-drag-drop';
 
+const HEADER_GAP = 50;
+const mapIndex = map.convert({ cap: false });
+
 const TabHeader = ({ name, title, isActive, setActive, visible, ...props }) => {
   return (
     <div
@@ -27,18 +30,8 @@ const TabHeader = ({ name, title, isActive, setActive, visible, ...props }) => {
   );
 };
 
-const HEADER_GAP = 50;
-const mapIndex = map.convert({ cap: false });
-
-export const Tabs = (props) => {
-  const { tabs, tabsComponents, active, setActive, setShow, width, setWidth, moveTab, showTab } = props;
-
-  const { headerRef, lastVisible, headersCount } = useMaxHeader(HEADER_GAP);
-  const showMore = headersCount && (lastVisible < headersCount);
-  const { dragProps, dropProps } = useDragDrop('tabs', moveTab);
-
-  const activeTab = tabsComponents[active];
-  const headers = mapIndex((name, index) => {
+function makeHeaders(tabsComponents, active, setActive, lastVisible, dragProps, dropProps) {
+  return mapIndex((name, index) => {
     const tabComponent = tabsComponents[name];
     return (
       <TabHeader
@@ -49,21 +42,37 @@ export const Tabs = (props) => {
         { ...dropProps(name) }
       />
     );
-  })(tabs);
-
-  const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize({
-    redrawOnResize: true,
-    setWidth,
   });
+}
 
-  const TabComponent = activeTab ? activeTab.component : null;
-
-  const [showMorePopup, setShowMorePopup] = useState(false);
-  const hiddenTabs = compose(
+function makeHiddenTabs(tabsComponents, lastVisible) {
+  return compose(
     map(({ title, name }) => ({ title, value: name })),
     map(name => tabsComponents[name]),
     slice(lastVisible, undefined),
-  )(tabs);
+  );
+}
+
+export const Tabs = (props) => {
+  const { tabs, tabsComponents, active, setActive, width, setWidth, moveTab, showTab } = props;
+
+  const { headerRef, lastVisible, headersCount } = useMaxHeader(HEADER_GAP);
+  const showMore = headersCount && (lastVisible < headersCount);
+
+  const { dragProps, dropProps } = useDragDrop('tabs', moveTab);
+  const headers = makeHeaders(tabsComponents, active, setActive, lastVisible, dragProps, dropProps)(tabs);
+
+  const { resizableRef, resizerRef, isResizing } = useHorizontalLeftResize(setWidth, { redrawOnResize: true });
+
+  const activeTab = tabsComponents[active];
+  const TabComponent = activeTab ? activeTab.component : null;
+
+  const [showMorePopup, setShowMorePopup] = useState(false);
+
+  const hiddenTabs = makeHiddenTabs(tabsComponents, lastVisible)(tabs);
+  const onShowTab = useCallback((tabId) => {
+    showTab(tabId, lastVisible);
+  }, [showTab, lastVisible]);
 
   return (
     <div
@@ -73,7 +82,6 @@ export const Tabs = (props) => {
     >
       <div
         className='tabs__header'
-        // onClick={ useCallback(() => setShow()) }
         ref={ headerRef }
         { ...dropProps('') }
       >
@@ -82,12 +90,17 @@ export const Tabs = (props) => {
       { showMore && (
         <div
           className='tabs__more'
-          onClick={ setShowMorePopup }
-        />
+          onClick={ () => { setShowMorePopup(!showMorePopup); } }
+        >
+          { showMorePopup && (
+            <Dropdown
+              items={ hiddenTabs }
+              onSelect={ onShowTab }
+              onOutClick={ () => { setShowMorePopup(false); } }
+            />
+          )}
+        </div>
       ) }
-      { showMorePopup && (
-        <Dropdown items={ hiddenTabs } onSelect={ showTab } />
-      )}
       <div className='tabs__tab'>
         <Tab>
           { TabComponent ? <TabComponent /> : null }

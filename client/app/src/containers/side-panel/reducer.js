@@ -5,6 +5,7 @@ import {
   SIDE_PANEL_SET_ACTIVE_TAB,
   SIDE_PANEL_SET_SIDEBAR_WIDTH,
   SIDE_PANEL_MOVE_TAB,
+  SIDE_PANEL_SHOW_TAB,
 } from './actions';
 
 const initialState = {
@@ -17,12 +18,6 @@ const initialState = {
     'file',
   ],
 };
-
-function swap(plist, iA, iB) {
-  const list = [...plist];
-  [list[iA], list[iB]] = [list[iB], list[iA]];
-  return list;
-}
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -67,6 +62,22 @@ export default function reducer(state = initialState, action) {
         tabs,
       };
     }
+    case SIDE_PANEL_SHOW_TAB: {
+      const { tabId, lastVisible } = action.payload;
+      const { tabs: oldTabs } = state;
+      const srcIndex = oldTabs.indexOf(tabId);
+      const dstIndex = lastVisible - 1;
+      const tabs = [...oldTabs];
+      const srcEl = tabs[srcIndex];
+      tabs.splice(srcIndex, 1);
+      tabs.splice(dstIndex, 0, srcEl);
+      return {
+        ...state,
+        tabs,
+        activeTab: tabId,
+      };
+    }
+
     default:
       return state;
   }
