@@ -1,10 +1,6 @@
-import { readdir } from 'fs';
-import { resolve, relative, sep, basename } from 'path';
-import { promisify } from 'util';
+import { relative, sep, basename } from 'path';
 
 import { readDir } from './read-dir';
-
-const readdirP = promisify(readdir);
 
 export async function dirInfo(baseRoot, root) {
   const data = [];
