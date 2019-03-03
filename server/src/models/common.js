@@ -11,6 +11,6 @@ export function arraySchema(schema, defaultValue = []) {
   return {
     type: 'array',
     default: defaultValue,
-    item: schema,
-  }
+    items: schema,
+  };
 }
