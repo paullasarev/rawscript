@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import { requestsReducer } from 'redux-saga-requests';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import { pipeReducers, defaultApiState, getDefaultApiState, getDataByArraySchema, getDataBySchema, fillDefaultsArray, getDefaultsByArraySchema, getDefaultsBySchema, defaultReducer, emptyReducer, combinePartialReducers } from '../../common/composite';
 import { catalogSchema } from '../../models/catalog';
@@ -76,4 +78,8 @@ const reducer = pipeReducers(
   baseReducer,
 );
 
-export default reducer;
+export default persistReducer({
+  key: 'file',
+  storage,
+  whitelist: ['catalogItem'],
+}, reducer);
