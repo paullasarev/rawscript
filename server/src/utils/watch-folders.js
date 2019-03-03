@@ -2,8 +2,8 @@ import { watch } from 'fs';
 
 import { readDir } from './read-dir';
 
-export const watchFolders = (root, data) => (eventType, fileName) => {
-  readDir(root, data);
+export const watchFolders = (baseRoot, root, data) => (eventType, fileName) => {
+  readDir(baseRoot, root, data);
 }
 
 export async function startWatcher(baseRoot, root, data) {
@@ -12,7 +12,7 @@ export async function startWatcher(baseRoot, root, data) {
     watch(root, {
       recursive: false,
       persistent: true,
-      }, watchFolders(root, data));
+      }, watchFolders(baseRoot, root, data));
   } catch(error) {
     console.error('startWatcher', { root, error})
   }

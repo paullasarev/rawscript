@@ -26,8 +26,8 @@ export const combinePartialReducers = (reducers) => {
       };
     }
     return state;
-  }
-}
+  };
+};
 
 export const defaultReducer = initialState => (state, action) => {
   return state || initialState;
