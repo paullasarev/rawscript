@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import Koa from 'koa';
 import logger from 'koa-logger';
+import cors from 'koa2-cors';
 import koaSwagger from 'koa2-swagger-ui';
 import { resolve } from 'path';
 
@@ -20,6 +21,7 @@ const app = new Koa();
 const router = createRoutes(config);
 
 app
+  .use(cors())
   .use(logger())
   .use(koaSwagger({
     routePrefix: '/docs', // host at /swagger instead of default /docs

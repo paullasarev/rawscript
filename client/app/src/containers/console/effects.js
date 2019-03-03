@@ -4,7 +4,7 @@ import { CONSOLE_RUN } from './actions';
 export function* runConsole() {
   while (true) {
     const action = yield take(CONSOLE_RUN);
-    console.log('run', action);
+    console.log('runConsole', action);
   }
 }
 
