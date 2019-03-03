@@ -3,7 +3,16 @@ import { requestsReducer } from 'redux-saga-requests';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { pipeReducers, defaultApiState, getDefaultApiState, getDataByArraySchema, getDataBySchema, fillDefaultsArray, getDefaultsByArraySchema, getDefaultsBySchema, defaultReducer, emptyReducer, combinePartialReducers } from '../../common/composite';
+import {
+  pipeReducers,
+  getDefaultApiState,
+  getDataByArraySchema,
+  getDataBySchema,
+  getDefaultsByArraySchema,
+  getDefaultsBySchema,
+  defaultReducer,
+  combinePartialReducers,
+} from '../../common/composite';
 import { catalogSchema } from '../../models/catalog';
 
 import {
@@ -33,11 +42,6 @@ const initialState = {
 function baseReducer(state, action) {
   switch (action.type) {
     case SELECT_CATALOG_ITEM: {
-      // const item = action.payload;
-      const { viewState: prevState } = state;
-      // const actions = prevState === FileState.CATALOG_LIST
-      //   ? undefined
-      //   : [getCatalogList()]
       const actions = [getCatalogList()];
       const viewState = FileState.CATALOG_LIST;
       return {
