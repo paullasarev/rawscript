@@ -1,11 +1,31 @@
+// @flow
 import { useState, useRef, useEffect } from 'react';
 import { isUndefined } from 'lodash';
 
-function getScreenX(event, touchType, preventDefault = false) {
-  const { type, changedTouches } = event;
+import { useHtmlRef } from './use-html-ref';
+
+type ResizeOptions = {
+  isLeftMargin?: boolean,
+  minWidth?: number,
+  minGap?: number,
+  redrawOnResize?: boolean,
+};
+
+type setWidthType = (width: number) => void;
+
+type ResizeState = {
+  startX: number,
+  isResizing: boolean,
+  width: number,
+};
+
+function getScreenX(event: MouseEvent | TouchEvent, preventDefault = false) {
   let result = 0;
-  if (type === touchType && changedTouches.length) {
-    result = changedTouches[0].screenX;
+  if (event instanceof TouchEvent) {
+    const { changedTouches } = event;
+    if (changedTouches.length) {
+      result = changedTouches[0].screenX;
+    }
   } else {
     result = event.screenX;
     if (preventDefault) {
@@ -15,7 +35,7 @@ function getScreenX(event, touchType, preventDefault = false) {
   return result;
 }
 
-export function useHorizontalResize(setWidth, options) {
+export function useHorizontalResize(setWidth: setWidthType, options: ResizeOptions) {
   const params = {
     isLeftMargin: true,
     minWidth: 100,
@@ -27,14 +47,16 @@ export function useHorizontalResize(setWidth, options) {
 
   const resizeStateRef = useRef({ startX: 0, isResizing: false, width: 0 });
   const [, setState] = useState(0);
-  const resizableRef = useRef();
-  const resizerRef = useRef();
+  const resizableRef = useHtmlRef();
+  const resizerRef = useHtmlRef();
   const requestRef = useRef(0);
 
   const setRefWidth = (newWidth, force) => {
     window.cancelAnimationFrame(requestRef.current);
     requestRef.current = window.requestAnimationFrame(() => {
-      resizableRef.current.style.width = `${newWidth}px`;
+      if (resizableRef.current) {
+        resizableRef.current.style.width = `${newWidth}px`;
+      }
     });
     if (setWidth && force) {
       setWidth(newWidth);
@@ -59,19 +81,19 @@ export function useHorizontalResize(setWidth, options) {
       resizeStateRef.current = state;
     };
 
-    const handleUp = (event) => {
+    const handleUp = (event: MouseEvent | TouchEvent) => {
       const { startX, isResizing, width } = getResizeState();
       if (isResizing) {
-        const endX = getScreenX(event, 'touchend');
-        setResizeState({ startX, isResizing: false });
+        const endX = getScreenX(event);
+        setResizeState({ startX, isResizing: false, width: 0 });
         setNewSize(width, endX - startX, true);
         setState(endX - startX); // force redraw
       }
     };
-    const handleResize = (event) => {
+    const handleResize = (event: MouseEvent | TouchEvent) => {
       const { startX, isResizing, width } = getResizeState();
       if (isResizing) {
-        const endX = getScreenX(event, 'touchmove', true);
+        const endX = getScreenX(event, true);
         event.stopPropagation();
         setNewSize(width, endX - startX);
         if (redrawOnResize) {
@@ -79,33 +101,41 @@ export function useHorizontalResize(setWidth, options) {
         }
       }
     };
-    const handleDown = (event) => {
-      const startX = getScreenX(event, 'touchstart');
+    const handleDown = (event: MouseEvent | TouchEvent) => {
+      const startX = getScreenX(event);
       event.preventDefault();
       event.stopPropagation();
-      const { width } = resizableRef.current.getBoundingClientRect();
-      setResizeState({ startX, isResizing: true, width });
+      if (resizableRef.current) {
+        const { width } = resizableRef.current.getBoundingClientRect();
+        setResizeState({ startX, isResizing: true, width });
+      }
     };
 
     document.addEventListener('mouseup', handleUp);
     document.addEventListener('touchend', handleUp);
     document.addEventListener('mousemove', handleResize);
     document.addEventListener('touchmove', handleResize);
-    resizerRef.current.addEventListener('mousedown', handleDown);
-    resizerRef.current.addEventListener('touchstart', handleDown);
+    const ref = resizerRef.current;
+    if (ref) {
+      ref.addEventListener('mousedown', handleDown);
+      ref.addEventListener('touchstart', handleDown);
+    }
     return () => {
       document.removeEventListener('mouseup', handleUp);
       document.removeEventListener('touchend', handleUp);
       document.removeEventListener('mousemove', handleResize);
       document.removeEventListener('touchmove', handleResize);
-      resizerRef.current.removeEventListener('mousedown', handleDown);
-      resizerRef.current.removeEventListener('touchstart', handleDown);
+      const ref = resizerRef.current;
+      if (ref) {
+        ref.removeEventListener('mousedown', handleDown);
+        ref.removeEventListener('touchstart', handleDown);
+      }
     };
   }, []);
 
   return { resizableRef, resizerRef, isResizing: resizeStateRef.current.isResizing };
 }
 
-export function useHorizontalLeftResize(setWidth, options) {
+export function useHorizontalLeftResize(setWidth: setWidthType, options: ResizeOptions) {
   return useHorizontalResize(setWidth, { ...options, isLeftMargin: true });
 }

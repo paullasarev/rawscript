@@ -1,3 +1,4 @@
+// @flow
 import { isUndefined, isEmpty } from 'lodash';
 
 import {
@@ -7,6 +8,16 @@ import {
   SIDE_PANEL_MOVE_TAB,
   SIDE_PANEL_SHOW_TAB,
 } from './actions';
+
+export type State = {
+  +showSidebar: boolean,
+  +activeTab: string,
+  +sidebarWidth: number,
+  +tabs: Array<string>,
+};
+
+export const section = 'sidePanel';
+export const selector = (state: any) => (state[section]: State);
 
 const initialState = {
   showSidebar: true,
@@ -19,7 +30,7 @@ const initialState = {
   ],
 };
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state: State = initialState, action: any) {
   switch (action.type) {
     case SIDE_PANEL_SHOW_SIDEBAR: {
       const show = action.payload;

@@ -1,10 +1,14 @@
+// @flow
 import { useEffect, useRef, useState } from 'react';
 import { reduce } from 'lodash';
 
-export function useMaxHeader(headerGap) {
-  const headerRef = useRef();
+import { useHtmlRef } from './use-html-ref';
+
+export function useMaxHeader(headerGap: number) {
+  const headerRef = useHtmlRef();
   const [lastVisible, setLast] = useState(0);
   useEffect(() => {
+    if (!headerRef.current) return;
     const node = headerRef.current;
     const maxWidth = node.clientWidth - headerGap;
     const headerState = reduce(node.children, ({ width, last }, el) => {

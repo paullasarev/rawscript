@@ -1,3 +1,4 @@
+// @flow
 import React, { useCallback, useState } from 'react';
 import { map, slice } from 'lodash/fp';
 import { compose } from 'redux';
@@ -8,9 +9,9 @@ import './tabs.scss';
 import Tab from './tab';
 import Dropdown from '../dropdown/dropdown';
 
-import { useHorizontalLeftResize } from './use-resize';
-import { useMaxHeader } from './use-max-header';
-import { useDragDrop } from './use-drag-drop';
+import { useHorizontalLeftResize } from '../../hooks/use-resize';
+import { useMaxHeader } from '../../hooks/use-max-header';
+import { useDragDrop } from '../../hooks/use-drag-drop';
 
 const HEADER_GAP = 50;
 const mapIndex = map.convert({ cap: false });
@@ -49,11 +50,22 @@ function makeHiddenTabs(tabsComponents, lastVisible) {
   return compose(
     map(({ title, name }) => ({ title, value: name })),
     map(name => tabsComponents[name]),
-    slice(lastVisible, undefined),
+    slice(lastVisible, Number.MAX_VALUE),
   );
 }
 
-export const Tabs = (props) => {
+type TabsProps = {
+  tabs: Array<string>,
+  tabsComponents: {[string]: { title: string, name: string, component: typeof React.Component } },
+  active: string,
+  setActive: (active: string) => void,
+  width: number,
+  setWidth: (width: number) => void,
+  moveTab: (src: string, dst: string) => void,
+  showTab: (src: string, lastVisible: number) => void,
+};
+
+export const Tabs = (props: TabsProps) => {
   const { tabs, tabsComponents, active, setActive, width, setWidth, moveTab, showTab } = props;
 
   const { headerRef, lastVisible, headersCount } = useMaxHeader(HEADER_GAP);

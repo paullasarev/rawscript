@@ -1,8 +1,10 @@
+// @flow
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
+import { bindActionCreators } from 'redux';
 
 import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab, showTab } from './actions';
+import { type State, selector } from './reducer';
 
 import Script from '../script/script';
 import Console from '../console/console';
@@ -48,17 +50,14 @@ const SidePanel = (props) => {
   );
 };
 
-export default compose(
-  connect(state => ({
-    showSidebar: state.sidePanel.showSidebar,
-    sidebarWidth: state.sidePanel.sidebarWidth,
-    activeTab: state.sidePanel.activeTab,
-    tabs: state.sidePanel.tabs,
-  }), dispatch => bindActionCreators({
-    setShowSidebar,
-    setActiveTab,
-    setSidebarWidth,
-    moveTab,
-    showTab,
-  }, dispatch)),
-)(SidePanel);
+export default connect((state) => {
+  return {
+    ...selector(state),
+  };
+}, dispatch => bindActionCreators({
+  setShowSidebar,
+  setActiveTab,
+  setSidebarWidth,
+  moveTab,
+  showTab,
+}, dispatch))(SidePanel);
