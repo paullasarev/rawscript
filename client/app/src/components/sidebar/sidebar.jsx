@@ -1,9 +1,17 @@
+// @flow
 import React, { useCallback } from 'react';
 import classNames from 'classnames';
 
 import './sidebar.scss';
 
-const Sidebar = ({ className, show, setShow, children }) => {
+type SidebarProps = {
+  className?: string,
+  show: boolean,
+  setShow: (value: boolean) => any,
+  children: any,
+}
+
+const Sidebar = ({ className, show, setShow, children }: SidebarProps) => {
   return (
     <div
       className={ classNames('sidebar', className, {
@@ -23,6 +31,6 @@ const Sidebar = ({ className, show, setShow, children }) => {
       { children }
     </div>
   );
-}
+};
 
 export default Sidebar;

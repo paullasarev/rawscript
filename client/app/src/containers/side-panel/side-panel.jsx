@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab, showTab } from './actions';
-import { type State, selector } from './reducer';
+import { type State, type StoreState, selector } from './reducer';
 
 import Script from '../script/script';
 import Console from '../console/console';
@@ -18,7 +18,24 @@ const tabsComponents = {
   file: { name: 'file', component: File, title: 'File' },
 };
 
-const SidePanel = (props) => {
+const mapDispatchToProps = {
+  setShowSidebar,
+  setActiveTab,
+  setSidebarWidth,
+  moveTab,
+  showTab,
+};
+type mapDispatchToPropsType = typeof mapDispatchToProps;
+
+// const mapStateToProps = selector;
+const mapStateToProps = (state: StoreState) => ({
+  ...selector(state),
+});
+type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
+
+type SidePanelProps = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
+
+const SidePanel = (props: SidePanelProps) => {
   const {
     activeTab,
     setActiveTab,
@@ -50,14 +67,9 @@ const SidePanel = (props) => {
   );
 };
 
-export default connect((state) => {
-  return {
-    ...selector(state),
-  };
-}, dispatch => bindActionCreators({
-  setShowSidebar,
-  setActiveTab,
-  setSidebarWidth,
-  moveTab,
-  showTab,
-}, dispatch))(SidePanel);
+// export default connect<SidePanelProps, {||}, _, _, _, _>(
+// // $FlowFixMe
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SidePanel);

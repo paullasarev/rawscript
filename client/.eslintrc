@@ -26,6 +26,7 @@
     "react/prop-types": "off",
     "no-shadow": 0,
     "react/prefer-stateless-function": "off",
+    "react/require-default-props": "off",
     "jsx-quotes": ["warn", "prefer-single"],
     "object-curly-newline": "off",
     "react/jsx-curly-spacing": ["warn", {

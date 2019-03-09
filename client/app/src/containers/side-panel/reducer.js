@@ -9,15 +9,17 @@ import {
   SIDE_PANEL_SHOW_TAB,
 } from './actions';
 
-export type State = {
+export type State = {|
   +showSidebar: boolean,
   +activeTab: string,
   +sidebarWidth: number,
   +tabs: Array<string>,
-};
+|};
 
 export const section = 'sidePanel';
-export const selector = (state: any) => (state[section]: State);
+export type StoreState = { sidePanel: State };
+// export const selector = (state: {sidePanel: State}) => state.sidePanel;
+export const selector = (state: StoreState) => state.sidePanel;
 
 const initialState = {
   showSidebar: true,

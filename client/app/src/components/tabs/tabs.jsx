@@ -58,11 +58,11 @@ type TabsProps = {
   tabs: Array<string>,
   tabsComponents: {[string]: { title: string, name: string, component: typeof React.Component } },
   active: string,
-  setActive: (active: string) => void,
+  setActive: (active: string) => any,
   width: number,
-  setWidth: (width: number) => void,
-  moveTab: (src: string, dst: string) => void,
-  showTab: (src: string, lastVisible: number) => void,
+  setWidth: (width: number) => any,
+  moveTab: (src: string, dst: string) => any,
+  showTab: (src: string, lastVisible: number) => any,
 };
 
 export const Tabs = (props: TabsProps) => {
