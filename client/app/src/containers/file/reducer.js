@@ -1,3 +1,4 @@
+// @flow
 import { combineReducers } from 'redux';
 import { requestsReducer } from 'redux-saga-requests';
 import { persistReducer } from 'redux-persist';
@@ -12,8 +13,13 @@ import {
   getDefaultsBySchema,
   defaultReducer,
   combinePartialReducers,
+  type ApiState,
 } from '../../common/composite';
-import { catalogSchema } from '../../models/catalog';
+import {
+  catalogSchema,
+  type Catalog,
+  type Catalogs,
+} from '../../models/catalog';
 
 import {
   SELECT_CATALOG_LIST,
@@ -22,15 +28,24 @@ import {
   GET_CATALOG_ITEM,
   getCatalogList,
   getCatalogItem,
+  type Action,
 } from './actions';
-import { FileState } from './entities';
+import { FileState, type FileStateType } from './entities';
 import { fillDefaults } from '../../common/json-schema';
 import { arraySchema } from '../../models/common';
 
-const initialState = {
+export type State = {
+  viewState: FileStateType,
+  catalogList: ApiState<Catalogs>,
+  catalogItem: ApiState<Catalog>,
+//   catalogList: getDefaultApiState(arraySchema(catalogSchema)),
+//   catalogItem: getDefaultApiState(catalogSchema),
+}
+
+const initialState: State = {
   viewState: FileState.NOT_SELECTED,
-  catalogList: getDefaultApiState(arraySchema(catalogSchema)),
-  catalogItem: getDefaultApiState(catalogSchema),
+  catalogList: getDefaultApiState<Catalogs>(arraySchema(catalogSchema)),
+  catalogItem: getDefaultApiState<Catalog>(catalogSchema),
   // year: defaultApiState,
   // years: defaultApiState,
   // day: defaultApiState,
@@ -39,7 +54,7 @@ const initialState = {
   // fotos: defaultApiState,
 };
 
-function baseReducer(state, action) {
+function baseReducer(state: State, action: Action): State {
   switch (action.type) {
     case SELECT_CATALOG_ITEM: {
       const actions = [getCatalogList()];
@@ -82,7 +97,7 @@ const reducer = pipeReducers(
   baseReducer,
 );
 
-export default persistReducer({
+export default persistReducer<State, Action>({
   key: 'file',
   storage,
   whitelist: ['catalogItem'],

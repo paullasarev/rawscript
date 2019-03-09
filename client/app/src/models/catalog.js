@@ -1,4 +1,5 @@
-import { stringSchema, numberSchema } from "./common";
+// @flow
+import { stringSchema, numberSchema } from './common';
 
 export const catalogSchema = {
   type: 'object',
@@ -7,3 +8,10 @@ export const catalogSchema = {
     folder: stringSchema,
   },
 };
+
+export type Catalog = {
+  name: string,
+  folder: string,
+};
+
+export type Catalogs = Array<Catalog>;

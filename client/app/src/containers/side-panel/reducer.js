@@ -32,7 +32,7 @@ const initialState = {
   ],
 };
 
-export default function reducer(state: State = initialState, action: Action) {
+export default function reducer(state: State = initialState, action: Action): State {
   switch (action.type) {
     case SIDE_PANEL_SHOW_SIDEBAR: {
       const show = action.payload;

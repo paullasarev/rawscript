@@ -9,5 +9,5 @@ export function setShowPicture(value: boolean) {
 }
 
 export type Action =
-  $Call<typeof setShowPicture, boolean> // eslint-disable-line no-undef
+  $Call<typeof setShowPicture, boolean>
 ;

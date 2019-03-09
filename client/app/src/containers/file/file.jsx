@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import './file.scss';
 
@@ -14,25 +15,47 @@ import {
 } from './actions';
 import { FileState } from './entities';
 
-const File = (props) => {
+function makeRoutes(props) {
+  const {
+    catalogItem,
+    selectCatalogItem,
+  } = props;
+  return (
+    <div className='file__route'>
+      <FileRouteItem
+        item={ catalogItem }
+        action={ selectCatalogItem }
+        placeholder='<catalog>'
+      />
+    </div>
+  );
+}
+
+function makeList(props) {
   const {
     viewState,
     catalogList,
     selectCatalogList,
-    catalogItem,
-    selectCatalogItem,
   } = props;
-  const isCatalogList = viewState === FileState.CATALOG_LIST;
+
+  switch (viewState) {
+    case FileState.CATALOG_LIST:
+      return <FileList items={ catalogList } action={ selectCatalogList } />;
+    default:
+      return null;
+  }
+}
+
+const File = (props) => {
+  const {
+    className,
+  } = props;
+  const list = makeList(props);
+  const routes = makeRoutes(props);
   return (
-    <div className='file'>
-      <div className='file__route'>
-        <FileRouteItem
-          item={ catalogItem }
-          action={ selectCatalogItem }
-          placeholder='<catalog>'
-        />
-      </div>
-      { isCatalogList && <FileList items={ catalogList } action={ selectCatalogList } /> }
+    <div className={ classNames('file', className) }>
+      { routes }
+      { list }
     </div>
   );
 };

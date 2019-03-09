@@ -1,10 +1,21 @@
+// @flow
 import { each, curry, keys, pick } from 'lodash/fp';
 import { combineReducers } from 'redux';
 
 import { fillDefaults } from './json-schema';
 import { arraySchema } from '../models/common';
 
-export const pipeReducers = (...reducers) => (pState, action) => {
+type BaseAction = {
+  type: string,
+};
+type BaseState = {};
+type BaseReducer = (state: BaseState, action: BaseAction) => BaseState;
+type BaseReducers = Array<BaseReducer>;
+type BaseSchema = {
+  type: string,
+};
+
+export const pipeReducers = (...reducers: BaseReducers) => (pState: BaseState, action: BaseAction) => {
   let state = pState;
   each((reducer) => {
     state = reducer(state, action);
@@ -12,7 +23,7 @@ export const pipeReducers = (...reducers) => (pState, action) => {
   return state;
 };
 
-export const combinePartialReducers = (reducers) => {
+export const combinePartialReducers = (reducers: {[key: string]: BaseReducer}): BaseReducer => {
   const baseKeys = keys(reducers);
   const combine = combineReducers(reducers);
   const pickKeys = pick(baseKeys);
@@ -29,11 +40,18 @@ export const combinePartialReducers = (reducers) => {
   };
 };
 
-export const defaultReducer = initialState => (state, action) => {
+export const defaultReducer = (initialState: {}) => (state: {}, action: BaseAction) => {
   return state || initialState;
 };
 
-export const emptyReducer = (state, action) => state;
+export const emptyReducer = (state: {}, action: BaseAction) => state;
+
+export type ApiState<Item> = {
+  data: null | Item,
+  error: null | {},
+  pending: number,
+  active: boolean,
+}
 
 export const defaultApiState = {
   data: null,
@@ -42,12 +60,12 @@ export const defaultApiState = {
   active: false,
 };
 
-export const getDefaultApiState = (schema, obj = {}) => {
+export function getDefaultApiState<T>(schema: BaseSchema, obj: {} = {}): ApiState<T> {
   return {
     ...defaultApiState,
-    data: fillDefaults(schema, obj),
+    data: (fillDefaults(schema, obj): T),
   };
-};
+}
 
 export const getDataBySchema = schema => (state, action) => (
   fillDefaults(schema, action.data)
