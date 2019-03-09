@@ -45,3 +45,11 @@ export function showTab(tabId: string, lastVisible: number) {
     },
   };
 }
+
+export type Action =
+  $Call<typeof setShowSidebar, boolean> // eslint-disable-line no-undef
+  | $Call<typeof setActiveTab, string> // eslint-disable-line no-undef
+  | $Call<typeof setSidebarWidth, number> // eslint-disable-line no-undef
+  | $Call<typeof moveTab, string, string> // eslint-disable-line no-undef
+  | $Call<typeof showTab, string, number> // eslint-disable-line no-undef
+;

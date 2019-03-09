@@ -1,12 +1,22 @@
+// @flow
 import {
   EDIT_SHOW_PICTURE,
+  type Action,
 } from './actions';
 
-const initialState = {
+export type State = {
+  showPicture: boolean;
+}
+
+const initialState: State = {
   showPicture: true,
 };
 
-export default function reducer(state = initialState, action) {
+export const section = 'edit';
+export type StoreState = { edit: State };
+export const selector = (state: StoreState) => state.edit;
+
+export default function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
     case EDIT_SHOW_PICTURE: {
       const showPicture = action.payload;

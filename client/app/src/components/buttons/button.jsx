@@ -1,27 +1,26 @@
-import React, { PureComponent } from 'react';
+// @flow
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
 
 import './button.scss';
 
-class Button extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.onClick = () => {
-      const { action, arg } = props;
-      if (action) {
-        action(arg);
-      }
-    };
-  }
+type ButtonProps = {
+  className?: string,
+  text: string,
+  action: (value: any) => any,
+  arg: any,
+};
 
-  render() {
-    const { className, text } = this.props;
-    return (
-      <div className={ classNames('button', className) } onClick={ this.onClick } tabIndex='0' >
-        { text }
-      </div>
-    );
-  }
+export default function Button (props: ButtonProps) {
+  const { action, arg } = props;
+  const onClick = useCallback(() => {
+    action(arg);
+  }, [action, arg]);
+
+  const { className, text } = props;
+  return (
+    <div className={ classNames('button', className) } onClick={ onClick } tabIndex='0'>
+      { text }
+    </div>
+  );
 }
-
-export default Button;

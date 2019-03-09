@@ -1,22 +1,29 @@
+// @flow
 import React, { useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-export default function Portal({ onOutClick, ...props }) {
-  const el = useRef();
-  const rootRef = useRef();
-  if (!el.current) {
-    el.current = document.createElement('div');
-  }
+import { useHtmlRef } from '../../hooks/use-html-ref';
+
+type PortalProps = {
+  onOutClick: (e: MouseEvent) => void
+};
+
+export default function Portal({ onOutClick, ...props }: PortalProps) {
+  const rootRef = useHtmlRef();
+  const el = useRef(document.createElement('div'));
 
   useEffect(() => {
-    const handleOutClick = (e) => {
+    const handleOutClick = (e: MouseEvent) => {
       const node = rootRef.current;
-      if (node && !node.contains(e.target)) {
+      const target = ((e.target: any): Node);
+      if (node && !node.contains(target)) {
         onOutClick(e);
       }
     };
 
-    document.body.appendChild(el.current);
+    if (document.body) {
+      document.body.appendChild(el.current);
+    }
     if (onOutClick) {
       document.addEventListener('click', handleOutClick, true);
     }
@@ -24,7 +31,9 @@ export default function Portal({ onOutClick, ...props }) {
       if (onOutClick) {
         document.removeEventListener('click', handleOutClick, true);
       }
-      document.body.removeChild(el.current);
+      if (document.body) {
+        document.body.removeChild(el.current);
+      }
     };
   }, [onOutClick]);
 

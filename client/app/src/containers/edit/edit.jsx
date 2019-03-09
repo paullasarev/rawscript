@@ -1,3 +1,4 @@
+// @flow
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
@@ -9,16 +10,22 @@ import { setShowPicture } from './actions';
 import Paper from '../paper/paper';
 import SidePanel from '../side-panel/side-panel';
 
-const Edit = (props) => {
+import { type StoreState, type State, selector } from './reducer';
+
+const mapDispatchToProps = {
+  setShowPicture,
+};
+type mapDispatchToPropsType = typeof mapDispatchToProps;
+const mapStateToProps = (state: StoreState) => ({
+  ...selector(state),
+});
+type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
+type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
+
+const Edit = (props: Props) => {
   const {
-    activeTab,
-    setActiveTab,
-    showSidebar,
-    setShowSidebar,
-    sidebarWidth,
-    setSidebarWidth,
-    moveTab,
-    tabs,
+    setShowPicture,
+    showPicture,
   } = props;
 
   return (
@@ -33,10 +40,8 @@ const Edit = (props) => {
   );
 };
 
-export default compose(
-  connect(state => ({
-    showPicture: state.edit.showPicture,
-  }), dispatch => bindActionCreators({
-    setShowPicture,
-  }, dispatch)),
+// $FlowFixMe
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
 )(Edit);

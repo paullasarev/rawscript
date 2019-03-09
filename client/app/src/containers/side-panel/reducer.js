@@ -7,6 +7,7 @@ import {
   SIDE_PANEL_SET_SIDEBAR_WIDTH,
   SIDE_PANEL_MOVE_TAB,
   SIDE_PANEL_SHOW_TAB,
+  type Action,
 } from './actions';
 
 export type State = {|
@@ -18,7 +19,6 @@ export type State = {|
 
 export const section = 'sidePanel';
 export type StoreState = { sidePanel: State };
-// export const selector = (state: {sidePanel: State}) => state.sidePanel;
 export const selector = (state: StoreState) => state.sidePanel;
 
 const initialState = {
@@ -32,7 +32,7 @@ const initialState = {
   ],
 };
 
-export default function reducer(state: State = initialState, action: any) {
+export default function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
     case SIDE_PANEL_SHOW_SIDEBAR: {
       const show = action.payload;

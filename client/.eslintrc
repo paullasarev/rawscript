@@ -23,6 +23,7 @@
     "linebreak-style": "off",
     "global-require": "off",
     "semi": "warn",
+    "semi-style": "off",
     "react/prop-types": "off",
     "no-shadow": 0,
     "react/prefer-stateless-function": "off",

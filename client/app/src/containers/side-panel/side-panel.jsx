@@ -27,15 +27,13 @@ const mapDispatchToProps = {
 };
 type mapDispatchToPropsType = typeof mapDispatchToProps;
 
-// const mapStateToProps = selector;
 const mapStateToProps = (state: StoreState) => ({
   ...selector(state),
 });
 type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
+type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
 
-type SidePanelProps = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
-
-const SidePanel = (props: SidePanelProps) => {
+const SidePanel = (props: Props) => {
   const {
     activeTab,
     setActiveTab,
@@ -67,8 +65,8 @@ const SidePanel = (props: SidePanelProps) => {
   );
 };
 
-// export default connect<SidePanelProps, {||}, _, _, _, _>(
-// // $FlowFixMe
+// export default connect<Props, {||}, mapStateToPropsType, mapDispatchToPropsType, StoreState, {}>(
+// $FlowFixMe
 export default connect(
   mapStateToProps,
   mapDispatchToProps,

@@ -1,6 +1,9 @@
+// @flow
 import React, { useRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { isEqual } from 'lodash';
+
+import { useHtmlRef } from '../../hooks/use-html-ref';
 
 import './relative-portal.scss';
 
@@ -9,28 +12,36 @@ import Portal from './portal';
 const SCREEN_GAP = 5;
 
 function getPageOffset() {
+  const { documentElement } = document;
+  if (!documentElement) return { x: 0, y: 0 };
   return {
-    x: (window.pageXOffset !== undefined)
-      ? window.pageXOffset
-      : (document.documentElement || document.body.parentNode || document.body).scrollLeft,
-    y: (window.pageYOffset !== undefined)
-      ? window.pageYOffset
-      : (document.documentElement || document.body.parentNode || document.body).scrollTop,
-  }
+    x: documentElement.scrollLeft,
+    y: documentElement.scrollTop,
+  };
 }
 
-export default function RelativePortal({ className, onOutClick, children }) {
-  const el = useRef();
-  const portalEl = useRef();
+type RelativePortalProps = {
+  className?: string,
+  onOutClick: (e: MouseEvent) => void,
+  children: any,
+};
+
+export default function RelativePortal({ className, onOutClick, children }: RelativePortalProps) {
+  const el = useHtmlRef();
+  const portalEl = useHtmlRef();
   const [styles, setStyles] = useState({});
 
   useEffect(() => {
     const node = el.current;
+    const portalNode = portalEl.current;
+    const { documentElement } = document;
+    if (!node || !portalNode || !documentElement) return;
+
     const rect = node.getBoundingClientRect();
-    const portalRect = portalEl.current.getBoundingClientRect();
+    const portalRect = portalNode.getBoundingClientRect();
     const pageOffset = getPageOffset();
     const top = pageOffset.y + rect.top;
-    const maxWidth = document.documentElement.clientWidth;
+    const maxWidth = documentElement.clientWidth;
     // const right = document.documentElement.clientWidth - rect.right - pageOffset.x;
     let left = pageOffset.x + rect.left;
     const { width } = portalRect;

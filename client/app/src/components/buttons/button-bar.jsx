@@ -1,9 +1,15 @@
+// @flow
 import React from 'react';
 import classNames from 'classnames';
 
 import './button-bar.scss';
 
-const ButtonBar = (props) => {
+type ButtonBarProps ={
+  className?: string,
+  children: any,
+}
+
+const ButtonBar = (props: ButtonBarProps) => {
   const { className, children } = props;
   return (
     <div className={ classNames('button-bar', className) }>

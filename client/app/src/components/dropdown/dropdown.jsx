@@ -1,3 +1,4 @@
+// @flow
 import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import { map } from 'lodash/fp';
@@ -25,7 +26,18 @@ function makeOptions(onSelect) {
   ));
 }
 
-const Dropdown = (props) => {
+type DropdownItem = {
+  title: string,
+  value: any,
+};
+type DropdownProps = {
+  className?: string,
+  items: Array<DropdownItem>,
+  onSelect: (value: any) => void,
+  onOutClick: (e: MouseEvent) => void,
+};
+
+const Dropdown = (props: DropdownProps) => {
   const { className, items, onSelect, onOutClick } = props;
   const options = makeOptions(onSelect)(items);
 
@@ -39,4 +51,3 @@ const Dropdown = (props) => {
 };
 
 export default Dropdown;
-
