@@ -19,7 +19,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 function logMiddleware({ getState }) {
   return next => (action) => {
     const result = next(action);
-    console.log({ [action.type]: { action, state: getState() } });
+    console.log({ [action.type]: { action, state: getState() } }); // eslint-disable-line no-console
     return result;
   };
 }
