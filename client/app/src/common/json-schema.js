@@ -1,4 +1,5 @@
-import { forOwn, curry } from 'lodash/fp';
+// @flow
+import { forOwn, curryN } from 'lodash/fp';
 
 const forOwnC = forOwn.convert({ cap: false });
 
@@ -22,8 +23,8 @@ function processObject(schemaNode, dataNode) {
 
   forOwnC((propertySchema, propertyName) => {
     if (
-      propertySchema.required ||
-      (dataNode !== undefined && dataNode[propertyName] !== undefined)) {
+      propertySchema.required
+      || (dataNode !== undefined && dataNode[propertyName] !== undefined)) {
       const nodeValue = dataNode !== undefined ? dataNode[propertyName] : undefined;
       result[propertyName] = processNode(propertySchema, nodeValue);
     }
@@ -50,10 +51,10 @@ function processArray(schemaNode, dataNode) {
 
   const result = [];
 
-  for (let i = 0; i < dataNode.length; i++) {
+  for (let i = 0; i < dataNode.length; ++i) {
     result.push(processNode(schemaNode.items, dataNode[i]));
   }
   return result;
 }
 
-export const fillDefaults = curry(processNode);
+export const fillDefaults = curryN(2, processNode);

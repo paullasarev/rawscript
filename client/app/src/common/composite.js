@@ -10,12 +10,11 @@ type BaseAction = {
   type: string,
 };
 type BaseState = {};
-type BaseReducer = (state: BaseState, action: BaseAction) => BaseState;
-type BaseReducers = Array<BaseReducer>;
 type JsonSchema = {
   type: string,
 };
 type Reducer<S, A> = (state: S, action: A) => S;
+type Reducers<S, A> = Array<Reducer<S, A>>;
 
 export function pipeReducers<S, A>(...reducers: Array<Reducer<S, A>>): Reducer<S, A> {
   return (pState: S, action: A): S => {
@@ -50,7 +49,7 @@ export function defaultReducer<S, A> (initialState: S): Reducer<S, A> {
   };
 }
 
-export const emptyReducer = (state: {}, action: BaseAction) => state;
+export const emptyReducer = <S, A>(state: S, action: S): S => state;
 
 export type ApiState<Item> = {
   data: null | Item,
@@ -74,26 +73,24 @@ export function getDefaultApiState<T>(schema: JsonSchema, obj: {} = {}): ApiStat
 }
 
 export function getDataBySchema(schema: JsonSchema) {
-  return (state, action) => fillDefaults(schema, action.data);
+  return (state: any, action: any) => fillDefaults(schema, action.data);
 }
 
 export function getDataByArraySchema(schema: JsonSchema) {
   const aSchema = arraySchema(schema);
-  return (state, action) => {
+  return (state: any, action: any) => {
     return fillDefaults(aSchema, action.data);
   };
 }
 
 export function getDefaultsBySchema(schema: JsonSchema) {
-  return () => {
-    return fillDefaults(schema, {});
-  };
+  return () => fillDefaults(schema, {});
 }
 
-export const getDefaultsByArraySchema = schema => () => {
-  return fillDefaults(arraySchema(schema), {});
-};
+export function getDefaultsByArraySchema(schema: JsonSchema) {
+  return () => fillDefaults(arraySchema(schema), {});
+}
 
-export const fillDefaultsArray = curry((schema, obj = {}) => (
-  fillDefaults(arraySchema(schema), obj)
-));
+export function fillDefaultsArray(schema: JsonSchema, obj: {} = {}) {
+  return fillDefaults(arraySchema(schema), obj);
+}

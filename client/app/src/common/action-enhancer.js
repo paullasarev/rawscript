@@ -22,7 +22,7 @@ export const createActionsEnhancer = sagaMiddleware => next => (reducer, initial
       const actionsToRun = uniqWith(actions, isEqual);
       actions = [];
       setTimeout(() => {
-        console.log('run actions', action.type, actionsToRun);
+        console.log('run actions', action.type, actionsToRun); // eslint-disable-line no-console
         sagaMiddleware.run(runActions, actionsToRun);
       }, 0);
     }

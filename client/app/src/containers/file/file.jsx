@@ -55,9 +55,14 @@ const mapDispatchToProps = {
   getCatalogItem,
 };
 type mapDispatchToPropsType = typeof mapDispatchToProps;
-const mapStateToProps = (state: StoreState) => ({
-  ...selector(state),
-});
+const mapStateToProps = (storeState: StoreState) => {
+  const state = selector(storeState);
+  return {
+    viewState: state.viewState,
+    catalogList: state.catalogList.data,
+    catalogItem: state.catalogItem.data,
+  };
+};
 type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
 type OwnProps = {|
   // className?: string,

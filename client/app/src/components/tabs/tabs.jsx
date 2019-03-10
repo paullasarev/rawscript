@@ -56,7 +56,7 @@ function makeHiddenTabs(tabsComponents, lastVisible) {
 
 type TabsProps = {
   tabs: Array<string>,
-  tabsComponents: {[string]: { title: string, name: string, component: any /*typeof React.Component*/ } },
+  tabsComponents: {[string]: { title: string, name: string, component: any } },
   active: string,
   setActive: (active: string) => any,
   width: number,
