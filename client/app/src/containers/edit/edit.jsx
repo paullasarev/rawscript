@@ -40,8 +40,7 @@ const Edit = (props: Props) => {
   );
 };
 
-// $FlowFixMe
-export default connect(
+export default connect<Props, {||}, _, _, _, _>(
   mapStateToProps,
   mapDispatchToProps,
 )(Edit);

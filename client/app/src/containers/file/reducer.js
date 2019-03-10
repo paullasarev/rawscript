@@ -54,6 +54,10 @@ const initialState: State = {
   // fotos: defaultApiState,
 };
 
+export const section = 'file';
+export type StoreState = { file: State };
+export const selector = (state: StoreState) => state.file;
+
 function baseReducer(state: State, action: Action): State {
   switch (action.type) {
     case SELECT_CATALOG_ITEM: {
@@ -80,7 +84,7 @@ function baseReducer(state: State, action: Action): State {
   }
 }
 
-const reducer = pipeReducers(
+const reducer = pipeReducers<State, Action>(
   defaultReducer(initialState),
   combinePartialReducers({
     catalogList: requestsReducer({

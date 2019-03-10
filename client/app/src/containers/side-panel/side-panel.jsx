@@ -25,7 +25,15 @@ const mapDispatchToProps = {
   moveTab,
   showTab,
 };
-type mapDispatchToPropsType = typeof mapDispatchToProps;
+
+type mapDispatchToPropsType = {|
+  setShowSidebar: typeof setShowSidebar,
+  setActiveTab: typeof setActiveTab,
+  setSidebarWidth: typeof setSidebarWidth,
+  moveTab: typeof moveTab,
+  showTab: typeof showTab,
+|};
+// type mapDispatchToPropsType = typeof mapDispatchToProps;
 
 const mapStateToProps = (state: StoreState) => ({
   ...selector(state),
@@ -66,8 +74,7 @@ const SidePanel = (props: Props) => {
 };
 
 // export default connect<Props, {||}, mapStateToPropsType, mapDispatchToPropsType, StoreState, {}>(
-// $FlowFixMe
-export default connect(
+export default connect<Props, {||}, _, _, _, _>(
   mapStateToProps,
   mapDispatchToProps,
 )(SidePanel);

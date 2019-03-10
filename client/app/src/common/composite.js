@@ -5,25 +5,29 @@ import { combineReducers } from 'redux';
 import { fillDefaults } from './json-schema';
 import { arraySchema } from '../models/common';
 
+
 type BaseAction = {
   type: string,
 };
 type BaseState = {};
 type BaseReducer = (state: BaseState, action: BaseAction) => BaseState;
 type BaseReducers = Array<BaseReducer>;
-type BaseSchema = {
+type JsonSchema = {
   type: string,
 };
+type Reducer<S, A> = (state: S, action: A) => S;
 
-export const pipeReducers = (...reducers: BaseReducers) => (pState: BaseState, action: BaseAction) => {
-  let state = pState;
-  each((reducer) => {
-    state = reducer(state, action);
-  })(reducers);
-  return state;
-};
+export function pipeReducers<S, A>(...reducers: Array<Reducer<S, A>>): Reducer<S, A> {
+  return (pState: S, action: A): S => {
+    let state = pState;
+    each((reducer) => {
+      state = reducer(state, action);
+    })(reducers);
+    return state;
+  };
+}
 
-export const combinePartialReducers = (reducers: {[key: string]: BaseReducer}): BaseReducer => {
+export function combinePartialReducers<S, A> (reducers: {[key: string]: Reducer<S, A>}): Reducer<S, A> {
   const baseKeys = keys(reducers);
   const combine = combineReducers(reducers);
   const pickKeys = pick(baseKeys);
@@ -38,11 +42,13 @@ export const combinePartialReducers = (reducers: {[key: string]: BaseReducer}): 
     }
     return state;
   };
-};
+}
 
-export const defaultReducer = (initialState: {}) => (state: {}, action: BaseAction) => {
-  return state || initialState;
-};
+export function defaultReducer<S, A> (initialState: S): Reducer<S, A> {
+  return (state: S, action: A): S => {
+    return state || initialState;
+  };
+}
 
 export const emptyReducer = (state: {}, action: BaseAction) => state;
 
@@ -60,27 +66,29 @@ export const defaultApiState = {
   active: false,
 };
 
-export function getDefaultApiState<T>(schema: BaseSchema, obj: {} = {}): ApiState<T> {
+export function getDefaultApiState<T>(schema: JsonSchema, obj: {} = {}): ApiState<T> {
   return {
     ...defaultApiState,
     data: (fillDefaults(schema, obj): T),
   };
 }
 
-export const getDataBySchema = schema => (state, action) => (
-  fillDefaults(schema, action.data)
-);
+export function getDataBySchema(schema: JsonSchema) {
+  return (state, action) => fillDefaults(schema, action.data);
+}
 
-export const getDataByArraySchema = (schema) => {
+export function getDataByArraySchema(schema: JsonSchema) {
   const aSchema = arraySchema(schema);
   return (state, action) => {
     return fillDefaults(aSchema, action.data);
   };
-};
+}
 
-export const getDefaultsBySchema = schema => () => {
-  return fillDefaults(schema, {});
-};
+export function getDefaultsBySchema(schema: JsonSchema) {
+  return () => {
+    return fillDefaults(schema, {});
+  };
+}
 
 export const getDefaultsByArraySchema = schema => () => {
   return fillDefaults(arraySchema(schema), {});

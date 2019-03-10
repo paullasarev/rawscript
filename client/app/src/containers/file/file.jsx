@@ -1,3 +1,4 @@
+// @flow
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -6,6 +7,7 @@ import './file.scss';
 
 import FileRouteItem from './file-route-item';
 import FileList from './file-list';
+import { selector, type StoreState } from './reducer';
 
 import {
   selectCatalogList,
@@ -46,27 +48,42 @@ function makeList(props) {
   }
 }
 
-const File = (props) => {
-  const {
-    className,
-  } = props;
+const mapDispatchToProps = {
+  selectCatalogList,
+  getCatalogList,
+  selectCatalogItem,
+  getCatalogItem,
+};
+type mapDispatchToPropsType = typeof mapDispatchToProps;
+const mapStateToProps = (state: StoreState) => ({
+  ...selector(state),
+});
+type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
+type OwnProps = {|
+  // className?: string,
+|};
+type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
+
+const File = (props: Props) => {
   const list = makeList(props);
   const routes = makeRoutes(props);
   return (
-    <div className={ classNames('file', className) }>
+    <div className='file'>
       { routes }
       { list }
     </div>
   );
 };
 
-export default connect(state => ({
-  viewState: state.file.viewState,
-  catalogList: state.file.catalogList.data,
-  catalogItem: state.file.catalogItem.data,
-}), {
-  selectCatalogList,
-  getCatalogList,
-  selectCatalogItem,
-  getCatalogItem,
-})(File);
+export default connect<Props, {||}, _, _, _, _>(mapStateToProps, mapDispatchToProps)(File);
+
+// export default connect(state => ({
+//   viewState: state.file.viewState,
+//   catalogList: state.file.catalogList.data,
+//   catalogItem: state.file.catalogItem.data,
+// }), {
+//   selectCatalogList,
+//   getCatalogList,
+//   selectCatalogItem,
+//   getCatalogItem,
+// })(File);
