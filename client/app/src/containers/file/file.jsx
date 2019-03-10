@@ -82,13 +82,3 @@ const File = (props: Props) => {
 
 export default connect<Props, {||}, _, _, _, _>(mapStateToProps, mapDispatchToProps)(File);
 
-// export default connect(state => ({
-//   viewState: state.file.viewState,
-//   catalogList: state.file.catalogList.data,
-//   catalogItem: state.file.catalogItem.data,
-// }), {
-//   selectCatalogList,
-//   getCatalogList,
-//   selectCatalogItem,
-//   getCatalogItem,
-// })(File);
