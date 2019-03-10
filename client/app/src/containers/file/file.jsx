@@ -81,4 +81,3 @@ const File = (props: Props) => {
 };
 
 export default connect<Props, {||}, _, _, _, _>(mapStateToProps, mapDispatchToProps)(File);
-
