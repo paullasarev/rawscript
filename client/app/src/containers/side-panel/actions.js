@@ -1,4 +1,6 @@
 // @flow
+import type { ReturnType } from '../../common/types';
+
 export const SIDE_PANEL_SHOW_SIDEBAR = 'SIDE_PANEL_SHOW_SIDEBAR';
 export const SIDE_PANEL_SET_ACTIVE_TAB = 'SIDE_PANEL_SET_ACTIVE_TAB';
 export const SIDE_PANEL_SET_SIDEBAR_WIDTH = 'SIDE_PANEL_SET_SIDEBAR_WIDTH';
@@ -47,9 +49,9 @@ export function showTab(tabId: string, lastVisible: number) {
 }
 
 export type Action =
-  $Call<typeof setShowSidebar, boolean>
-  | $Call<typeof setActiveTab, string>
-  | $Call<typeof setSidebarWidth, number>
-  | $Call<typeof moveTab, string, string>
-  | $Call<typeof showTab, string, number>
+  ReturnType<typeof setShowSidebar>
+  | ReturnType<typeof setActiveTab>
+  | ReturnType<typeof setSidebarWidth>
+  | ReturnType<typeof moveTab>
+  | ReturnType<typeof showTab>
 ;

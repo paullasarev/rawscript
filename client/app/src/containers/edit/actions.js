@@ -1,4 +1,6 @@
 // @flow
+import type { ReturnType } from '../../common/types';
+
 export const EDIT_SHOW_PICTURE = 'EDIT_SHOW_PICTURE';
 
 export function setShowPicture(value: boolean) {
@@ -9,5 +11,5 @@ export function setShowPicture(value: boolean) {
 }
 
 export type Action =
-  $Call<typeof setShowPicture, boolean>
+  ReturnType<typeof setShowPicture>
 ;

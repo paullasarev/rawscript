@@ -1,5 +1,6 @@
 // @flow
 import type { Catalog } from '../../models/catalog';
+import type { ReturnType } from '../../common/types';
 
 export const SELECT_CATALOG_LIST = 'SELECT_CATALOG_LIST';
 export const GET_CATALOG_LIST = 'GET_CATALOG_LIST';
@@ -45,8 +46,8 @@ export function getCatalogItem(id: string) {
 }
 
 export type Action =
-  $Call<typeof selectCatalogList, Catalog>
-  | $Call<typeof getCatalogList>
-  | $Call<typeof selectCatalogItem, Catalog>
-  | $Call<typeof getCatalogItem, string>
+  ReturnType<typeof selectCatalogList>
+  | ReturnType<typeof getCatalogList>
+  | ReturnType<typeof selectCatalogItem>
+  | ReturnType<typeof getCatalogItem>
 ;
