@@ -71,8 +71,8 @@ export const selector = (state: StoreState) => state.file;
 function baseReducer(state: State, action: Action): State {
   switch (action.type) {
     case SELECT_CATALOG_ITEM: {
-      const actions = [getCatalogList()];
       const viewState = FileState.CATALOG_LIST;
+      const actions = [getCatalogList()];
       return {
         ...state,
         viewState,
@@ -83,6 +83,29 @@ function baseReducer(state: State, action: Action): State {
       const item = action.payload;
       const viewState = FileState.NOT_SELECTED;
       const actions = [getCatalogItem(item.name)];
+      return {
+        ...state,
+        yearItem: initialState.yearItem,
+        yearList: initialState.yearList,
+        viewState,
+        actions,
+      };
+    }
+    case SELECT_YEAR_ITEM: {
+      const viewState = FileState.YEAR_LIST;
+      const catalogId = state.catalogItem.data.name;
+      const actions = [getYearList(catalogId)];
+      return {
+        ...state,
+        viewState,
+        actions,
+      };
+    }
+    case SELECT_YEAR_LIST: {
+      const item = action.payload;
+      const viewState = FileState.NOT_SELECTED;
+      const catalogId = state.catalogItem.data.name;
+      const actions = [getYearItem(catalogId, item.name)];
       return {
         ...state,
         viewState,

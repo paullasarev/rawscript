@@ -19,7 +19,7 @@ export default function FileList(props) {
     <div
       className='file__list'
     >
-      { map(items, item => (<ListItem { ...{ item, action, key: item.name } } />)) }
+      { map(items, (item) => (<ListItem { ...{ item, action, key: item.name } } />)) }
     </div>
   );
 }

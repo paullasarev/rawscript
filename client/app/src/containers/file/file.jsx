@@ -2,18 +2,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import type { ReturnType } from '../../common/types';
 
 import './file.scss';
 
 import FileRouteItem from './file-route-item';
 import FileList from './file-list';
-import { selector, type StoreState } from './reducer';
+import { selector, type StoreState, type State } from './reducer';
 
 import {
   selectCatalogList,
-  getCatalogList,
   selectCatalogItem,
-  getCatalogItem,
+  selectYearList,
+  selectYearItem,
 } from './actions';
 import { FileState } from './entities';
 
@@ -21,13 +22,20 @@ function makeRoutes(props) {
   const {
     catalogItem,
     selectCatalogItem,
+    yearItem,
+    selectYearItem,
   } = props;
   return (
     <div className='file__route'>
       <FileRouteItem
-        item={ catalogItem }
+        item={ catalogItem.data }
         action={ selectCatalogItem }
         placeholder='<catalog>'
+      />
+      <FileRouteItem
+        item={ yearItem.data }
+        action={ selectYearItem }
+        placeholder='<year>'
       />
     </div>
   );
@@ -38,11 +46,15 @@ function makeList(props) {
     viewState,
     catalogList,
     selectCatalogList,
+    yearList,
+    selectYearList,
   } = props;
 
   switch (viewState) {
     case FileState.CATALOG_LIST:
-      return <FileList items={ catalogList } action={ selectCatalogList } />;
+      return <FileList items={ catalogList.data } action={ selectCatalogList } />;
+    case FileState.YEAR_LIST:
+      return <FileList items={ yearList.data } action={ selectYearList } />;
     default:
       return null;
   }
@@ -50,28 +62,26 @@ function makeList(props) {
 
 const mapDispatchToProps = {
   selectCatalogList,
-  getCatalogList,
   selectCatalogItem,
-  getCatalogItem,
+  selectYearList,
+  selectYearItem,
 };
 type mapDispatchToPropsType = typeof mapDispatchToProps;
 const mapStateToProps = (storeState: StoreState) => {
-  const state = selector(storeState);
   return {
-    viewState: state.viewState,
-    catalogList: state.catalogList.data,
-    catalogItem: state.catalogItem.data,
+    ...selector(storeState),
   };
 };
-type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
+// type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
+type mapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type OwnProps = {|
   // className?: string,
 |};
 type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
 
 const File = (props: Props) => {
-  const list = makeList(props);
   const routes = makeRoutes(props);
+  const list = makeList(props);
   return (
     <div className='file'>
       { routes }

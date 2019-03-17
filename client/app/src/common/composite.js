@@ -52,24 +52,23 @@ export function defaultReducer<S, A> (initialState: S): Reducer<S, A> {
 export const emptyReducer = <S, A>(state: S, action: S): S => state;
 
 export type ApiState<Item> = {
-  data: null | Item,
+  data: Item,
   error: null | {},
   pending: number,
   active: boolean,
 }
 
-export const defaultApiState = {
-  data: null,
-  error: null,
-  pending: 0,
-  active: false,
+export const defaultApiState = <T>(data: T): ApiState<T> => {
+  return {
+    data,
+    error: null,
+    pending: 0,
+    active: false,
+  };
 };
 
 export function getDefaultApiState<T>(schema: JsonSchema, obj: {} = {}): ApiState<T> {
-  return {
-    ...defaultApiState,
-    data: (fillDefaults(schema, obj): T),
-  };
+  return defaultApiState<T>(fillDefaults(schema, obj));
 }
 
 export function getDataBySchema(schema: JsonSchema) {

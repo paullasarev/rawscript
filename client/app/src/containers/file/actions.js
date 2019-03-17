@@ -20,19 +20,18 @@ export function getCatalogList() {
       url: '/catalogs',
     },
     meta: {
-      // abortOn: CLEAR_PHOTO,
     },
   };
 }
 
-export function getCatalogItem(id: string) {
+export function getCatalogItem(catalogId: string) {
   return {
     type: GET_CATALOG_ITEM,
     request: {
-      url: `/catalogs/${id}`,
+      url: `/catalogs/${catalogId}`,
     },
     meta: {
-      id,
+      catalogId,
     },
   };
 }
@@ -51,26 +50,27 @@ export function selectCatalogItem(item: Catalog) {
   };
 }
 
-export function getYearList() {
+export function getYearList(catalogId: string) {
   return {
     type: GET_YEAR_LIST,
     request: {
-      url: '/years',
+      url: `/catalogs/${catalogId}/years`,
     },
     meta: {
-      // abortOn: CLEAR_PHOTO,
+      catalogId,
     },
   };
 }
 
-export function getYearItem(id: string) {
+export function getYearItem(catalogId: string, yearId: string) {
   return {
     type: GET_YEAR_ITEM,
     request: {
-      url: `/years/${id}`,
+      url: `/catalogs/${catalogId}/years/${yearId}`,
     },
     meta: {
-      id,
+      catalogId,
+      yearId,
     },
   };
 }
