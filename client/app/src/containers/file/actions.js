@@ -1,6 +1,8 @@
 // @flow
 import type { Catalog } from '../../models/catalog.flow';
 import type { Year } from '../../models/year.flow';
+import type { Day } from '../../models/day.flow';
+import type { Foto } from '../../models/foto.flow';
 import type { ReturnType } from '../../common/types';
 
 export const GET_CATALOG_LIST = 'GET_CATALOG_LIST';
@@ -12,6 +14,11 @@ export const GET_YEAR_LIST = 'GET_YEAR_LIST';
 export const GET_YEAR_ITEM = 'GET_YEAR_ITEM';
 export const SELECT_YEAR_LIST = 'SELECT_YEAR_LIST';
 export const SELECT_YEAR_ITEM = 'SELECT_YEAR_ITEM';
+
+export const GET_DAY_LIST = 'GET_DAY_LIST';
+export const GET_DAY_ITEM = 'GET_DAY_ITEM';
+export const SELECT_DAY_LIST = 'SELECT_DAY_LIST';
+export const SELECT_DAY_ITEM = 'SELECT_DAY_ITEM';
 
 export function getCatalogList() {
   return {
@@ -49,6 +56,7 @@ export function selectCatalogItem(item: Catalog) {
     payload: item,
   };
 }
+
 
 export function getYearList(catalogId: string) {
   return {
@@ -89,6 +97,45 @@ export function selectYearItem(item: Year) {
   };
 }
 
+export function getDayList(catalogId: string, yearId: string) {
+  return {
+    type: GET_DAY_LIST,
+    request: {
+      url: `/catalogs/${catalogId}/years/${yearId}/days`,
+    },
+    meta: {
+      catalogId,
+    },
+  };
+}
+
+export function getDayItem(catalogId: string, yearId: string, dayId: string) {
+  return {
+    type: GET_DAY_ITEM,
+    request: {
+      url: `/catalogs/${catalogId}/years/${yearId}/days/${dayId}`,
+    },
+    meta: {
+      catalogId,
+      yearId,
+    },
+  };
+}
+
+export function selectDayList(item: Day) {
+  return {
+    type: SELECT_DAY_LIST,
+    payload: item,
+  };
+}
+
+export function selectDayItem(item: Day) {
+  return {
+    type: SELECT_DAY_ITEM,
+    payload: item,
+  };
+}
+
 export type Action =
   | ReturnType<typeof getCatalogList>
   | ReturnType<typeof getCatalogItem>
@@ -98,4 +145,8 @@ export type Action =
   | ReturnType<typeof getYearItem>
   | ReturnType<typeof selectYearList>
   | ReturnType<typeof selectYearItem>
+  | ReturnType<typeof getDayList>
+  | ReturnType<typeof getDayItem>
+  | ReturnType<typeof selectDayList>
+  | ReturnType<typeof selectDayItem>
 ;

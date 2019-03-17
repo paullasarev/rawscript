@@ -4,7 +4,7 @@ import { fillDefaults } from '../utils/json-schema';
 import { readDir } from '../utils/read-dir';
 import { resolve } from 'path';
 import { dirInfo } from '../utils/dir-info';
-import { daySchema } from '../models/day.schema';
+import daySchema from '../models/day.schema';
 
 import fotosRoute from './fotos';
 

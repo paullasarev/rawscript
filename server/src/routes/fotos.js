@@ -3,7 +3,7 @@ import { map } from 'lodash/fp';
 import { fillDefaults } from '../utils/json-schema';
 import { readDir } from '../utils/read-dir';
 import { resolve } from 'path';
-import { fotoSchema } from '../models/foto.schema';
+import fotoSchema from '../models/foto.schema';
 import { fileInfo } from '../utils/file-info';
 
 const fillEntry = fillDefaults(fotoSchema);

@@ -15,6 +15,8 @@ import {
   selectCatalogItem,
   selectYearList,
   selectYearItem,
+  selectDayList,
+  selectDayItem,
 } from './actions';
 import { FileState } from './entities';
 
@@ -24,6 +26,8 @@ function makeRoutes(props) {
     selectCatalogItem,
     yearItem,
     selectYearItem,
+    dayItem,
+    selectDayItem,
   } = props;
   return (
     <div className='file__route'>
@@ -37,6 +41,11 @@ function makeRoutes(props) {
         action={ selectYearItem }
         placeholder='<year>'
       />
+      <FileRouteItem
+        item={ dayItem.data }
+        action={ selectDayItem }
+        placeholder='<day>'
+      />
     </div>
   );
 }
@@ -48,6 +57,8 @@ function makeList(props) {
     selectCatalogList,
     yearList,
     selectYearList,
+    dayList,
+    selectDayList,
   } = props;
 
   switch (viewState) {
@@ -55,6 +66,8 @@ function makeList(props) {
       return <FileList items={ catalogList.data } action={ selectCatalogList } />;
     case FileState.YEAR_LIST:
       return <FileList items={ yearList.data } action={ selectYearList } />;
+    case FileState.DAY_LIST:
+      return <FileList items={ dayList.data } action={ selectDayList } />;
     default:
       return null;
   }
@@ -65,6 +78,8 @@ const mapDispatchToProps = {
   selectCatalogItem,
   selectYearList,
   selectYearItem,
+  selectDayList,
+  selectDayItem,
 };
 type mapDispatchToPropsType = typeof mapDispatchToProps;
 const mapStateToProps = (storeState: StoreState) => {

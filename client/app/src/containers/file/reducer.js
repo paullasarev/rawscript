@@ -38,6 +38,14 @@ import {
   SELECT_YEAR_ITEM,
   getYearList,
   getYearItem,
+
+  GET_DAY_LIST,
+  GET_DAY_ITEM,
+  SELECT_DAY_LIST,
+  SELECT_DAY_ITEM,
+  getDayList,
+  getDayItem,
+
   type Action,
 } from './actions';
 import { FileState, type FileStateType } from './entities';
@@ -50,6 +58,8 @@ export type State = {
   catalogItem: ApiState<Catalog>,
   yearList: ApiState<YearArray>,
   yearItem: ApiState<Year>,
+  dayList: ApiState<DayArray>,
+  dayItem: ApiState<Day>,
 }
 
 const initialState: State = {
@@ -58,6 +68,8 @@ const initialState: State = {
   catalogItem: getDefaultApiState<Catalog>(catalogSchema),
   yearList: getDefaultApiState<YearArray>(arraySchema(yearSchema)),
   yearItem: getDefaultApiState<Year>(yearSchema),
+  dayList: getDefaultApiState<DayArray>(arraySchema(daySchema)),
+  dayItem: getDefaultApiState<Day>(daySchema),
   // day: defaultApiState,
   // days: defaultApiState,
   // foto: defaultApiState,
@@ -87,6 +99,8 @@ function baseReducer(state: State, action: Action): State {
         ...state,
         yearItem: initialState.yearItem,
         yearList: initialState.yearList,
+        dayItem: initialState.dayItem,
+        dayList: initialState.dayList,
         viewState,
         actions,
       };
@@ -109,6 +123,32 @@ function baseReducer(state: State, action: Action): State {
       return {
         ...state,
         viewState,
+        dayItem: initialState.dayItem,
+        dayList: initialState.dayList,
+        actions,
+      };
+    }
+
+    case SELECT_DAY_ITEM: {
+      const viewState = FileState.DAY_LIST;
+      const catalogId = state.catalogItem.data.name;
+      const yearId = state.yearItem.data.name;
+      const actions = [getDayList(catalogId, yearId)];
+      return {
+        ...state,
+        viewState,
+        actions,
+      };
+    }
+    case SELECT_DAY_LIST: {
+      const item = action.payload;
+      const viewState = FileState.NOT_SELECTED;
+      const catalogId = state.catalogItem.data.name;
+      const yearId = state.yearItem.data.name;
+      const actions = [getDayItem(catalogId, yearId, item.name)];
+      return {
+        ...state,
+        viewState,
         actions,
       };
     }
@@ -120,6 +160,7 @@ function baseReducer(state: State, action: Action): State {
 const reducer = pipeReducers<State, Action>(
   defaultReducer(initialState),
   combinePartialReducers({
+
     catalogList: requestsReducer({
       actionType: GET_CATALOG_LIST,
       getDefaultData: getDefaultsByArraySchema(catalogSchema),
@@ -141,6 +182,18 @@ const reducer = pipeReducers<State, Action>(
       getDefaultData: getDefaultsBySchema(yearSchema),
       getData: getDataBySchema(yearSchema),
     }),
+
+    dayList: requestsReducer({
+      actionType: GET_DAY_LIST,
+      getDefaultData: getDefaultsByArraySchema(daySchema),
+      getData: getDataByArraySchema(daySchema),
+    }),
+    dayItem: requestsReducer({
+      actionType: GET_DAY_ITEM,
+      getDefaultData: getDefaultsBySchema(daySchema),
+      getData: getDataBySchema(daySchema),
+    }),
+
   }),
   baseReducer,
 );
