@@ -1,4 +1,5 @@
 export const schemaDefault = (schema, defaultValue) => ({ ...schema, default: defaultValue });
+export const schemaRequired = (schema, required) => ({ ...schema, required });
 
 export const stringSchema = { type: 'string' };
 export const numberSchema = { type: 'number' };

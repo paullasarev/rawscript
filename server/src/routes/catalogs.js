@@ -3,7 +3,7 @@ import { map, find } from 'lodash/fp';
 import { resolve } from 'path';
 
 import { fillDefaults } from '../utils/json-schema';
-import { catalogSchema } from '../models/catalog';
+import catalogSchema from '../models/catalog.schema';
 import { startWatcher } from '../utils/watch-folders';
 
 import yearsRoute from './years';

@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import { map } from 'lodash/fp';
 import { fillDefaults } from '../utils/json-schema';
-import { yearSchema } from '../models/year';
+import yearSchema from '../models/year.schema';
 import { readDir } from '../utils/read-dir';
 import { resolve } from 'path';
 import { dirInfo } from '../utils/dir-info';

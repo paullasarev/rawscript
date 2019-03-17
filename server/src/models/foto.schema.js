@@ -1,7 +1,8 @@
-import { stringSchema, numberSchema } from "./common";
+import { stringSchema, numberSchema } from './common';
 
-export const fotoSchema = {
+const schema = {
   type: 'object',
+  id: 'Foto',
   properties: {
     name: stringSchema,
     ext: stringSchema,
@@ -10,4 +11,7 @@ export const fotoSchema = {
     mtime: stringSchema,
     size: numberSchema,
   },
-}
+  required: ['name', 'ext', 'folder', 'ctime', 'mtime', 'size'],
+};
+
+export default schema;

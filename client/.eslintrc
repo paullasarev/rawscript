@@ -23,6 +23,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "linebreak-style": "off",
     "global-require": "off",
+    "arrow-parens": "off",
     "semi": "warn",
     "semi-style": "off",
     "react/prop-types": "off",
@@ -44,6 +45,7 @@
     "arrow-body-style": "off",
     "import/no-named-as-default": 0,
     "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
     "no-unused-vars": ["off", { "args": "all" }],
     "react-hooks/rules-of-hooks": "error",
     "flowtype/define-flow-type": 1

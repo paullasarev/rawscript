@@ -15,19 +15,29 @@ import {
   combinePartialReducers,
   type ApiState,
 } from '../../common/composite';
-import {
-  catalogSchema,
-  type Catalog,
-  type Catalogs,
-} from '../../models/catalog';
+import catalogSchema from '../../models/catalog.schema';
+import type { Catalog, CatalogArray } from '../../models/catalog.flow';
+import yearSchema from '../../models/year.schema';
+import type { Year, YearArray } from '../../models/year.flow';
+import daySchema from '../../models/day.schema';
+import type { Day, DayArray } from '../../models/day.flow';
+import fotoSchema from '../../models/foto.schema';
+import type { Foto, FotoArray } from '../../models/foto.flow';
 
 import {
-  SELECT_CATALOG_LIST,
   GET_CATALOG_LIST,
-  SELECT_CATALOG_ITEM,
   GET_CATALOG_ITEM,
+  SELECT_CATALOG_LIST,
+  SELECT_CATALOG_ITEM,
   getCatalogList,
   getCatalogItem,
+
+  GET_YEAR_LIST,
+  GET_YEAR_ITEM,
+  SELECT_YEAR_LIST,
+  SELECT_YEAR_ITEM,
+  getYearList,
+  getYearItem,
   type Action,
 } from './actions';
 import { FileState, type FileStateType } from './entities';
@@ -36,18 +46,18 @@ import { arraySchema } from '../../models/common';
 
 export type State = {
   viewState: FileStateType,
-  catalogList: ApiState<Catalogs>,
+  catalogList: ApiState<CatalogArray>,
   catalogItem: ApiState<Catalog>,
-//   catalogList: getDefaultApiState(arraySchema(catalogSchema)),
-//   catalogItem: getDefaultApiState(catalogSchema),
+  yearList: ApiState<YearArray>,
+  yearItem: ApiState<Year>,
 }
 
 const initialState: State = {
   viewState: FileState.NOT_SELECTED,
-  catalogList: getDefaultApiState<Catalogs>(arraySchema(catalogSchema)),
+  catalogList: getDefaultApiState<CatalogArray>(arraySchema(catalogSchema)),
   catalogItem: getDefaultApiState<Catalog>(catalogSchema),
-  // year: defaultApiState,
-  // years: defaultApiState,
+  yearList: getDefaultApiState<YearArray>(arraySchema(yearSchema)),
+  yearItem: getDefaultApiState<Year>(yearSchema),
   // day: defaultApiState,
   // days: defaultApiState,
   // foto: defaultApiState,
@@ -97,6 +107,17 @@ const reducer = pipeReducers<State, Action>(
       getDefaultData: getDefaultsBySchema(catalogSchema),
       getData: getDataBySchema(catalogSchema),
     }),
+
+    yearList: requestsReducer({
+      actionType: GET_YEAR_LIST,
+      getDefaultData: getDefaultsByArraySchema(yearSchema),
+      getData: getDataByArraySchema(yearSchema),
+    }),
+    yearItem: requestsReducer({
+      actionType: GET_YEAR_ITEM,
+      getDefaultData: getDefaultsBySchema(yearSchema),
+      getData: getDataBySchema(yearSchema),
+    }),
   }),
   baseReducer,
 );
@@ -104,5 +125,5 @@ const reducer = pipeReducers<State, Action>(
 export default persistReducer<State, Action>({
   key: 'file',
   storage,
-  whitelist: ['catalogItem'],
+  whitelist: ['catalogItem', 'yearItem', 'dayItem', 'fotoItem'],
 }, reducer);

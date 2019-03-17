@@ -1,17 +1,14 @@
-// @flow
 import { stringSchema, numberSchema } from './common';
 
-export const catalogSchema = {
+const schema = {
   type: 'object',
+  id: 'Day',
   properties: {
     name: stringSchema,
     folder: stringSchema,
+    count: numberSchema,
   },
+  required: ['name', 'folder'],
 };
 
-export type Catalog = {
-  name: string,
-  folder: string,
-};
-
-export type Catalogs = Array<Catalog>;
+export default schema;
