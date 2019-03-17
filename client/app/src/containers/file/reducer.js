@@ -46,6 +46,13 @@ import {
   getDayList,
   getDayItem,
 
+  GET_FOTO_LIST,
+  GET_FOTO_ITEM,
+  SELECT_FOTO_LIST,
+  SELECT_FOTO_ITEM,
+  getFotoList,
+  getFotoItem,
+
   type Action,
 } from './actions';
 import { FileState, type FileStateType } from './entities';
@@ -60,6 +67,8 @@ export type State = {
   yearItem: ApiState<Year>,
   dayList: ApiState<DayArray>,
   dayItem: ApiState<Day>,
+  fotoList: ApiState<FotoArray>,
+  fotoItem: ApiState<Foto>,
 }
 
 const initialState: State = {
@@ -70,10 +79,8 @@ const initialState: State = {
   yearItem: getDefaultApiState<Year>(yearSchema),
   dayList: getDefaultApiState<DayArray>(arraySchema(daySchema)),
   dayItem: getDefaultApiState<Day>(daySchema),
-  // day: defaultApiState,
-  // days: defaultApiState,
-  // foto: defaultApiState,
-  // fotos: defaultApiState,
+  fotoList: getDefaultApiState<FotoArray>(arraySchema(fotoSchema)),
+  fotoItem: getDefaultApiState<Foto>(fotoSchema),
 };
 
 export const section = 'file';
@@ -101,6 +108,8 @@ function baseReducer(state: State, action: Action): State {
         yearList: initialState.yearList,
         dayItem: initialState.dayItem,
         dayList: initialState.dayList,
+        fotoItem: initialState.fotoItem,
+        fotoList: initialState.fotoList,
         viewState,
         actions,
       };
@@ -125,6 +134,8 @@ function baseReducer(state: State, action: Action): State {
         viewState,
         dayItem: initialState.dayItem,
         dayList: initialState.dayList,
+        fotoItem: initialState.fotoItem,
+        fotoList: initialState.fotoList,
         actions,
       };
     }
@@ -149,9 +160,38 @@ function baseReducer(state: State, action: Action): State {
       return {
         ...state,
         viewState,
+        fotoItem: initialState.fotoItem,
+        fotoList: initialState.fotoList,
         actions,
       };
     }
+
+    case SELECT_FOTO_ITEM: {
+      const viewState = FileState.FOTO_LIST;
+      const catalogId = state.catalogItem.data.name;
+      const yearId = state.yearItem.data.name;
+      const dayId = state.dayItem.data.name;
+      const actions = [getFotoList(catalogId, yearId, dayId)];
+      return {
+        ...state,
+        viewState,
+        actions,
+      };
+    }
+    case SELECT_FOTO_LIST: {
+      const item = action.payload;
+      const viewState = FileState.NOT_SELECTED;
+      const catalogId = state.catalogItem.data.name;
+      const yearId = state.yearItem.data.name;
+      const dayId = state.dayItem.data.name;
+      const actions = [getFotoItem(catalogId, yearId, dayId, item.name)];
+      return {
+        ...state,
+        viewState,
+        actions,
+      };
+    }
+
     default:
       return state;
   }
@@ -192,6 +232,17 @@ const reducer = pipeReducers<State, Action>(
       actionType: GET_DAY_ITEM,
       getDefaultData: getDefaultsBySchema(daySchema),
       getData: getDataBySchema(daySchema),
+    }),
+
+    fotoList: requestsReducer({
+      actionType: GET_FOTO_LIST,
+      getDefaultData: getDefaultsByArraySchema(fotoSchema),
+      getData: getDataByArraySchema(fotoSchema),
+    }),
+    fotoItem: requestsReducer({
+      actionType: GET_FOTO_ITEM,
+      getDefaultData: getDefaultsBySchema(fotoSchema),
+      getData: getDataBySchema(fotoSchema),
     }),
 
   }),

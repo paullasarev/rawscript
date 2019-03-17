@@ -17,6 +17,8 @@ import {
   selectYearItem,
   selectDayList,
   selectDayItem,
+  selectFotoList,
+  selectFotoItem,
 } from './actions';
 import { FileState } from './entities';
 
@@ -28,6 +30,8 @@ function makeRoutes(props) {
     selectYearItem,
     dayItem,
     selectDayItem,
+    fotoItem,
+    selectFotoItem,
   } = props;
   return (
     <div className='file__route'>
@@ -46,6 +50,11 @@ function makeRoutes(props) {
         action={ selectDayItem }
         placeholder='<day>'
       />
+      <FileRouteItem
+        item={ fotoItem.data }
+        action={ selectFotoItem }
+        placeholder='<foto>'
+      />
     </div>
   );
 }
@@ -59,6 +68,8 @@ function makeList(props) {
     selectYearList,
     dayList,
     selectDayList,
+    fotoList,
+    selectFotoList,
   } = props;
 
   switch (viewState) {
@@ -68,6 +79,8 @@ function makeList(props) {
       return <FileList items={ yearList.data } action={ selectYearList } />;
     case FileState.DAY_LIST:
       return <FileList items={ dayList.data } action={ selectDayList } />;
+    case FileState.FOTO_LIST:
+      return <FileList items={ fotoList.data } action={ selectFotoList } />;
     default:
       return null;
   }
@@ -80,6 +93,8 @@ const mapDispatchToProps = {
   selectYearItem,
   selectDayList,
   selectDayItem,
+  selectFotoList,
+  selectFotoItem,
 };
 type mapDispatchToPropsType = typeof mapDispatchToProps;
 const mapStateToProps = (storeState: StoreState) => {
@@ -87,7 +102,6 @@ const mapStateToProps = (storeState: StoreState) => {
     ...selector(storeState),
   };
 };
-// type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
 type mapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type OwnProps = {|
   // className?: string,
@@ -105,4 +119,4 @@ const File = (props: Props) => {
   );
 };
 
-export default connect<Props, {||}, _, _, _, _>(mapStateToProps, mapDispatchToProps)(File);
+export default connect<Props, OwnProps, _, _, _, _>(mapStateToProps, mapDispatchToProps)(File);

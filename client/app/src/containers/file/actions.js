@@ -20,6 +20,11 @@ export const GET_DAY_ITEM = 'GET_DAY_ITEM';
 export const SELECT_DAY_LIST = 'SELECT_DAY_LIST';
 export const SELECT_DAY_ITEM = 'SELECT_DAY_ITEM';
 
+export const GET_FOTO_LIST = 'GET_FOTO_LIST';
+export const GET_FOTO_ITEM = 'GET_FOTO_ITEM';
+export const SELECT_FOTO_LIST = 'SELECT_FOTO_LIST';
+export const SELECT_FOTO_ITEM = 'SELECT_FOTO_ITEM';
+
 export function getCatalogList() {
   return {
     type: GET_CATALOG_LIST,
@@ -136,6 +141,45 @@ export function selectDayItem(item: Day) {
   };
 }
 
+export function getFotoList(catalogId: string, yearId: string, dayId: string) {
+  return {
+    type: GET_FOTO_LIST,
+    request: {
+      url: `/catalogs/${catalogId}/years/${yearId}/days/${dayId}/fotos`,
+    },
+    meta: {
+      catalogId,
+    },
+  };
+}
+
+export function getFotoItem(catalogId: string, yearId: string, dayId: string, fotoId: string) {
+  return {
+    type: GET_FOTO_ITEM,
+    request: {
+      url: `/catalogs/${catalogId}/years/${yearId}/days/${dayId}/fotos/${fotoId}`,
+    },
+    meta: {
+      catalogId,
+      yearId,
+    },
+  };
+}
+
+export function selectFotoList(item: Foto) {
+  return {
+    type: SELECT_FOTO_LIST,
+    payload: item,
+  };
+}
+
+export function selectFotoItem(item: Foto) {
+  return {
+    type: SELECT_FOTO_ITEM,
+    payload: item,
+  };
+}
+
 export type Action =
   | ReturnType<typeof getCatalogList>
   | ReturnType<typeof getCatalogItem>
@@ -149,4 +193,8 @@ export type Action =
   | ReturnType<typeof getDayItem>
   | ReturnType<typeof selectDayList>
   | ReturnType<typeof selectDayItem>
+  | ReturnType<typeof getFotoList>
+  | ReturnType<typeof getFotoItem>
+  | ReturnType<typeof selectFotoList>
+  | ReturnType<typeof selectFotoItem>
 ;
