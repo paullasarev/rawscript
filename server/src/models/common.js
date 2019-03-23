@@ -1,3 +1,5 @@
+import {keys} from 'lodash';
+
 export const schemaDefault = (schema, defaultValue) => ({ ...schema, default: defaultValue });
 
 export const stringSchema = { type: 'string' };
@@ -12,5 +14,12 @@ export function arraySchema(schema, defaultValue = []) {
     type: 'array',
     default: defaultValue,
     items: schema,
+  };
+}
+
+export function requiredSchema(schema) {
+  return {
+    ...schema,
+    required: keys(schema.properties),
   };
 }

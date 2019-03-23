@@ -13,3 +13,13 @@ export async function readDir(baseRoot, root, data) {
     data.push({ name, folder  })
   });
 }
+
+export async function readDirWithTypes(baseRoot, root, data) {
+  const names = await readdirP(root, {withFileTypes: true});
+  data.length = 0;
+  names.forEach(dirent => {
+    const folderName = relative(baseRoot, resolve(root, dirent.name));
+    const folder = folderName.split(sep).join('/');
+    data.push({ dirent, folder  });
+  });
+}
