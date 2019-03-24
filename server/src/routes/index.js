@@ -2,7 +2,6 @@ import Router from 'koa-router';
 
 import pkginfo from '../../package.json';
 
-import catalogsRoute from './catalogs';
 import pathsRoute from './paths';
 
 const {
@@ -51,11 +50,9 @@ function addInfo(router) {
 export default function createRoute(config) {
   const router = new Router();
 
-  const catalogs = catalogsRoute(config);
   const paths = pathsRoute(config);
 
   addInfo(router);
-  router.use('/catalogs', catalogs.routes(), catalogs.allowedMethods());
   router.use('/paths', paths.routes(), paths.allowedMethods());
 
   return router;
