@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { map, slice } from 'lodash';
+
 import type { ReturnType } from '../../common/types';
 
 import './file.scss';
@@ -11,49 +13,37 @@ import FileList from './file-list';
 import { selector, type StoreState, type State } from './reducer';
 
 import {
-  selectCatalogList,
-  selectCatalogItem,
-  selectYearList,
-  selectYearItem,
-  selectDayList,
-  selectDayItem,
-  selectFotoList,
-  selectFotoItem,
+  selectPathList,
+  selectRouteItem,
 } from './actions';
 import { FileState } from './entities';
 
 function makeRoutes(props) {
   const {
-    catalogItem,
-    selectCatalogItem,
-    yearItem,
-    selectYearItem,
-    dayItem,
-    selectDayItem,
-    fotoItem,
-    selectFotoItem,
+    path,
+    file,
+    selectRouteItem,
   } = props;
+  const paths = path ? path.split(':') : [];
   return (
     <div className='file__route'>
+      { map(paths, (pathItem, index: number) => {
+        const itemPath = slice(paths, 0, index).join(':');
+        return (
+          <FileRouteItem
+            name={ pathItem }
+            path={ itemPath }
+            key={ itemPath }
+            action={ selectRouteItem }
+            placeholder='<path>'
+          />
+        );
+      }) }
       <FileRouteItem
-        item={ catalogItem.data }
-        action={ selectCatalogItem }
-        placeholder='<catalog>'
-      />
-      <FileRouteItem
-        item={ yearItem.data }
-        action={ selectYearItem }
-        placeholder='<year>'
-      />
-      <FileRouteItem
-        item={ dayItem.data }
-        action={ selectDayItem }
-        placeholder='<day>'
-      />
-      <FileRouteItem
-        item={ fotoItem.data }
-        action={ selectFotoItem }
-        placeholder='<foto>'
+        name={ file }
+        path={ path }
+        action={ selectRouteItem }
+        placeholder='<select>'
       />
     </div>
   );
@@ -62,39 +52,21 @@ function makeRoutes(props) {
 function makeList(props) {
   const {
     viewState,
-    catalogList,
-    selectCatalogList,
-    yearList,
-    selectYearList,
-    dayList,
-    selectDayList,
-    fotoList,
-    selectFotoList,
+    pathList,
+    selectPathList,
   } = props;
 
   switch (viewState) {
-    case FileState.CATALOG_LIST:
-      return <FileList items={ catalogList.data } action={ selectCatalogList } />;
-    case FileState.YEAR_LIST:
-      return <FileList items={ yearList.data } action={ selectYearList } />;
-    case FileState.DAY_LIST:
-      return <FileList items={ dayList.data } action={ selectDayList } />;
-    case FileState.FOTO_LIST:
-      return <FileList items={ fotoList.data } action={ selectFotoList } />;
+    case FileState.PATH_LIST:
+      return <FileList items={ pathList.data } action={ selectPathList } />;
     default:
       return null;
   }
 }
 
 const mapDispatchToProps = {
-  selectCatalogList,
-  selectCatalogItem,
-  selectYearList,
-  selectYearItem,
-  selectDayList,
-  selectDayItem,
-  selectFotoList,
-  selectFotoItem,
+  selectPathList,
+  selectRouteItem,
 };
 type mapDispatchToPropsType = typeof mapDispatchToProps;
 const mapStateToProps = (storeState: StoreState) => {

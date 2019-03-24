@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { isEmpty } from 'lodash';
 
 export default function FileRouteItem(props) {
-  const { item: { name }, item, action, placeholder } = props;
+  const { path, name, action, placeholder } = props;
   const isEmptyName = isEmpty(name);
   const nameValue = isEmptyName ? placeholder : name;
   return (
@@ -11,7 +11,7 @@ export default function FileRouteItem(props) {
       className={ classNames('file__route-item', {
         'file__route-item--placeholder': isEmptyName,
       }) }
-      onClick={ () => { action(item); } }
+      onClick={ () => { action(path, name); } }
     >
       { nameValue }
     </div>

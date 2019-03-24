@@ -29,12 +29,13 @@ function makePath(path = '') {
 const list = (root, dataRoot) => async (ctx) => {
   const data = [];
   const path = makePath(ctx.params.path);
-  if (!path) {
-    return;
-  }
+  // if (!path) {
+  //   ctx.body = [];
+  //   return;
+  // }
   const pathRoot = resolve(dataRoot, path);
   try {
-    await readDirWithTypes(root, pathRoot, data);
+    await readDirWithTypes(dataRoot, pathRoot, data);
   } catch (e) {
     ctx.throw(404, `invalid path: ${path}`);
   }

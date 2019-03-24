@@ -24,6 +24,7 @@
     "linebreak-style": "off",
     "global-require": "off",
     "arrow-parens": "off",
+    "padded-blocks": "off",
     "semi": "warn",
     "semi-style": "off",
     "react/prop-types": "off",
