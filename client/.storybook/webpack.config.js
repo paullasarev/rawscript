@@ -1,18 +1,11 @@
-// you can use this file to add your custom webpack plugins, loaders and anything you like.
-// This is just the basic way to add additional webpack configurations.
-// For more information refer the docs: https://storybook.js.org/configurations/custom-webpack-config
+const path = require('path');
+const { pick } = require('lodash');
+const merge = require('webpack-merge');
 
-// IMPORTANT
-// When you add this file, we won't add the default configurations which is similar
-// to "React Create App". This only has babel loader to load JavaScript.
+const custom = require('../webpack.dev.js');
 
-module.exports = {
-  plugins: [
-    // your custom plugins
-  ],
-  module: {
-    rules: [
-      // add your custom rules.
-    ],
-  },
+module.exports = ({ config, mode }) => {
+  // const newConfig = merge(config, pick(custom, ['context', 'resolve', 'module', 'plugins']));
+  return merge(config, pick(custom, ['context', 'resolve', 'module']));
 };
+
