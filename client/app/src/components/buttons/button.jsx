@@ -7,14 +7,14 @@ import './button.scss';
 type ButtonProps = {
   className?: string,
   text: string,
-  action: (value: any) => any,
+  action: (...values: any) => any,
   arg: any,
 };
 
 export default function Button (props: ButtonProps) {
   const { action, arg } = props;
   const onClick = useCallback(() => {
-    action(arg);
+    action(...arg);
   }, [action, arg]);
 
   const { className, text } = props;

@@ -4,5 +4,9 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 15px;
+  // padding: 10px 15px;
+  margin-bottom: 15px;
+  &--right {
+    justify-content: flex-end;
+  }
 }

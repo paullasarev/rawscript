@@ -21,13 +21,24 @@ storiesOf('Single Button', module)
   .addDecorator(WidthDecorator)
   .add('single', () => (
     <Button text='Run' action={ action('clicked') } arg='run' />
-  ));
+  ))
+  .add('multiple args', () => (
+    <Button text='Run2' action={ action('clicked') } arg={ ['arg1', 'arg2'] } />
+  ))
+;
 
 storiesOf('Button bar', module)
   .addDecorator(WidthDecorator)
-  .add('bar', () => (
+  .add('normal', () => (
     <ButtonBar>
       <Button text='OK' action={ action('clicked') } arg='OK' />
       <Button text='Cancel' action={ action('clicked') } arg='Cancel' />
     </ButtonBar>
-  ));
+  ))
+  .add('right', () => (
+    <ButtonBar right>
+      <Button text='OK' action={ action('clicked') } arg='OK' />
+      <Button text='Cancel' action={ action('clicked') } arg='Cancel' />
+    </ButtonBar>
+  ))
+;

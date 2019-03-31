@@ -2,11 +2,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { map, slice } from 'lodash';
+import { flatMap, slice } from 'lodash';
+
+import './file.scss';
 
 import type { ReturnType } from '../../common/types';
 
-import './file.scss';
+import Button from '../../components/buttons/button';
+import ButtonBar from '../../components/buttons/button-bar';
 
 import FileRouteItem from './file-route-item';
 import FileList from './file-list';
@@ -15,10 +18,11 @@ import { selector, type StoreState, type State } from './reducer';
 import {
   selectPathList,
   selectRouteItem,
+  importItem,
 } from './actions';
 import { FileState } from './entities';
 
-function makeRoutes(props) {
+function renderRoutes(props) {
   const {
     path,
     file,
@@ -27,17 +31,25 @@ function makeRoutes(props) {
   const paths = path ? path.split(':') : [];
   return (
     <div className='file__route'>
-      { map(paths, (pathItem, index: number) => {
+      { flatMap(paths, (pathItem, index: number) => {
         const itemPath = slice(paths, 0, index).join(':');
-        return (
+        return [(
           <FileRouteItem
             name={ pathItem }
             path={ itemPath }
             key={ itemPath }
             action={ selectRouteItem }
             placeholder='<path>'
+            isPath
           />
-        );
+        ), (
+          <div
+            className='file__route-item file__route-item--path'
+            key={ `${itemPath}-path` }
+          >
+          /
+          </div>
+        )];
       }) }
       <FileRouteItem
         name={ file }
@@ -49,7 +61,7 @@ function makeRoutes(props) {
   );
 }
 
-function makeList(props) {
+function renderList(props) {
   const {
     viewState,
     pathList,
@@ -64,9 +76,23 @@ function makeList(props) {
   }
 }
 
+function renderButtons(props) {
+  const {
+    path,
+    file,
+    importItem,
+  } = props;
+  return (
+    <ButtonBar right className='file__buttons'>
+      <Button text='Import' action={ importItem } arg={ [path, file] } />
+    </ButtonBar>
+  );
+}
+
 const mapDispatchToProps = {
   selectPathList,
   selectRouteItem,
+  importItem,
 };
 type mapDispatchToPropsType = typeof mapDispatchToProps;
 const mapStateToProps = (storeState: StoreState) => {
@@ -81,12 +107,11 @@ type OwnProps = {|
 type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
 
 const File = (props: Props) => {
-  const routes = makeRoutes(props);
-  const list = makeList(props);
   return (
     <div className='file'>
-      { routes }
-      { list }
+      { renderButtons(props) }
+      { renderRoutes(props) }
+      { renderList(props) }
     </div>
   );
 };
