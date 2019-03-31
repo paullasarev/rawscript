@@ -19,12 +19,14 @@ import pathSchema from '../../models/path.schema';
 import type { Path, PathArray } from '../../models/path.flow';
 import fileSchema from '../../models/file.schema';
 import type { File, FileArray } from '../../models/file.flow';
+import importItemSchema from '../../models/import-item.schema';
 
 import {
   GET_PATH_LIST,
   GET_FILE_ITEM,
   SELECT_PATH_LIST,
   SELECT_ROUTE_ITEM,
+  IMPORT_ITEM,
   getPathList,
   getFileItem,
   type Action,
@@ -109,6 +111,11 @@ const reducer = pipeReducers<State, Action>(
       actionType: GET_FILE_ITEM,
       getDefaultData: getDefaultsBySchema(fileSchema),
       getData: getDataBySchema(fileSchema),
+    }),
+    importItem: requestsReducer({
+      actionType: IMPORT_ITEM,
+      getDefaultData: getDefaultsBySchema(importItemSchema),
+      getData: getDataBySchema(importItemSchema),
     }),
 
   }),

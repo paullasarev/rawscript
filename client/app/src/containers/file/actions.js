@@ -52,12 +52,15 @@ export function selectRouteItem(path: string, name: string) {
   };
 }
 
-export function importItem(path: string, name: string) {
+export function importItem(path: string, file: string) {
   return {
     type: IMPORT_ITEM,
-    payload: {
+    request: {
+      url: `/import/${path}/${file}`,
+    },
+    meta: {
       path,
-      name,
+      file,
     },
   };
 }
