@@ -29,6 +29,7 @@ import {
   IMPORT_ITEM,
   getPathList,
   getFileItem,
+  selectRouteItem,
   type Action,
 } from './actions';
 import { FileState, type FileStateType } from './entities';
@@ -74,13 +75,16 @@ function baseReducer(state: State, action: Action): State {
       const viewState = FileState.NOT_SELECTED;
       const { isFile, isDirectory, name, folder } = action.payload;
       const paths = folder ? folder.split('/') : [];
+      let path = paths.join(':');
       let actions;
       let fileName = '';
       if (isFile) {
-        actions = [getFileItem(paths.join(':'), name)];
+        actions = [getFileItem(path, name)];
         fileName = name;
       } else if (isDirectory) {
         paths.push(name);
+        path = paths.join(':');
+        actions = [selectRouteItem(path, '')];
       } else {
         return state;
       }
@@ -88,7 +92,7 @@ function baseReducer(state: State, action: Action): State {
         ...state,
         viewState,
         actions,
-        path: paths.join(':'),
+        path,
         file: fileName,
       };
     }
