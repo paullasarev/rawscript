@@ -3,14 +3,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
-// import { Welcome } from '@storybook/react/demo';
 
 import Button from './button';
+import UploadButton from './upload-button';
 import ButtonBar from './button-bar';
-
-// storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
-
-// storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
 const styles = {
   maxWidth: '200px',
@@ -24,6 +20,9 @@ storiesOf('Single Button', module)
   ))
   .add('multiple args', () => (
     <Button text='Run2' action={ action('clicked') } arg={ ['arg1', 'arg2'] } />
+  ))
+  .add('upload-button', () => (
+    <UploadButton text='Upload' action={ action('clicked') } />
   ))
 ;
 

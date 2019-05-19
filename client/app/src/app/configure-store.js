@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { createLogger } from 'redux-logger';
 
 import { createActionsEnhancer } from '../common/action-enhancer';
 
@@ -16,13 +17,9 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-function logMiddleware({ getState }) {
-  return next => (action) => {
-    const result = next(action);
-    console.log({ [action.type]: { action, state: getState() } }); // eslint-disable-line no-console
-    return result;
-  };
-}
+const logger = createLogger({
+  collapsed: true,
+});
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -32,7 +29,7 @@ const actionEnchancer = createActionsEnhancer(sagaMiddleware);
 
 middlewares.push(sagaMiddleware);
 if (isDev) {
-  middlewares.push(logMiddleware);
+  middlewares.push(logger);
 }
 
 let enhancer = applyMiddleware(...middlewares);

@@ -8,8 +8,9 @@ import './file.scss';
 
 import type { ReturnType } from '../../common/types';
 
-import Button from '../../components/buttons/button';
 import ButtonBar from '../../components/buttons/button-bar';
+import Button from '../../components/buttons/button';
+import UploadButton from '../../components/buttons/upload-button';
 
 import FileRouteItem from './file-route-item';
 import FileList from './file-list';
@@ -18,7 +19,7 @@ import { selector, type StoreState, type State } from './reducer';
 import {
   selectPathList,
   selectRouteItem,
-  importItem,
+  importFiles,
 } from './actions';
 import { FileState } from './entities';
 
@@ -80,11 +81,11 @@ function renderButtons(props) {
   const {
     path,
     file,
-    importItem,
+    importFiles,
   } = props;
   return (
     <ButtonBar right className='file__buttons'>
-      <Button text='Import' action={ importItem } arg={ [path, file] } />
+      <UploadButton text='Import' action={ importFiles } arg={ [path, file] } />
     </ButtonBar>
   );
 }
@@ -92,7 +93,7 @@ function renderButtons(props) {
 const mapDispatchToProps = {
   selectPathList,
   selectRouteItem,
-  importItem,
+  importFiles,
 };
 type mapDispatchToPropsType = typeof mapDispatchToProps;
 const mapStateToProps = (storeState: StoreState) => {

@@ -7,8 +7,8 @@ export const GET_PATH_LIST = 'GET_PATH_LIST';
 export const GET_FILE_ITEM = 'GET_FILE_ITEM';
 export const SELECT_PATH_LIST = 'SELECT_PATH_LIST';
 export const SELECT_ROUTE_ITEM = 'SELECT_ROUTE_ITEM';
+export const IMPORT_FILES = 'IMPORT_FILES';
 export const IMPORT_ITEM = 'IMPORT_ITEM';
-
 
 export function getPathList(path: string) {
   return {
@@ -52,6 +52,15 @@ export function selectRouteItem(path: string, name: string) {
   };
 }
 
+export function importFiles(files: FileList) {
+  return {
+    type: IMPORT_FILES,
+    payload: {
+      files,
+    },
+  };
+}
+
 export function importItem(path: string, file: string) {
   return {
     type: IMPORT_ITEM,
@@ -70,5 +79,6 @@ export type Action =
   | ReturnType<typeof getFileItem>
   | ReturnType<typeof selectPathList>
   | ReturnType<typeof selectRouteItem>
+  | ReturnType<typeof importFiles>
   | ReturnType<typeof importItem>
 ;
