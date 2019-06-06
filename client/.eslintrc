@@ -15,6 +15,7 @@
   },
   "plugins": [
     "react-hooks",
+    //"@typescript-eslint",
     "flowtype"
   ],
   "rules": {

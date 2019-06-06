@@ -9,7 +9,7 @@ module.exports = {
     app: './index.js',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       images: path.resolve(__dirname, 'app/assets/images/'),
     },

@@ -72,7 +72,7 @@ declare module "react-router-dom" {
       callback: (location: Location, action: HistoryAction) => boolean
     ): void,
     // createMemoryHistory
-    index?: number,
+    flow?: number,
     entries?: Array<Location>
   };
 

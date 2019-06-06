@@ -5,8 +5,9 @@
   "main": "app/main.js",
   "scripts": {
     "serve": "webpack-dev-server --config webpack.dev.js",
-    "flow:schema": "npx babel-node ./json-schema-to-flow/index.js",
+    "flow:schema": "npx babel-node json-schema-to-type/flow.js",
     "flow:check": "npx flow check",
+    "typescript:schema": "npx babel-node json-schema-to-type/typescript.js",
     "build": "webpack --config webpack.prod.js",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -60,7 +61,17 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@babel/runtime": "^7.4.4",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11",
+    "@storybook/react": "^5.0.11",
+    "@types/lodash": "^4.14.133",
+    "@types/react": "^16.8.19",
+    "@types/react-dom": "^16.8.4",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^2.0.2",
@@ -78,6 +89,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
     "json-schema-to-flow-type": "^1.0.0",
+    "json-schema-to-typescript": "^6.1.3",
     "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^4.12.0",
     "ramda": "^0.26.1",
@@ -92,10 +104,6 @@
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.3.1",
-    "webpack-merge": "^4.2.1",
-    "@storybook/react": "^5.0.11",
-    "@storybook/addon-actions": "^5.0.11",
-    "@storybook/addon-links": "^5.0.11",
-    "@storybook/addons": "^5.0.11"
+    "webpack-merge": "^4.2.1"
   }
 }
