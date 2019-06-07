@@ -1,4 +1,4 @@
-import { keys } from 'lodash';
+import { keys, omit } from 'lodash';
 
 export const schemaDefault = (schema, defaultValue) => ({ ...schema, default: defaultValue });
 export const schemaRequired = (schema, required) => ({ ...schema, required });
@@ -23,4 +23,8 @@ export function requiredSchema(schema) {
     ...schema,
     required: keys(schema.properties),
   };
+}
+
+export function omitId(schema) {
+  return omit(schema, ['id', 'title']);
 }

@@ -6,23 +6,21 @@
  */
 
 export interface Import {
-  path: Path;
-  file: File;
-  [k: string]: any;
-}
-export interface Path {
-  name: string;
-  folder: string;
-  isDirectory: boolean;
-  isFile: boolean;
-  [k: string]: any;
-}
-export interface File {
-  name: string;
-  ext: string;
-  folder: string;
-  ctime: string;
-  mtime: string;
-  size: number;
+  path: {
+    name: string;
+    folder: string;
+    isDirectory: boolean;
+    isFile: boolean;
+    [k: string]: any;
+  };
+  file: {
+    name: string;
+    ext: string;
+    folder: string;
+    ctime: string;
+    mtime: string;
+    size: number;
+    [k: string]: any;
+  };
   [k: string]: any;
 }

@@ -26,10 +26,10 @@ const processFile = (filesExt, context) => (file) => {
     // const flowText = `/* @flow */\n${flowMainType}\n\n${flowArrayType}\n`;
     const flowFilename = join(fileDirname, `${fileBasename}.d.ts`);
     console.log(flowFilename); // eslint-disable-line no-console
+    context.count++;
     compile(mainSchema, { declareExternallyReferenced: false })
       .then((tsText) => {
         writeFileSync(flowFilename, tsText);
-        context.count++;
       })
   } catch (e) {
     console.error(e); // eslint-disable-line no-console

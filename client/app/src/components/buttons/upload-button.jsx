@@ -29,7 +29,7 @@ export default function UploadButton (props: Props) {
 
   const { className, text } = props;
   return (
-    <div className={ classNames('button', className) } onClick={ onClick } tabIndex='0'>
+    <div className={ classNames('button.tsx', className) } onClick={ onClick } tabIndex='0'>
       <input
         type='file'
         style={ { display: 'none' } }

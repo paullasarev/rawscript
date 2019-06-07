@@ -1,15 +1,15 @@
-// @flow
 import React, { useCallback } from 'react';
 import classNames from 'classnames';
 
 import './button.scss';
 
-type ButtonProps = {
-  className?: string,
-  text: string,
-  action: (...values: any) => any,
-  arg: any,
-};
+
+interface ButtonProps {
+  className?: string;
+  text: string;
+  action: (...values: any) => any;
+  arg: any;
+}
 
 export default function Button (props: ButtonProps) {
   const { action, arg } = props;
@@ -19,7 +19,7 @@ export default function Button (props: ButtonProps) {
 
   const { className, text } = props;
   return (
-    <div className={ classNames('button', className) } onClick={ onClick } tabIndex='0'>
+    <div className={ classNames('button.tsx', className) } onClick={ onClick } tabIndex={0}>
       { text }
     </div>
   );
