@@ -1,13 +1,13 @@
-// @flow
+// @ts-ignore
 import React from 'react';
 import classNames from 'classnames';
 
 import './button-bar.scss';
 
-type ButtonBarProps ={
-  className?: string,
-  children: any,
-  right?: boolean,
+interface ButtonBarProps {
+  className?: string;
+  children: any;
+  right?: boolean;
 }
 
 const ButtonBar = (props: ButtonBarProps) => {

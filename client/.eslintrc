@@ -18,10 +18,22 @@
     //"@typescript-eslint",
     "flowtype"
   ],
+  "settings": {
+    "import/resolver": {
+      "node": true,
+      "eslint-import-resolver-typescript": true
+    },
+    "typescript": {
+//      "compilerOptions": {
+//        "esModuleInterop": true,
+//        "allowSyntheticDefaultImports": true
+//      }
+    }
+  },
   "rules": {
     "max-len": ["warn", { "code": 150 }],
     "space-before-function-paren": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "linebreak-style": "off",
     "global-require": "off",
     "arrow-parens": "off",
