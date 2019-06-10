@@ -36,7 +36,7 @@ export function combinePartialReducers<S, A> (reducers: ReducerMap<S, A>): Reduc
   const pickByKeys = pick(baseKeys);
   return (state: S, action: A) => {
     const partialState = (<S>pickByKeys(state));
-    const newState = reducer(partialState, action));
+    const newState = reducer(partialState, action);
     if (newState !== partialState) {
       return {
         ...state,
