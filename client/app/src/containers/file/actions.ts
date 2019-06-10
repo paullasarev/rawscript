@@ -1,7 +1,6 @@
-// @flow
-import type { Path } from '../../models/path.flow';
-import type { File } from '../../models/file.flow';
-import type { ReturnType } from '../../common/types';
+import { Path } from '../../models/path.d';
+import { File } from '../../models/file.d';
+// import type { ReturnType } from '../../common/types';
 
 export const GET_PATH_LIST = 'GET_PATH_LIST';
 export const GET_FILE_ITEM = 'GET_FILE_ITEM';
@@ -74,7 +73,7 @@ export function importItem(path: string, file: string) {
   };
 }
 
-export type Action =
+export type StateAction =
   | ReturnType<typeof getPathList>
   | ReturnType<typeof getFileItem>
   | ReturnType<typeof selectPathList>

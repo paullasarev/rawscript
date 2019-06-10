@@ -1,5 +1,5 @@
-// @flow
-import type { ReturnType } from '../../common/types';
+// import { ReturnType } from '../../common/types';
+// import { Action } from 'redux';
 
 export const SIDE_PANEL_SHOW_SIDEBAR = 'SIDE_PANEL_SHOW_SIDEBAR';
 export const SIDE_PANEL_SET_ACTIVE_TAB = 'SIDE_PANEL_SET_ACTIVE_TAB';
@@ -14,7 +14,7 @@ export function setShowSidebar(value: boolean) {
   };
 }
 
-export function setActiveTab(value: string) {
+export function setActiveTab(value?: string) {
   return {
     type: SIDE_PANEL_SET_ACTIVE_TAB,
     payload: value,
@@ -48,10 +48,13 @@ export function showTab(tabId: string, lastVisible: number) {
   };
 }
 
-export type Action =
-  ReturnType<typeof setShowSidebar>
-  | ReturnType<typeof setActiveTab>
-  | ReturnType<typeof setSidebarWidth>
-  | ReturnType<typeof moveTab>
-  | ReturnType<typeof showTab>
-;
+// export type StateAction =
+//   ReturnType<typeof setShowSidebar | typeof setActiveTab | typeof setSidebarWidth | typeof moveTab | typeof showTab>
+// ;
+// export type Action =
+//   ReturnType<typeof setShowSidebar>
+//   | ReturnType<typeof setActiveTab>
+//   | ReturnType<typeof setSidebarWidth>
+//   | ReturnType<typeof moveTab>
+//   | ReturnType<typeof showTab>
+// ;

@@ -1,6 +1,7 @@
 {
   "extends": "airbnb",
   "parser": "babel-eslint",
+//  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 6,
     "ecmaFeatures": {
@@ -20,15 +21,17 @@
   ],
   "settings": {
     "import/resolver": {
-      "node": true,
-      "eslint-import-resolver-typescript": true
-    },
-    "typescript": {
+//      "node": true,
+      "babel-module": {},
+//      "eslint-import-resolver-typescript": true
+      "typescript": {}
+    }
+//    "typescript": {
 //      "compilerOptions": {
 //        "esModuleInterop": true,
 //        "allowSyntheticDefaultImports": true
 //      }
-    }
+//    }
   },
   "rules": {
     "max-len": ["warn", { "code": 150 }],
@@ -62,6 +65,7 @@
     "import/no-extraneous-dependencies": 0,
     "no-unused-vars": ["off", { "args": "all" }],
     "react-hooks/rules-of-hooks": "error",
-    "flowtype/define-flow-type": 1
+    "flowtype/define-flow-type": 1,
+    "typescript/generic-type-naming": 1
   }
 }

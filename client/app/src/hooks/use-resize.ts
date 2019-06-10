@@ -1,23 +1,22 @@
-// @flow
 import { useState, useRef, useEffect } from 'react';
 import { isUndefined } from 'lodash';
 
 import { useHtmlRef } from './use-html-ref';
 
 type ResizeOptions = {
-  isLeftMargin?: boolean,
-  minWidth?: number,
-  minGap?: number,
-  redrawOnResize?: boolean,
-};
+  isLeftMargin?: boolean;
+  minWidth?: number;
+  minGap?: number;
+  redrawOnResize?: boolean;
+}
 
 type setWidthType = (width: number) => void;
 
 type ResizeState = {
-  startX: number,
-  isResizing: boolean,
-  width: number,
-};
+  startX: number;
+  isResizing: boolean;
+  width: number;
+}
 
 function getScreenX(event: MouseEvent | TouchEvent, preventDefault = false) {
   let result = 0;

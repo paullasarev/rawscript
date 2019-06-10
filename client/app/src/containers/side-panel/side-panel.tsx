@@ -1,10 +1,9 @@
-// @flow
-import React, { useState } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 
 import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab, showTab } from './actions';
-import { type State, type StoreState, selector } from './reducer';
+import { StoreState, selector } from './reducer';
 
 import Script from '../script/script';
 import Console from '../console/console';
@@ -18,30 +17,30 @@ const tabsComponents = {
   file: { name: 'file', component: File, title: 'File' },
 };
 
-const mapDispatchToProps = {
-  setShowSidebar,
-  setActiveTab,
-  setSidebarWidth,
-  moveTab,
-  showTab,
-};
+// const mapDispatchToProps = {
+//   setShowSidebar,
+//   setActiveTab,
+//   setSidebarWidth,
+//   moveTab,
+//   showTab,
+// };
 
-type mapDispatchToPropsType = {|
-  setShowSidebar: typeof setShowSidebar,
-  setActiveTab: typeof setActiveTab,
-  setSidebarWidth: typeof setSidebarWidth,
-  moveTab: typeof moveTab,
-  showTab: typeof showTab,
-|};
+// type mapDispatchToPropsType = {|
+//   setShowSidebar: typeof setShowSidebar,
+//   setActiveTab: typeof setActiveTab,
+//   setSidebarWidth: typeof setSidebarWidth,
+//   moveTab: typeof moveTab,
+//   showTab: typeof showTab,
+// |};
 // type mapDispatchToPropsType = typeof mapDispatchToProps;
 
-const mapStateToProps = (state: StoreState) => ({
-  ...selector(state),
-});
-type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
-type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
+// const mapStateToProps = (state: StoreState) => ({
+//   ...selector(state),
+// });
+// type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
+// type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
 
-const SidePanel = (props: Props) => {
+const SidePanel = (props) => {
   const {
     activeTab,
     setActiveTab,
@@ -74,7 +73,12 @@ const SidePanel = (props: Props) => {
 };
 
 // export default connect<Props, {||}, mapStateToPropsType, mapDispatchToPropsType, StoreState, {}>(
-export default connect<Props, {||}, _, _, _, _>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SidePanel);
+export default connect((state: StoreState) => ({
+  ...selector(state),
+}), {
+  setShowSidebar,
+  setActiveTab,
+  setSidebarWidth,
+  moveTab,
+  showTab,
+})(SidePanel);

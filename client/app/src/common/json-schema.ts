@@ -1,6 +1,6 @@
-// @flow
 import { forOwn, curryN } from 'lodash/fp';
 
+// @ts-ignore
 const forOwnC = forOwn.convert({ cap: false });
 
 function processNode(schemaNode, dataNode) {

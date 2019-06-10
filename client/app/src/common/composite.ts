@@ -1,38 +1,42 @@
-// @flow
 import { each, curry, keys, pick } from 'lodash/fp';
-import { combineReducers } from 'redux';
+import { combineReducers, AnyAction } from 'redux';
 
 import { fillDefaults } from './json-schema';
 import { arraySchema } from '../models/common';
 
 
-type BaseAction = {
-  type: string,
-};
-type BaseState = {};
+// type BaseAction = {
+//   type: string,
+// };
+// type BaseState = {};
 type JsonSchema = {
   type: string,
 };
+
 type Reducer<S, A> = (state: S, action: A) => S;
-type Reducers<S, A> = Array<Reducer<S, A>>;
+// type Reducers<S, A> = Array<Reducer<S, A>>;
+
+export type ReducerMap<S, A> = {
+  [key: string]: Reducer<S, A>
+};
 
 export function pipeReducers<S, A>(...reducers: Array<Reducer<S, A>>): Reducer<S, A> {
   return (pState: S, action: A): S => {
     let state = pState;
-    each((reducer) => {
+    each((reducer: Reducer<S, A>) => {
       state = reducer(state, action);
     })(reducers);
     return state;
   };
 }
 
-export function combinePartialReducers<S, A> (reducers: {[key: string]: Reducer<S, A>}): Reducer<S, A> {
+export function combinePartialReducers<S, A> (reducers: ReducerMap<S, A>): Reducer<S, A> {
   const baseKeys = keys(reducers);
-  const combine = combineReducers(reducers);
-  const pickKeys = pick(baseKeys);
-  return (state, action) => {
-    const partialState = pickKeys(state);
-    const newState = combine(partialState, action);
+  const reducer = combineReducers(reducers);
+  const pickByKeys = pick(baseKeys);
+  return (state: S, action: A) => {
+    const partialState = (<S>pickByKeys(state));
+    const newState = reducer(partialState, action));
     if (newState !== partialState) {
       return {
         ...state,

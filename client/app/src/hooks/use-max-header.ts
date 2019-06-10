@@ -1,4 +1,3 @@
-// @flow
 import { useEffect, useRef, useState } from 'react';
 import { reduce } from 'lodash';
 

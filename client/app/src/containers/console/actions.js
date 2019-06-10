@@ -10,6 +10,6 @@ export function run(text: string) {
   };
 }
 
-export type Action =
+export type StateAction =
   ReturnType<typeof run>
 ;

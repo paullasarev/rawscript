@@ -1,5 +1,4 @@
-// @flow
-import React, { useRef, useState, useEffect } from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 import { isEqual } from 'lodash';
 
@@ -8,6 +7,8 @@ import { useHtmlRef } from '../../hooks/use-html-ref';
 import './relative-portal.scss';
 
 import Portal from './portal';
+
+const { useRef, useState, useEffect } = React;
 
 const SCREEN_GAP = 5;
 
@@ -20,11 +21,11 @@ function getPageOffset() {
   };
 }
 
-type RelativePortalProps = {
-  className?: string,
-  onOutClick: (e: MouseEvent) => void,
-  children: any,
-};
+interface RelativePortalProps {
+  className?: string;
+  onOutClick: (e: MouseEvent) => void;
+  children: any;
+}
 
 export default function RelativePortal({ className, onOutClick, children }: RelativePortalProps) {
   const el = useHtmlRef();

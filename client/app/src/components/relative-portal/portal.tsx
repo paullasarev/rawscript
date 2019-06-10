@@ -1,12 +1,15 @@
-// @flow
-import React, { useRef, useEffect } from 'react';
+import * as React from 'react';
+// import React, { useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useHtmlRef } from '../../hooks/use-html-ref';
 
-type PortalProps = {
-  onOutClick: (e: MouseEvent) => void
-};
+const { useRef, useEffect } = React;
+
+interface PortalProps {
+  onOutClick: (e: MouseEvent) => void;
+}
+
 
 export default function Portal({ onOutClick, ...props }: PortalProps) {
   const rootRef = useHtmlRef();
@@ -15,7 +18,9 @@ export default function Portal({ onOutClick, ...props }: PortalProps) {
   useEffect(() => {
     const handleOutClick = (e: MouseEvent) => {
       const node = rootRef.current;
-      const target = ((e.target: any): Node);
+      // const target = ((e.target: any): Node);
+      const target = ((e.target as any) as Node);
+      // const target: any = e.target ;
       if (node && !node.contains(target)) {
         onOutClick(e);
       }

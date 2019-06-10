@@ -16,9 +16,9 @@ import {
   type ApiState,
 } from '../../common/composite';
 import pathSchema from '../../models/path.schema';
-import type { Path, PathArray } from '../../models/path.flow';
+import { Path } from '../../models/path.d';
 import fileSchema from '../../models/file.schema';
-import type { File, FileArray } from '../../models/file.flow';
+import { File } from '../../models/file.d';
 import importItemSchema from '../../models/import-item.schema';
 
 import {
@@ -30,7 +30,7 @@ import {
   getPathList,
   getFileItem,
   selectRouteItem,
-  type Action,
+  StateAction,
 } from './actions';
 import { FileState, type FileStateType } from './entities';
 import { fillDefaults } from '../../common/json-schema';
@@ -38,10 +38,11 @@ import { arraySchema } from '../../models/common';
 
 export type State = {
   viewState: FileStateType,
-  pathList: ApiState<PathArray>,
+  pathList: ApiState<Array<Path>>,
   fileItem: ApiState<File>,
   path: string,
   file: string,
+  actions?: Array<any>
 }
 
 const initialState: State = {
@@ -56,7 +57,7 @@ export const section = 'file';
 export type StoreState = { file: State };
 export const selector = (state: StoreState) => state.file;
 
-function baseReducer(state: State, action: Action): State {
+function baseReducer(state: State, action: StateAction): State {
   switch (action.type) {
 
     case SELECT_ROUTE_ITEM: {

@@ -1,4 +1,3 @@
-// @flow
 import { useEffect, useRef } from 'react';
 import { memoize } from 'lodash';
 

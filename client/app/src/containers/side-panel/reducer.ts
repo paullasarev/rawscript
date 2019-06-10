@@ -1,21 +1,26 @@
-// @flow
 import { isUndefined, isEmpty } from 'lodash';
+import { AnyAction } from 'redux';
 
 import {
+  // StateAction,
   SIDE_PANEL_SHOW_SIDEBAR,
   SIDE_PANEL_SET_ACTIVE_TAB,
   SIDE_PANEL_SET_SIDEBAR_WIDTH,
   SIDE_PANEL_MOVE_TAB,
-  SIDE_PANEL_SHOW_TAB,
-  type Action,
+  SIDE_PANEL_SHOW_TAB, setShowSidebar, setActiveTab, setSidebarWidth, moveTab, showTab,
 } from './actions';
 
-export type State = {|
-  +showSidebar: boolean,
-  +activeTab: string,
-  +sidebarWidth: number,
-  +tabs: Array<string>,
-|};
+export type State = {
+  showSidebar: boolean;
+  activeTab: string;
+  sidebarWidth: number;
+  tabs: Array<string>;
+}
+
+export type StateAction =
+  ReturnType<typeof setShowSidebar | typeof setActiveTab | typeof setSidebarWidth | typeof moveTab | typeof showTab>
+| AnyAction
+;
 
 export const section = 'sidePanel';
 export type StoreState = { sidePanel: State };
@@ -32,7 +37,7 @@ const initialState = {
   ],
 };
 
-export default function reducer(state: State = initialState, action: Action): State {
+export default function reducer(state: State = initialState, action: StateAction): State {
   switch (action.type) {
     case SIDE_PANEL_SHOW_SIDEBAR: {
       const show = action.payload;

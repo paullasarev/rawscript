@@ -2,7 +2,13 @@ import {
   CONSOLE_RUN,
 } from './actions';
 
-const initialState = {
+export type State = {
+  text: string;
+}
+
+export type StoreState = { console: State };
+
+const initialState: State = {
   text: `\
 > run script
 > set contrast +10

@@ -1,11 +1,12 @@
-// @flow
-import React, { useCallback } from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 import { map } from 'lodash/fp';
 
 import './dropdown.scss';
 
 import RelativePortal from '../relative-portal/relative-portal';
+
+const { useCallback } = React;
 
 const DropdownOption = ({ value, title, onSelect }) => {
   return (
@@ -26,16 +27,16 @@ function makeOptions(onSelect) {
   ));
 }
 
-type DropdownItem = {
-  title: string,
-  value: any,
-};
-type DropdownProps = {
-  className?: string,
-  items: Array<DropdownItem>,
-  onSelect: (value: any) => void,
-  onOutClick: (e: MouseEvent) => void,
-};
+interface DropdownItem {
+  title: string;
+  value: any;
+}
+interface DropdownProps {
+  className?: string;
+  items: Array<DropdownItem>;
+  onSelect: (value: any) => void;
+  onOutClick: (e: MouseEvent) => void;
+}
 
 const Dropdown = (props: DropdownProps) => {
   const { className, items, onSelect, onOutClick } = props;

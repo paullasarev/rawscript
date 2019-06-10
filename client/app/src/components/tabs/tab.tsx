@@ -1,11 +1,10 @@
-// @flow
-import React, { type Node } from 'react';
+import * as React from 'react';
 
 import './tabs.scss';
 
-type TabProps = {
-  children?: Node,
-};
+interface TabProps {
+  children?: any;
+}
 
 export default function Tab({ children }: TabProps) {
   return (

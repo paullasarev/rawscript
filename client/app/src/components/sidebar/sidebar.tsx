@@ -1,14 +1,15 @@
-// @flow
-import React, { useCallback, type Node } from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 
 import './sidebar.scss';
 
-type SidebarProps = {
-  className?: string,
-  show: boolean,
-  setShow: (value: boolean) => any,
-  children?: Node,
+const { useCallback } = React;
+
+interface SidebarProps {
+  className?: string;
+  show: boolean;
+  setShow: (value: boolean) => any;
+  children?: any;
 }
 
 const Sidebar = ({ className, show, setShow, children }: SidebarProps) => {
