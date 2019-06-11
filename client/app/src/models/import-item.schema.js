@@ -4,7 +4,7 @@ import fileSchema from './file.schema';
 
 const schema = requiredSchema({
   type: 'object',
-  id: 'Import',
+  id: 'ImportItem',
   properties: {
     path: omitId(pathSchema),
     file: omitId(fileSchema),

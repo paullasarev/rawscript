@@ -1,7 +1,11 @@
 {
   "extends": "airbnb",
-  "parser": "babel-eslint",
-//  "parser": "@typescript-eslint/parser",
+//  "extends": [
+//    "plugin:react/recommended",
+//    "plugin:@typescript-eslint/recommended"
+//  ],
+//  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 6,
     "ecmaFeatures": {
@@ -15,23 +19,31 @@
     "es6": true
   },
   "plugins": [
-    "react-hooks",
-    //"@typescript-eslint",
-    "flowtype"
+    "import",
+    "react-hooks"
+//    "@typescript-eslint"
+//    "flowtype"
   ],
   "settings": {
+    "import/extensions": ["js", ".jsx", "ts", "tsx"],
+    "import/parser": {
+      "typescript-eslint-parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
-//      "node": true,
-      "babel-module": {},
-//      "eslint-import-resolver-typescript": true
-      "typescript": {}
+      "eslint-import-resolver-typescript": true,
+      "node": {
+        "extensions": ["js", ".jsx", "ts", "tsx"]
+      }
+    },
+//    "import/resolver": {
+////      "node": true,
+//      "babel-module": {},
+////      "eslint-import-resolver-typescript": true
+//      "typescript": {}
+//    },
+    "react":  {
+      "version":  "detect",
     }
-//    "typescript": {
-//      "compilerOptions": {
-//        "esModuleInterop": true,
-//        "allowSyntheticDefaultImports": true
-//      }
-//    }
   },
   "rules": {
     "max-len": ["warn", { "code": 150 }],
@@ -65,7 +77,7 @@
     "import/no-extraneous-dependencies": 0,
     "no-unused-vars": ["off", { "args": "all" }],
     "react-hooks/rules-of-hooks": "error",
-    "flowtype/define-flow-type": 1,
-    "typescript/generic-type-naming": 1
+//    "flowtype/define-flow-type": 1
+//    "typescript/generic-type-naming": 1,
   }
 }

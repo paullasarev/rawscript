@@ -19,7 +19,7 @@ export default function Button (props: ButtonProps) {
 
   const { className, text } = props;
   return (
-    <div className={ classNames('button', className) } onClick={ onClick } tabIndex={0}>
+    <div className={ classNames('button', className) } onClick={ onClick } tabIndex={ 0 }>
       { text }
     </div>
   );

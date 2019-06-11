@@ -5,7 +5,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Import {
+export interface ImportItem {
   path: {
     name: string;
     folder: string;

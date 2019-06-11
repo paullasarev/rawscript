@@ -1,5 +1,5 @@
 import { each, curry, keys, pick } from 'lodash/fp';
-import { combineReducers, AnyAction, Reducer } from 'redux';
+import { combineReducers, Action, Reducer, ReducersMapObject } from 'redux';
 
 import { fillDefaults } from './json-schema';
 import { arraySchema } from '../models/common';
@@ -16,11 +16,11 @@ type JsonSchema = {
 // type Reducer<S, A> = (state: S, action: A) => S;
 // type Reducers<S, A> = Array<Reducer<S, A>>;
 
-export type ReducerMap<S, A> = {
-  [key: string]: Reducer<S, A>
-};
+// export type ReducerMap<S, A extends Action> = {
+//   [key: string]: Reducer<S, A>
+// };
 
-export function pipeReducers<S, A>(...reducers: Array<Reducer<S, A>>): Reducer<S, A> {
+export function pipeReducers<S, A extends Action>(...reducers: Array<Reducer<S, A>>): Reducer<S, A> {
   return (pState: S, action: A): S => {
     let state = pState;
     each((reducer: Reducer<S, A>) => {
@@ -30,13 +30,13 @@ export function pipeReducers<S, A>(...reducers: Array<Reducer<S, A>>): Reducer<S
   };
 }
 
-export function combinePartialReducers<S, A> (reducers: ReducerMap<S, A>): Reducer<S, A> {
+export function combinePartialReducers<S, A extends Action> (reducers: ReducersMapObject<any, A>): Reducer<S, A> {
   const baseKeys = keys(reducers);
   // const reducer: (state: (any | undefined), action: AnyAction) => any = combineReducers(reducers);
   const reducer = combineReducers(reducers);
   const pickByKeys = pick(baseKeys);
   return (state: S, action: A) => {
-    const partialState = (pickByKeys(state));
+    const partialState = (pickByKeys(state) as S);
     const newState = reducer(partialState, action);
     if (newState !== partialState) {
       return {
@@ -48,13 +48,13 @@ export function combinePartialReducers<S, A> (reducers: ReducerMap<S, A>): Reduc
   };
 }
 
-export function defaultReducer<S, A> (initialState: S): Reducer<S, A> {
+export function defaultReducer<S, A extends Action> (initialState: S): Reducer<S, A> {
   return (state: S, action: A): S => {
     return state || initialState;
   };
 }
 
-export const emptyReducer = <S, A>(state: S, action: S): S => state;
+export const emptyReducer = <S, A extends Action>(state: S, action: A): S => state;
 
 export type ApiState<Item> = {
   data: Item,

@@ -22,8 +22,8 @@ const render = (Component) => {
 render(App);
 
 if (module.hot) {
-  module.hot.accept('./src/app/app.jsx', () => {
-    const newApp = require('./src/app/app.jsx').default;
+  module.hot.accept('./src/app/app.tsx', () => {
+    const newApp = require('./src/app/app.tsx').default;
     render(newApp);
   });
 }
