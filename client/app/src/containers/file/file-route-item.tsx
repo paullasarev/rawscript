@@ -1,5 +1,4 @@
-// @flow
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 import { isEmpty } from 'lodash';
 
@@ -8,6 +7,7 @@ type Props = {
   name: string,
   placeholder: string,
   action: (path: string, name: string) => any,
+  isPath?: boolean,
 }
 
 export default function FileRouteItem(props: Props) {

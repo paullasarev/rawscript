@@ -1,5 +1,4 @@
-// @flow
-import type { ReturnType } from '../../common/types';
+import { ReturnType } from '../../common/types';
 
 export const CONSOLE_RUN = 'CONSOLE_RUN';
 

@@ -1,8 +1,9 @@
-// @ts-ignore
-import React, { useCallback, useRef } from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 
 import './button.scss';
+
+const { useCallback, useRef } = React;
 
 interface Props {
   className?: string;

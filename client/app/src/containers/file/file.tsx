@@ -1,20 +1,19 @@
-// @flow
-import React, { useState } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { flatMap, slice } from 'lodash';
 
 import './file.scss';
 
-import type { ReturnType } from '../../common/types';
+// import { ReturnType } from '../../common/types';
 
 import ButtonBar from '../../components/buttons/button-bar';
-import Button from '../../components/buttons/button';
+// import Button from '../../components/buttons/button';
 import UploadButton from '../../components/buttons/upload-button';
 
 import FileRouteItem from './file-route-item';
 import FileList from './file-list';
-import { selector, type StoreState, type State } from './reducer';
+import { selector, StoreState, State } from './reducer';
 
 import {
   selectPathList,
@@ -22,6 +21,8 @@ import {
   importFiles,
 } from './actions';
 import { FileState } from './entities';
+
+// const { useState } = React;
 
 function renderRoutes(props) {
   const {
@@ -90,24 +91,24 @@ function renderButtons(props) {
   );
 }
 
-const mapDispatchToProps = {
-  selectPathList,
-  selectRouteItem,
-  importFiles,
-};
-type mapDispatchToPropsType = typeof mapDispatchToProps;
-const mapStateToProps = (storeState: StoreState) => {
-  return {
-    ...selector(storeState),
-  };
-};
-type mapStateToPropsType = ReturnType<typeof mapStateToProps>;
-type OwnProps = {|
-  // className?: string,
-|};
-type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
+// const mapDispatchToProps = {
+//   selectPathList,
+//   selectRouteItem,
+//   importFiles,
+// };
+// type mapDispatchToPropsType = typeof mapDispatchToProps;
+// const mapStateToProps = (storeState: StoreState) => {
+//   return {
+//     ...selector(storeState),
+//   };
+// };
+// type mapStateToPropsType = ReturnType<typeof mapStateToProps>;
+// type OwnProps = {|
+//   // className?: string,
+// |};
+// type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
 
-const File = (props: Props) => {
+const File = (props) => {
   return (
     <div className='file'>
       { renderButtons(props) }
@@ -117,4 +118,10 @@ const File = (props: Props) => {
   );
 };
 
-export default connect<Props, OwnProps, _, _, _, _>(mapStateToProps, mapDispatchToProps)(File);
+export default connect((state: StoreState) => ({
+  ...selector(state),
+}), {
+  selectPathList,
+  selectRouteItem,
+  importFiles,
+})(File);

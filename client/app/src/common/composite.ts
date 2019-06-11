@@ -1,5 +1,5 @@
 import { each, curry, keys, pick } from 'lodash/fp';
-import { combineReducers, AnyAction } from 'redux';
+import { combineReducers, AnyAction, Reducer } from 'redux';
 
 import { fillDefaults } from './json-schema';
 import { arraySchema } from '../models/common';
@@ -13,7 +13,7 @@ type JsonSchema = {
   type: string,
 };
 
-type Reducer<S, A> = (state: S, action: A) => S;
+// type Reducer<S, A> = (state: S, action: A) => S;
 // type Reducers<S, A> = Array<Reducer<S, A>>;
 
 export type ReducerMap<S, A> = {
@@ -32,10 +32,11 @@ export function pipeReducers<S, A>(...reducers: Array<Reducer<S, A>>): Reducer<S
 
 export function combinePartialReducers<S, A> (reducers: ReducerMap<S, A>): Reducer<S, A> {
   const baseKeys = keys(reducers);
+  // const reducer: (state: (any | undefined), action: AnyAction) => any = combineReducers(reducers);
   const reducer = combineReducers(reducers);
   const pickByKeys = pick(baseKeys);
   return (state: S, action: A) => {
-    const partialState = (<S>pickByKeys(state));
+    const partialState = (pickByKeys(state));
     const newState = reducer(partialState, action);
     if (newState !== partialState) {
       return {

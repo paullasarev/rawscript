@@ -1,5 +1,4 @@
-// @flow
-import { combineReducers } from 'redux';
+import { AnyAction } from 'redux';
 import { requestsReducer } from 'redux-saga-requests';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -13,7 +12,7 @@ import {
   getDefaultsBySchema,
   defaultReducer,
   combinePartialReducers,
-  type ApiState,
+  ApiState,
 } from '../../common/composite';
 import pathSchema from '../../models/path.schema';
 import { Path } from '../../models/path.d';
@@ -30,14 +29,14 @@ import {
   getPathList,
   getFileItem,
   selectRouteItem,
-  StateAction,
+  selectPathList, importFiles, importItem,
 } from './actions';
-import { FileState, type FileStateType } from './entities';
-import { fillDefaults } from '../../common/json-schema';
+import { FileState } from './entities';
+// import { fillDefaults } from '../../common/json-schema';
 import { arraySchema } from '../../models/common';
 
 export type State = {
-  viewState: FileStateType,
+  viewState: FileState,
   pathList: ApiState<Array<Path>>,
   fileItem: ApiState<File>,
   path: string,
@@ -45,9 +44,13 @@ export type State = {
   actions?: Array<any>
 }
 
+export type StateAction = ReturnType<typeof getPathList | typeof getFileItem | typeof selectPathList | typeof selectRouteItem | typeof importFiles | typeof importItem >
+  // | AnyAction
+;
+
 const initialState: State = {
   viewState: FileState.NOT_SELECTED,
-  pathList: getDefaultApiState<PathArray>(arraySchema(pathSchema)),
+  pathList: getDefaultApiState<Array<Path>>(arraySchema(pathSchema)),
   fileItem: getDefaultApiState<File>(fileSchema),
   path: '',
   file: '',
@@ -103,7 +106,7 @@ function baseReducer(state: State, action: StateAction): State {
   }
 }
 
-const reducer = pipeReducers<State, Action>(
+const reducer = pipeReducers<State, StateAction>(
   defaultReducer(initialState),
   combinePartialReducers({
 
@@ -127,7 +130,7 @@ const reducer = pipeReducers<State, Action>(
   baseReducer,
 );
 
-export default persistReducer<State, Action>({
+export default persistReducer<State, StateAction>({
   key: 'file',
   storage,
   whitelist: ['path', 'file'],

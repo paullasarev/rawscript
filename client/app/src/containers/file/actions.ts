@@ -73,11 +73,11 @@ export function importItem(path: string, file: string) {
   };
 }
 
-export type StateAction =
-  | ReturnType<typeof getPathList>
-  | ReturnType<typeof getFileItem>
-  | ReturnType<typeof selectPathList>
-  | ReturnType<typeof selectRouteItem>
-  | ReturnType<typeof importFiles>
-  | ReturnType<typeof importItem>
-;
+// export type StateAction =
+//   | ReturnType<typeof getPathList>
+//   | ReturnType<typeof getFileItem>
+//   | ReturnType<typeof selectPathList>
+//   | ReturnType<typeof selectRouteItem>
+//   | ReturnType<typeof importFiles>
+//   | ReturnType<typeof importItem>
+// ;
