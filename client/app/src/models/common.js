@@ -26,5 +26,5 @@ export function requiredSchema(schema) {
 }
 
 export function omitId(schema) {
-  return omit(schema, ['id', 'title']);
+  return omit(schema, ['id', 'title', 'default']);
 }

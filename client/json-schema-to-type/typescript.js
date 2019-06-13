@@ -1,9 +1,8 @@
+import { compile } from 'json-schema-to-typescript';
+
 const { writeFileSync, readFileSync } = require('fs');
 const { basename, dirname, join, resolve } = require('path');
 const glob = require('glob');
-// const { parseSchema } = require('json-schema-to-flow-type');
-// const { inspect } = require('util');
-import { compile } from 'json-schema-to-typescript';
 
 const SCHEMA_EXT = '.schema.js';
 const SCHEMA_FILES = `/**/*${SCHEMA_EXT}`;
@@ -14,34 +13,26 @@ const processFile = (filesExt, context) => (file) => {
     const fileBasename = basename(file, filesExt);
     const jsonSchema = require(file); // eslint-disable-line import/no-dynamic-require
     const mainSchema = jsonSchema.default;
-    const typeId = mainSchema.id;
-    const arraySchema = {
-      type: 'array',
-      items: mainSchema,
-      id: `${typeId}Array`,
-    };
-
-    // const flowArrayType = `export type ${typeId}Array = Array<${typeId}>;`;
-
-    // const flowText = `/* @flow */\n${flowMainType}\n\n${flowArrayType}\n`;
-    const flowFilename = join(fileDirname, `${fileBasename}.d.ts`);
-    console.log(flowFilename); // eslint-disable-line no-console
+    mainSchema.default = undefined;
+    const fileName = join(fileDirname, `${fileBasename}.d.ts`);
     context.count++;
-    compile(mainSchema, { declareExternallyReferenced: false })
+    compile(mainSchema)
       .then((tsText) => {
-        writeFileSync(flowFilename, tsText);
-      })
+        writeFileSync(fileName, tsText);
+        console.log('done', fileName)
+      });
   } catch (e) {
     console.error(e); // eslint-disable-line no-console
   }
 };
 
 const generate = (targetDir, filesGlob, filesExt) => {
-  console.log('processs', filesGlob); // eslint-disable-line no-console
-  const files = glob.sync(join(targetDir, filesGlob));
+  const pattern = join(targetDir, filesGlob);
+  console.log('process', pattern); // eslint-disable-line no-console
+  const files = glob.sync(pattern);
   const context = { count: 0 };
   files.forEach(processFile(filesExt, context));
-  console.log(`done ${context.count} files`); // eslint-disable-line no-console
+  console.log(`process ${context.count} files`); // eslint-disable-line no-console
 };
 
-generate(resolve('.'), SCHEMA_FILES, SCHEMA_EXT);
+generate(resolve('./app/src'), SCHEMA_FILES, SCHEMA_EXT);
