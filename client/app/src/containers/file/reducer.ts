@@ -30,7 +30,9 @@ import {
   getPathList,
   getFileItem,
   selectRouteItem,
-  selectPathList, importFiles, importItem,
+  selectPathList,
+  importFiles,
+  importItem,
 } from './actions';
 import { FileState } from './entities';
 // import { fillDefaults } from '../../common/json-schema';
@@ -46,9 +48,14 @@ export interface State {
   actions?: any[];
 }
 
-export type StateAction = AnyAction | ReturnType<typeof getPathList | typeof getFileItem | typeof selectPathList | typeof selectRouteItem | typeof importFiles | typeof importItem >
-   // | AnyAction
-;
+export type StateAction = ReturnType<
+  typeof getPathList
+  | typeof selectPathList
+  | typeof getFileItem
+  | typeof selectRouteItem
+  | typeof importFiles
+  | typeof importItem
+>;
 
 const initialState: State = {
   viewState: FileState.NOT_SELECTED,
@@ -67,7 +74,7 @@ function baseReducer(state: State, action: StateAction): State {
   switch (action.type) {
 
     case SELECT_ROUTE_ITEM: {
-      const { path, name } = (action as ReturnType<typeof selectRouteItem>).payload;
+      const { path, name } = action.payload;
       const viewState = FileState.PATH_LIST;
       const actions = [getPathList(path)];
       return {
@@ -80,7 +87,7 @@ function baseReducer(state: State, action: StateAction): State {
 
     case SELECT_PATH_LIST: {
       const viewState = FileState.NOT_SELECTED;
-      const { isFile, isDirectory, name, folder } = (action as ReturnType<typeof selectPathList>).payload;
+      const { isFile, isDirectory, name, folder } = action.payload;
       const paths = folder ? folder.split('/') : [];
       let path = paths.join(':');
       let actions;
