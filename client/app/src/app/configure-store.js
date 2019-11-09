@@ -21,11 +21,11 @@ const logger = createLogger({
   collapsed: true,
 });
 
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = true; // process.env.NODE_ENV !== 'production';
 
 const middlewares = [];
 const sagaMiddleware = createSagaMiddleware();
-const actionEnchancer = createActionsEnhancer(sagaMiddleware);
+const actionEnchancer = createActionsEnhancer({ log: console.log.bind(console) }); // eslint-disable-line no-console
 
 middlewares.push(sagaMiddleware);
 if (isDev) {

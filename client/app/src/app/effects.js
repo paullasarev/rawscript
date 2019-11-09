@@ -6,7 +6,8 @@ import axios from 'axios';
 import { consoleSagas } from '../containers/console/effects';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3030',
+  // baseURL: 'http://localhost:3030',
+  baseURL: '/api',
 });
 
 export default function* rootSaga() {
