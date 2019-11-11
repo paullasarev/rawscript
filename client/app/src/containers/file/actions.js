@@ -8,7 +8,6 @@ export const GET_FILE_ITEM = 'GET_FILE_ITEM';
 export const SELECT_PATH_LIST = 'SELECT_PATH_LIST';
 export const SELECT_ROUTE_ITEM = 'SELECT_ROUTE_ITEM';
 export const IMPORT_FILES = 'IMPORT_FILES';
-export const IMPORT_ITEM = 'IMPORT_ITEM';
 
 export function getPathList(path: string) {
   return {
@@ -52,24 +51,27 @@ export function selectRouteItem(path: string, name: string) {
   };
 }
 
-export function importFiles(files: FileList) {
+export function importFiles(path: string, files: FileList) {
   return {
     type: IMPORT_FILES,
     payload: {
+      path,
       files,
     },
   };
 }
 
-export function importItem(path: string, file: string) {
+export const UPLOAD_FILES = 'UPLOAD_FILES';
+export function uploadFiles(path: string, formData: FormData) {
   return {
-    type: IMPORT_ITEM,
+    type: UPLOAD_FILES,
     request: {
-      url: `/import/${path}/${file}`,
-    },
-    meta: {
-      path,
-      file,
+      url: `/upload/${path}`,
+      method: 'POST',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
   };
 }
@@ -81,4 +83,5 @@ export type Action =
   | ReturnType<typeof selectRouteItem>
   | ReturnType<typeof importFiles>
   | ReturnType<typeof importItem>
+  | ReturnType<typeof uploadFiles>
 ;

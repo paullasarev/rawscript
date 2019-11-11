@@ -1,24 +1,21 @@
-import { Controller, Get, Param, Res } from '@nestjs/common';
-import { PathsService } from './paths.service';
-import { ConfigService } from '../config/config.service';
-import { Response, response } from 'express';
+import {Controller, Get, Param, Res} from '@nestjs/common';
+import {Response} from 'express';
+import {resolve} from 'path';
 
-function makePath(path = '') {
-  path = path.replace(/::+/g, ':');
-  path = path.replace(/(^:+)|(:+$)/g, '');
-  return path.split(':').join('/');
-}
+import {PathsService} from './paths.service';
+import {ConfigService} from '../config/config.service';
+import {makePath} from '../utils/path';
 
 @Controller('paths')
 export class PathsController {
-  public dataFolder: string;
+  public filesFolder: string;
   public rootFolder: string;
 
   constructor(
     private readonly PathsService: PathsService,
     private readonly config: ConfigService,
     ) {
-      this.dataFolder = this.config.dataFolder;
+      this.filesFolder = this.config.filesFolder;
       this.rootFolder = this.config.rootFolder;
     }
 
@@ -26,20 +23,20 @@ export class PathsController {
   async getFile(@Param() params, @Res() res: Response) {
     const path = makePath(params.path);
     const file = makePath(params.file);
-    const result = await this.PathsService.getFile(res, this.rootFolder, this.dataFolder, path, file);
+    const result = await this.PathsService.getFile(res, this.rootFolder, this.filesFolder, path, file);
     res.send(result);
   }
 
   @Get(':path')
   async listPath(@Param() params, @Res() res: Response) {
     const path = makePath(params.path);
-    const result = await this.PathsService.list(res, this.dataFolder, path);
+    const result = await this.PathsService.list(res, this.filesFolder, path);
     res.send(result);
   }
 
   @Get()
   async list(@Res() res: Response) {
-    const result = await this.PathsService.list(res, this.dataFolder);
+    const result = await this.PathsService.list(res, this.filesFolder);
     res.send(result);
   }
 }

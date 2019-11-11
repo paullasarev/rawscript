@@ -1,5 +1,4 @@
 // @flow
-import { combineReducers } from 'redux';
 import { requestsReducer } from 'redux-saga-requests';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -19,21 +18,21 @@ import pathSchema from '../../models/path.schema';
 import type { Path, PathArray } from '../../models/path.flow';
 import fileSchema from '../../models/file.schema';
 import type { File, FileArray } from '../../models/file.flow';
-import importItemSchema from '../../models/import-item.schema';
+// import uploadFilesSchema from '../../models/upload-files.schema';
 
 import {
   GET_PATH_LIST,
   GET_FILE_ITEM,
   SELECT_PATH_LIST,
   SELECT_ROUTE_ITEM,
-  IMPORT_ITEM,
+  UPLOAD_FILES,
   getPathList,
   getFileItem,
   selectRouteItem,
-  type Action,
+  type Action, IMPORT_FILES, uploadFiles,
 } from './actions';
 import { FileState, type FileStateType } from './entities';
-import { fillDefaults } from '../../common/json-schema';
+// import { fillDefaults } from '../../common/json-schema';
 import { arraySchema } from '../../models/common';
 
 export type State = {
@@ -97,6 +96,22 @@ function baseReducer(state: State, action: Action): State {
       };
     }
 
+    case IMPORT_FILES: {
+      const { path, files } = action.payload;
+
+      const formData = new FormData();
+      for (const file of files) {
+        formData.append('file', file);
+        console.log('add file', file)
+      }
+
+      const actions = [uploadFiles(path, formData)];
+      return {
+        ...state,
+        actions,
+      };
+    }
+
     default:
       return state;
   }
@@ -116,11 +131,11 @@ const reducer = pipeReducers<State, Action>(
       getDefaultData: getDefaultsBySchema(fileSchema),
       getData: getDataBySchema(fileSchema),
     }),
-    importItem: requestsReducer({
-      actionType: IMPORT_ITEM,
-      getDefaultData: getDefaultsBySchema(importItemSchema),
-      getData: getDataBySchema(importItemSchema),
-    }),
+    // uploadFiles: requestsReducer({
+    //   actionType: UPLOAD_FILES,
+    //   getDefaultData: getDefaultsBySchema(uploadFilesSchema),
+    //   getData: getDataBySchema(uploadFilesSchema),
+    // }),
 
   }),
   baseReducer,

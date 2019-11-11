@@ -12,14 +12,14 @@ type Props = {
 };
 
 export default function UploadButton (props: Props) {
-  const { action, arg } = props;
+  const { action, arg: { path } } = props;
   const ref = useRef<HTMLInputElement|null>(null);
 
   const onChange = useCallback(() => {
     if (ref.current) {
-      action(ref.current.files);
+      action(path, ref.current.files);
     }
-  }, [action, arg, ref]);
+  }, [action, path, ref]);
 
   const onClick = useCallback(() => {
     if (ref.current) {

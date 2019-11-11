@@ -6,14 +6,14 @@ export type Import = {
     isDirectory: boolean,
     isFile: boolean,
   },
-  file: {
+  files: Array<{
     name: string,
     ext: string,
     folder: string,
     ctime: string,
     mtime: string,
     size: number,
-  },
+  }>,
 };
 
 export type ImportArray = Array<Import>;

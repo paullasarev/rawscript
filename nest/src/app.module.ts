@@ -8,6 +8,17 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { PathsController } from './paths/paths.controller';
 import { PathsService } from './paths/paths.service';
+import { UploadController } from './upload/upload.controller';
+import { UploadService } from './upload/upload.service';
+import { MulterModule } from '@nestjs/platform-express';
+
+const multerModule = MulterModule.registerAsync({
+  imports: [ConfigModule],
+  useFactory: async (configService: ConfigService) => ({
+    dest: configService.uploadFolder,
+  }),
+  inject: [ConfigService],
+});
 
 @Module({
   imports: [
@@ -15,14 +26,17 @@ import { PathsService } from './paths/paths.service';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'client', 'dist'),
     }),
+    multerModule,
   ],
   controllers: [
     AppController,
     PathsController,
+    UploadController,
   ],
   providers: [
     AppService,
     PathsService,
+    UploadService,
   ],
 })
 export class AppModule {

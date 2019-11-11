@@ -1,4 +1,5 @@
 {
   "singleQuote": true,
+  "indentSize": 2,
   "trailingComma": "all"
 }

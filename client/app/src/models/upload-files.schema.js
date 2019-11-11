@@ -1,4 +1,4 @@
-import { stringSchema, numberSchema, requiredSchema } from './common';
+import {stringSchema, numberSchema, requiredSchema, arraySchema} from './common';
 import pathSchema from './path.schema';
 import fileSchema from './file.schema';
 
@@ -7,7 +7,7 @@ const schema = requiredSchema({
   id: 'Import',
   properties: {
     path: pathSchema,
-    file: fileSchema,
+    files: arraySchema(fileSchema),
   },
 });
 

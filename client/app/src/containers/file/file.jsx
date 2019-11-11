@@ -85,7 +85,7 @@ function renderButtons(props) {
   } = props;
   return (
     <ButtonBar right className='file__buttons'>
-      <UploadButton text='Import' action={ importFiles } arg={ [path, file] } />
+      <UploadButton text='Import' action={ importFiles } arg={ { path } } />
     </ButtonBar>
   );
 }

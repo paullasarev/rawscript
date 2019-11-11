@@ -39,15 +39,15 @@ export class PathsService {
       res.status(HttpStatus.NOT_FOUND).send(`invalid path: ${path}`);
     }
   }
-  
-  
+
+
   async getFile(res: Response, baseRoot: string, dataRoot: string, path: string, file: string) {
     if (!path) {
       return;
     }
     const entryRoot = resolve(dataRoot, path, file);
     const obj = await fileInfo(baseRoot, entryRoot);
-  
+
     if (obj) {
       return fotoFillEntry(obj);
     }
