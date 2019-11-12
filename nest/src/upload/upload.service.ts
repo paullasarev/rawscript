@@ -1,23 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { map } from 'lodash';
-
+import { map, padStart } from 'lodash';
+import { resolve } from 'path';
+import { parse } from 'date-fns';
+import { mkdir, writeFile } from 'fs';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import moveFile from 'move-file';
+
 import { getFirst } from '../utils/path';
 
-import { parse } from 'date-fns';
-
 const asyncExec = promisify(exec);
+const asyncMkdir = promisify(mkdir);
+const asyncWriteFile = promisify(writeFile);
 
 interface IUploadFile {
-  // originalname: '4eaeae34-16cd-451d-9d1e-e7588455c766.jpg',
-  // encoding: '7bit',
-  // mimetype: 'image/jpeg',
-  // destination: 'c:\\projects\\rawscript\\data\\uploads',
-  // filename: 'c7287c151bd78d1fda5364698305d6ef',
-  // path: 'c:\\projects\\rawscript\\data\\uploads\\c7287c151bd78d1fda5364698305d6ef',
-  // size: 146899
   originalname: string;
   encoding: string;
   mimetype: string;
@@ -27,6 +23,10 @@ interface IUploadFile {
   size: number;
 }
 
+function getFolderName(year, month, day) {
+  return `${padStart(String(year), 4, '0')}-${padStart(String(month), 2, '0')}-${padStart(String(day), 2, '0')}`;
+}
+
 @Injectable()
 export class UploadService {
   constructor() {
@@ -34,40 +34,46 @@ export class UploadService {
 
   async uploadFiles(uploadFolder: string, dataFolder: string, path: string, files: IUploadFile[]) {
     const filenames = map(files, ({filename})=>filename);
-
     const cmd = `docker run -v ${uploadFolder}:/tmp exiftool -json ${filenames.join(' ')}`;
     const { stdout, stderr } = await asyncExec(cmd);
     const exifs = JSON.parse(stdout);
-    // console.log('exifs', exifs)
 
     const results = [];
     for (let ind = 0; ind < files.length; ++ind) {
       const file = files[ind];
       const exif = exifs[ind];
       const { filename, originalname, size, mimetype } = file;
-      results.push({
-        ...exif,
-        filename,
-        originalname,
-        size,
-        mimetype,
-      });
-    }
-    // console.log('uploaded1', results);
-
-    for (let result of results) {
-      const { originalname, size, mimetype, filename } = result;
-      console.log(originalname, filename)
-      const strDate = getFirst(result,
+      const strDate = getFirst(exif,
         ['DateTimeOriginal', 'CreateDate', 'FileModifyDate', 'FileAccessDate'],
       );
-      console.log({strDate})
-      const date = parse(strDate, 'yyyy.MM.dd hh:mm:ss', new Date());
-      console.log({date})
-      console.log(originalname, date.getFullYear(), date.getMonth(), date.getDay())
+      const date = parse(strDate, 'yyyy:MM:dd HH:mm:ss', new Date());
+      results.push({
+        exif,
+        input: {
+          filename,
+          originalname,
+          size,
+          mimetype,
+          date,
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate(),
+        }
+      });
     }
 
-    console.log('uploaded', results);
+    for (let result of results) {
+      const { originalname, size, year, day, month, mimetype, filename } = result.input;
+      const folder = resolve(dataFolder, getFolderName(year, month, day), originalname);
+      await asyncMkdir(folder, { recursive: true });
+      const oldFilename = resolve(uploadFolder, filename);
+      const newFilename = resolve(folder, originalname);
+      const infoFilename = resolve(folder, 'info.json');
+      console.log({oldFilename, folder, newFilename, infoFilename})
+      await moveFile(oldFilename, newFilename);
+      await asyncWriteFile(infoFilename, JSON.stringify(result, null, '  '));
+    }
+
     return results;
   }
 }

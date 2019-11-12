@@ -18,6 +18,7 @@ export default function UploadButton (props: Props) {
   const onChange = useCallback(() => {
     if (ref.current) {
       action(path, ref.current.files);
+      ref.current.value = '';
     }
   }, [action, path, ref]);
 
