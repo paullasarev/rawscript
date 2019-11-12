@@ -101,7 +101,9 @@ function baseReducer(state: State, action: Action): State {
 
       const formData = new FormData();
       for (const file of files) {
+        const { lastModifiedDate, size, name } = file;
         formData.append('file', file);
+        formData.append('info', { lastModifiedDate, size, name })
         console.log('add file', file)
       }
 
