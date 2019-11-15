@@ -1,5 +1,5 @@
 import { stat } from 'fs';
-import { resolve, relative, sep, basename, extname } from 'path';
+import { relative, sep, basename, extname } from 'path';
 import { promisify } from 'util';
 
 const statP = promisify(stat);

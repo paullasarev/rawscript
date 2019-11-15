@@ -3,23 +3,22 @@ import Koa from 'koa';
 import logger from 'koa-logger';
 import cors from 'koa2-cors';
 import koaSwagger from 'koa2-swagger-ui';
-import { resolve } from 'path';
+import koaStatic from 'koa-static';
+import { join } from 'path';
 
 import swaggerSpec from '../swagger.json';
 
 import createRoutes from './routes/index';
-
-const PORT = 3030;
+import configure  from './configure';
 
 const dataFolder = process.env.DATA_FOLDER;
-const config = {
-  root: resolve(__dirname, '..'),
-  dataFolder,
-};
+const config = configure(`config.${process.env.NODE_ENV || 'development'}.env`);
 
 const app = new Koa();
 const router = createRoutes(config);
+const port = config.get('API_PORT');
 
+const staticDir = join(__dirname, '..', '..', 'client', 'dist');
 app
   .use(cors())
   .use(logger())
@@ -31,9 +30,11 @@ app
     },
   }))
   .use(router.routes())
-  .use(router.allowedMethods());
+  .use(router.allowedMethods())
+  .use(koaStatic(staticDir, {}))
+;
 
 console.log('the server is started');
-console.log( { PORT, dataFolder });
-  
-app.listen(PORT);
+console.log( { port, dataFolder });
+
+app.listen(port);

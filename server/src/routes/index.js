@@ -3,6 +3,7 @@ import Router from 'koa-router';
 import pkginfo from '../../package.json';
 
 import pathsRoute from './paths';
+import uploadRoute from './upload';
 
 const {
   name,
@@ -16,7 +17,7 @@ const info = {
   description,
   version,
   author,
-}
+};
 
 function addInfo(router) {
   /**
@@ -48,12 +49,16 @@ function addInfo(router) {
 
 
 export default function createRoute(config) {
-  const router = new Router();
+  const router = new Router({
+    prefix: config.get('API_PREFIX'),
+  });
 
   const paths = pathsRoute(config);
+  const upload = uploadRoute(config);
 
   addInfo(router);
   router.use('/paths', paths.routes(), paths.allowedMethods());
+  router.use('/upload', upload.routes(), paths.allowedMethods());
 
   return router;
 }
