@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 });
 
 export default function* rootSaga() {
-  yield createRequestInstance({ driver: createDriver(axiosInstance) });
-  yield spawn(watchRequests);
+  // yield createRequestInstance({ driver: createDriver(axiosInstance) });
+  // yield spawn(watchRequests);
   yield spawn(consoleSagas);
 }

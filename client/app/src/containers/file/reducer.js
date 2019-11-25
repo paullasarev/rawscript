@@ -1,5 +1,6 @@
 // @flow
-import { requestsReducer } from 'redux-saga-requests';
+// import { requestsReducer } from 'redux-saga-requests';
+import { requestsReducer } from 'redux-fetch-requests';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
