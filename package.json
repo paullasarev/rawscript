@@ -1,0 +1,10 @@
+{
+  "name": "root",
+  "scripts": {
+    "install": "lerna bootstrap",
+    "start": "lerna run start --stream"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
+}

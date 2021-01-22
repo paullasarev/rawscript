@@ -1,0 +1,77 @@
+@import "../../assets/scss/variables.scss";
+
+.tabs {
+  height: 100%;
+  width: 280px;
+  display: block;
+  position: relative;
+  font-size: 14px;
+  background-color: $color-background;
+  box-sizing: border-box;
+
+  $border: 1px solid $color-border-tab;
+  $border-bold: 2px solid $color-border-tab;
+  $border-radius: 5px;
+
+  &__more {
+    position: absolute;
+    right: 38px;
+    top: 0;
+    @include background-image('../../assets/images/chevron-double-right.svg', 10px, 30px);
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: $border;
+  }
+  &__title {
+    padding: 5px 10px;
+    top: 1px;
+    position: relative;
+    margin-bottom: 2px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+
+    &--active {
+      &:after {
+        width: 100%;
+        bottom: -1px;
+        left: 0;
+        height: 2px;
+        display: block;
+        content: '';
+        position: absolute;
+        border-bottom: 2px solid $color-border-tab;
+      }
+    }
+  }
+  &__tab {
+
+  }
+
+  &__resizer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -6px;
+    width: 11px;
+    cursor: ew-resize;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+  }
+}
+
+.tab {
+  margin: 10px 10px;
+}

@@ -1,0 +1,43 @@
+@import '../../assets/scss/variables.scss';
+
+.edit {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: stretch;
+
+  &__left {
+    flex-grow: 1;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+  }
+  &__right {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+  }
+
+  &__sidebar{
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  &__top {
+    height: 80%;
+  }
+
+  &__bottom {
+    height: 20%;
+    border-top: 1px solid $color-panel-delimiter;
+  }
+
+}

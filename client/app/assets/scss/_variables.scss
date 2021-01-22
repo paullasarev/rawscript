@@ -12,9 +12,10 @@ $color-popup-background: #f1f1f1;
 $color-popup-border: #a1a1a1;
 
 $size-text: 14px;
+// background-image: url('~images/#{$img}');
 
 @mixin background-image($img, $img-size, $full-size) {
-  background-image: url('~images/#{$img}');
+  background-image: url($img);
   background-repeat: no-repeat;
   background-position: center;
   background-size:  $img-size  $img-size;
