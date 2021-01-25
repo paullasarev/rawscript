@@ -23,7 +23,7 @@ export function useMaxHeader(headerGap: number) {
     if (lastVisible !== headerState.last) {
       setLast(headerState.last);
     }
-  } );
+  });
 
   const headersCount = headerRef.current ? headerRef.current.children.length : 0;
   return { headerRef, lastVisible, headersCount };
