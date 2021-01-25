@@ -1,4 +1,3 @@
-
 export const SIDE_PANEL_SHOW_SIDEBAR = 'SIDE_PANEL_SHOW_SIDEBAR';
 export const SIDE_PANEL_SET_ACTIVE_TAB = 'SIDE_PANEL_SET_ACTIVE_TAB';
 export const SIDE_PANEL_SET_SIDEBAR_WIDTH = 'SIDE_PANEL_SET_SIDEBAR_WIDTH';
@@ -9,21 +8,21 @@ export function setShowSidebar(value: boolean) {
   return {
     type: SIDE_PANEL_SHOW_SIDEBAR,
     payload: value,
-  };
+  } as const;
 }
 
 export function setActiveTab(value: string) {
   return {
     type: SIDE_PANEL_SET_ACTIVE_TAB,
     payload: value,
-  };
+  } as const;
 }
 
 export function setSidebarWidth(value: number) {
   return {
     type: SIDE_PANEL_SET_SIDEBAR_WIDTH,
     payload: value,
-  };
+  } as const;
 }
 
 export function moveTab(srcId: string, dstId: string) {
@@ -33,7 +32,7 @@ export function moveTab(srcId: string, dstId: string) {
       srcId,
       dstId,
     },
-  };
+  } as const;
 }
 
 export function showTab(tabId: string, lastVisible: number) {
@@ -43,13 +42,12 @@ export function showTab(tabId: string, lastVisible: number) {
       tabId,
       lastVisible,
     },
-  };
+  } as const;
 }
 
 export type Action =
-  ReturnType<typeof setShowSidebar>
+  | ReturnType<typeof setShowSidebar>
   | ReturnType<typeof setActiveTab>
   | ReturnType<typeof setSidebarWidth>
   | ReturnType<typeof moveTab>
-  | ReturnType<typeof showTab>
-;
+  | ReturnType<typeof showTab>;

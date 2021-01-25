@@ -7,6 +7,4 @@ export function run(text: string) {
   };
 }
 
-export type Action =
-  ReturnType<typeof run>
-;
+export type Action = ReturnType<typeof run>;

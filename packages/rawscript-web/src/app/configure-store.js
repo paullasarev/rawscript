@@ -16,12 +16,12 @@ const migrate = async (state, version) => {
   const prevVersion = get(state, '_persist.version');
   const result = version === prevVersion ? state : rootReducer({}, { type: 'UNKNOWN' });
   return result;
-}
+};
 const persistConfig = {
   key: 'root',
   migrate,
   stateReconciler: hardSet,
-  version: 2,
+  version: 5,
   storage,
   whitelist: ['edit', 'sidePanel'],
 };
@@ -38,9 +38,11 @@ const middlewares = [];
 const actionEnchancer = createActionsEnhancer({ log: console.log.bind(console) }); // eslint-disable-line no-console
 
 // middlewares.push(sagaMiddleware);
-middlewares.push(createMiddleware({
-  baseUrl: '/api',
-}));
+middlewares.push(
+  createMiddleware({
+    baseUrl: '/api',
+  }),
+);
 if (isDev) {
   middlewares.push(logger);
 }
@@ -50,8 +52,7 @@ if (isDev) {
   enhancer = composeWithDevTools(enhancer);
 }
 
-const store = createStore(persistedReducer,
-  compose(actionEnchancer, enhancer));
+const store = createStore(persistedReducer, compose(actionEnchancer, enhancer));
 
 const persistor = persistStore(store);
 // sagaMiddleware.run(rootSaga);

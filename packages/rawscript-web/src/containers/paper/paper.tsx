@@ -14,16 +14,10 @@ interface PaperProps {
 const Paper: FunctionComponent<PaperProps> = (props) => {
   const { className } = props;
   return (
-    <div className={ classNames('paper', className) }>
-      <Image
-        className='paper__image'
-        img={ img }
-        width={ 200 }
-        height={ 200 }
-        alt='react'
-      />
+    <div className={classNames('paper', className)}>
+      <Image className="paper__image" img={img} width={200} height={200} alt="react" />
     </div>
   );
-}
+};
 
 export default Paper;

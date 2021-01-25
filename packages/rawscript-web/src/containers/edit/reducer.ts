@@ -1,12 +1,9 @@
 // @flow
-import {
-  EDIT_SHOW_PICTURE,
-  EditAction,
-} from './actions';
+import { EDIT_SHOW_PICTURE, EditAction } from './actions';
 
 export type State = {
   showPicture: boolean;
-}
+};
 
 const initialState: State = {
   showPicture: true,

@@ -1,4 +1,4 @@
-import {stringSchema, numberSchema, requiredSchema, arraySchema} from './common';
+import { requiredSchema, arraySchema } from './common';
 import pathSchema from './path.schema';
 import fileSchema from './file.schema';
 

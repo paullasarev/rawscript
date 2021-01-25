@@ -4,10 +4,10 @@ import classNames from 'classnames';
 import './button.scss';
 
 type ButtonProps = {
-  className?: string,
-  text: string,
-  action: (...values: any) => any,
-  arg: any,
+  className?: string;
+  text: string;
+  action: (...values: any) => any;
+  arg: any;
 };
 
 export const Button: FunctionComponent<ButtonProps> = (props) => {
@@ -18,10 +18,10 @@ export const Button: FunctionComponent<ButtonProps> = (props) => {
 
   const { className, text } = props;
   return (
-    <div className={ classNames('button', className) } onClick={ onClick } tabIndex='0'>
-      { text }
+    <div className={classNames('button', className)} onClick={onClick} tabIndex={0}>
+      {text}
     </div>
   );
-}
+};
 
 export default Button;

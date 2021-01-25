@@ -1,5 +1,5 @@
 // @flow
-import type { Path } from '../../models/path.flow';
+import type { Path } from '../../models/path';
 import type { File } from '../../models/file.flow';
 import type { ReturnType } from '../../common/types';
 

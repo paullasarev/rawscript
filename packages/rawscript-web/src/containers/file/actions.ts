@@ -1,7 +1,4 @@
-// @flow
-import type { Path } from '../../models/path.flow';
-import type { File } from '../../models/file.flow';
-import type { ReturnType } from '../../common/types';
+import type { Path } from '../../models/path';
 
 export const GET_PATH_LIST = 'GET_PATH_LIST';
 export const GET_FILE_ITEM = 'GET_FILE_ITEM';
@@ -18,7 +15,7 @@ export function getPathList(path: string) {
     meta: {
       path,
     },
-  };
+  } as const;
 }
 
 export function getFileItem(path: string, file: string) {
@@ -31,14 +28,14 @@ export function getFileItem(path: string, file: string) {
       path,
       file,
     },
-  };
+  } as const;
 }
 
 export function selectPathList(item: Path) {
   return {
     type: SELECT_PATH_LIST,
     payload: item,
-  };
+  } as const;
 }
 
 export function selectRouteItem(path: string, name: string) {
@@ -48,7 +45,7 @@ export function selectRouteItem(path: string, name: string) {
       path,
       name,
     },
-  };
+  } as const;
 }
 
 export function importFiles(path: string, files: FileList) {
@@ -58,7 +55,7 @@ export function importFiles(path: string, files: FileList) {
       path,
       files,
     },
-  };
+  } as const;
 }
 
 export const UPLOAD_FILES = 'UPLOAD_FILES';
@@ -73,7 +70,7 @@ export function uploadFiles(path: string, formData: FormData) {
         'Content-Type': 'multipart/form-data',
       },
     },
-  };
+  } as const;
 }
 
 export type Action =
@@ -82,6 +79,4 @@ export type Action =
   | ReturnType<typeof selectPathList>
   | ReturnType<typeof selectRouteItem>
   | ReturnType<typeof importFiles>
-  | ReturnType<typeof importItem>
-  | ReturnType<typeof uploadFiles>
-;
+  | ReturnType<typeof uploadFiles>;

@@ -22,9 +22,7 @@ import SidePanel from '../side-panel/side-panel';
 // type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
 // type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
 
-export interface EditProps {
-
-}
+export interface EditProps {}
 
 const Edit: FunctionComponent<EditProps> = (props) => {
   // const {
@@ -33,11 +31,11 @@ const Edit: FunctionComponent<EditProps> = (props) => {
   // } = props;
 
   return (
-    <div className='edit'>
-      <div className='edit__left'>
-        <Paper className='edit__paper edit__top' />
+    <div className="edit">
+      <div className="edit__left">
+        <Paper className="edit__paper edit__top" />
       </div>
-      <div className='edit__sidebar'>
+      <div className="edit__sidebar">
         <SidePanel />
       </div>
     </div>

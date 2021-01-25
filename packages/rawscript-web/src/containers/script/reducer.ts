@@ -1,4 +1,10 @@
-const initialState = {
+import { Action } from 'redux';
+
+export interface State {
+  text: string;
+}
+
+const initialState: State = {
   text: `\
 const Processor = require('processor');
 const Files = require('files');
@@ -12,7 +18,9 @@ proc.save(out);
 `,
 };
 
-export default function reducer(state = initialState, action) {
+export const selector = (rootState: { script: State }) => rootState.script;
+
+export function script(state = initialState, action: Action) {
   switch (action.type) {
     default:
       return state;

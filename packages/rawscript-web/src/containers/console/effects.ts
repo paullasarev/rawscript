@@ -8,7 +8,6 @@ export function* runConsole() {
   }
 }
 
-
 export function* consoleSagas() {
   yield fork(runConsole);
 }

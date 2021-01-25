@@ -1,6 +1,6 @@
 import React from 'react';
 
-const withAccessor = (getName, setName, accessorName) => WrappedComponent => (props) => {
+const withAccessor = (getName, setName, accessorName) => (WrappedComponent) => (props) => {
   const {
     [getName]: getter,
     [setName]: setter,
@@ -10,9 +10,7 @@ const withAccessor = (getName, setName, accessorName) => WrappedComponent => (pr
     get: () => getter,
     set: setter,
   };
-  return (
-    <WrappedComponent { ...props } { ...{ [accessorName]: accessor } } />
-  );
+  return <WrappedComponent {...props} {...{ [accessorName]: accessor }} />;
 };
 
 export default withAccessor;

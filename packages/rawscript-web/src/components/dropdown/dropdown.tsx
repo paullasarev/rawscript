@@ -9,26 +9,24 @@ import RelativePortal from '../relative-portal/relative-portal';
 interface DropdownOptionProps {
   title: string;
   value: any;
-  onSelect: (value: any) => void,
+  onSelect: (value: any) => void;
 }
 
 const DropdownOption: FunctionComponent<DropdownOptionProps> = ({ value, title, onSelect }) => {
   return (
     <div
-      className='dropdown__option'
-      onClick={ useCallback(() => { onSelect(value); }, [onSelect, value]) }
+      className="dropdown__option"
+      onClick={useCallback(() => {
+        onSelect(value);
+      }, [onSelect, value])}
     >
-      { title }
+      {title}
     </div>
   );
 };
 
-const makeOptions = (onSelect: (value: any) => void,) => {
-  return map(({ title, value }) => (
-    <DropdownOption
-      { ...{ title, value, onSelect, key: value } }
-    />
-  ));
+const makeOptions = (onSelect: (value: any) => void) => {
+  return map(({ title, value }) => <DropdownOption {...{ title, value, onSelect, key: value }} />);
 };
 
 export interface DropdownItem {
@@ -37,10 +35,10 @@ export interface DropdownItem {
 }
 
 export type DropdownProps = {
-  className?: string,
-  items: Array<DropdownItem>,
-  onSelect: (value: any) => void,
-  onOutClick: (e: MouseEvent) => void,
+  className?: string;
+  items: Array<DropdownItem>;
+  onSelect: (value: any) => void;
+  onOutClick: (e: MouseEvent) => void;
 };
 
 const Dropdown = (props: DropdownProps) => {
@@ -48,10 +46,8 @@ const Dropdown = (props: DropdownProps) => {
   const options = makeOptions(onSelect)(items);
 
   return (
-    <RelativePortal { ...{ onOutClick } }>
-      <div className={ classNames('dropdown', className) }>
-        { options }
-      </div>
+    <RelativePortal {...{ onOutClick }}>
+      <div className={classNames('dropdown', className)}>{options}</div>
     </RelativePortal>
   );
 };

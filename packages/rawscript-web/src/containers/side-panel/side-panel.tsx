@@ -2,20 +2,19 @@ import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 
-import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab, showTab } from './actions';
-import { selector } from './reducer';
-
-// import Script from '../script/script';
+import Script from '../script/script';
 import Console from '../console/console';
-// import File from '../file/file';
+import File from '../file/file';
 import Tabs from '../../components/tabs/tabs';
 import Sidebar from '../../components/sidebar/sidebar';
 import { useActions } from '../../hooks/use-actions';
+import { selector } from './reducer';
+import { setShowSidebar, setActiveTab, setSidebarWidth, moveTab, showTab } from './actions';
 
 const tabsComponents = {
-  // script: { name: 'script', component: Script, title: 'Script' },
+  script: { name: 'script', component: Script, title: 'Script' },
   console: { name: 'console', component: Console, title: 'Console' },
-  // file: { name: 'file', component: File, title: 'File' },
+  file: { name: 'file', component: File, title: 'File' },
 };
 
 // const mapDispatchToProps = {
@@ -41,8 +40,7 @@ const tabsComponents = {
 // type mapStateToPropsType = $Call<typeof mapStateToProps, StoreState>; // eslint-disable-line no-undef
 // type Props = {| ...mapDispatchToPropsType, ...mapStateToPropsType |};
 
-export interface SidePanelProps {
-}
+export interface SidePanelProps {}
 
 export const SidePanel: FunctionComponent<SidePanelProps> = (props) => {
   // const {
@@ -57,22 +55,21 @@ export const SidePanel: FunctionComponent<SidePanelProps> = (props) => {
   //   tabs,
   // } = props;
   const { showSidebar, activeTab, sidebarWidth, tabs } = useSelector(selector);
-  const { setShow } = useActions({ setShow: setShowSidebar })
+  const { setShow } = useActions({ setShow: setShowSidebar });
 
   return (
-    <Sidebar
-      { ...{ show: showSidebar, setShow } }
-    >
-      <Tabs { ...{
-        active: activeTab,
-        setActive: setActiveTab,
-        width: sidebarWidth,
-        setWidth: setSidebarWidth,
-        moveTab,
-        showTab,
-        tabs,
-        tabsComponents,
-      } }
+    <Sidebar {...{ show: showSidebar, setShow }}>
+      <Tabs
+        {...{
+          active: activeTab,
+          setActive: setActiveTab,
+          width: sidebarWidth,
+          setWidth: setSidebarWidth,
+          moveTab,
+          showTab,
+          tabs,
+          tabsComponents,
+        }}
       />
     </Sidebar>
   );

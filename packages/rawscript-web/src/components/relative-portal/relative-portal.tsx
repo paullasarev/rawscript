@@ -1,4 +1,3 @@
-// @flow
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { isEqual } from 'lodash';
@@ -21,9 +20,9 @@ function getPageOffset() {
 }
 
 type RelativePortalProps = {
-  className?: string,
-  onOutClick: (e: MouseEvent) => void,
-  children: any,
+  className?: string;
+  onOutClick: (e: MouseEvent) => void;
+  children: any;
 };
 
 export default function RelativePortal({ className, onOutClick, children }: RelativePortalProps) {
@@ -55,20 +54,17 @@ export default function RelativePortal({ className, onOutClick, children }: Rela
   }, [el, portalEl, styles]);
 
   return (
-    <div
-      className={ classNames('relative-portal', className) }
-      ref={ el }
-    >
-      <Portal { ...{ onOutClick } }>
+    <div className={classNames('relative-portal', className)} ref={el}>
+      <Portal {...{ onOutClick }}>
         <div
-          style={ {
+          style={{
             position: 'fixed',
             zIndex: 1,
             ...styles,
-          } }
-          ref={ portalEl }
+          }}
+          ref={portalEl}
         >
-          { children }
+          {children}
         </div>
       </Portal>
     </div>

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
 
 export function useHtmlRef() {
-  return useRef<HTMLDivElement|null>(null);
+  return useRef<HTMLDivElement | null>(null);
 }

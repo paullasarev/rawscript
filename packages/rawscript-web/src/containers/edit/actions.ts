@@ -7,6 +7,4 @@ export function setShowPicture(value: boolean) {
   };
 }
 
-export type EditAction =
-  ReturnType<typeof setShowPicture>
-;
+export type EditAction = ReturnType<typeof setShowPicture>;

@@ -4,10 +4,10 @@ import { useState, useRef, useEffect } from 'react';
 import { useHtmlRef } from './use-html-ref';
 
 type ResizeOptions = {
-  isLeftMargin?: boolean,
-  minWidth?: number,
-  minGap?: number,
-  redrawOnResize?: boolean,
+  isLeftMargin?: boolean;
+  minWidth?: number;
+  minGap?: number;
+  redrawOnResize?: boolean;
 };
 
 type setWidthType = (width: number) => void;
@@ -52,11 +52,11 @@ export function useHorizontalResize(setWidth: setWidthType, options: ResizeOptio
 
   useEffect(() => {
     const getResizeState = () => resizeStateRef.current;
-    const setResizeState = (state) => {
+    const setResizeState = (state: any) => {
       resizeStateRef.current = state;
     };
 
-    const setRefWidth = (newWidth, force) => {
+    const setRefWidth = (newWidth: number, force: boolean) => {
       window.cancelAnimationFrame(requestRef.current);
       requestRef.current = window.requestAnimationFrame(() => {
         if (resizableRef.current) {
@@ -68,7 +68,7 @@ export function useHorizontalResize(setWidth: setWidthType, options: ResizeOptio
       }
     };
 
-    const setNewSize = (width, dx, force = false) => {
+    const setNewSize = (width: number, dx: number, force = false) => {
       let newWidth = isLeftMargin ? width - dx : width + dx;
       if (newWidth < minWidth) {
         newWidth = minWidth;
@@ -79,7 +79,6 @@ export function useHorizontalResize(setWidth: setWidthType, options: ResizeOptio
       }
       setRefWidth(newWidth, force);
     };
-
 
     const handleUp = (event: MouseEvent | TouchEvent) => {
       const { startX, isResizing, width } = getResizeState();

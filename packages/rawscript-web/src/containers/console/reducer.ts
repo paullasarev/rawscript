@@ -1,7 +1,4 @@
-import {
-  CONSOLE_RUN,
-  Action,
-} from './actions';
+import { CONSOLE_RUN, Action } from './actions';
 
 const initialState = {
   text: `\

@@ -10,6 +10,6 @@ export function useActions<C>(actions: C, deps?: any[]): C {
       return bindActionCreators(actions as any, dispatch);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    deps ? [actions, dispatch, ...deps] : [actions, dispatch]
+    deps ? [actions, dispatch, ...deps] : [actions, dispatch],
   );
 }

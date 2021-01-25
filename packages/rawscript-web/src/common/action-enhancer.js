@@ -6,13 +6,18 @@ export function dispatchActions(store, actions) {
   }
 }
 
-export const createActionsEnhancer = (options = {}) => next => (reducer, initialState, enhancer) => {
+export const createActionsEnhancer = (options = {}) => (next) => (
+  reducer,
+  initialState,
+  enhancer,
+) => {
   const { startActionType, log } = options;
   let actions = [];
   let isPending = !!startActionType;
+  // eslint-disable-next-line prefer-const
   let store;
 
-  const actionsReducer = reducer => (state, action) => {
+  const actionsReducer = (reducer) => (state, action) => {
     const result = reducer(state, action);
     each(result, (subState) => {
       if (has(subState, 'actions') && isArray(subState.actions) && subState.actions.length) {
@@ -26,12 +31,17 @@ export const createActionsEnhancer = (options = {}) => next => (reducer, initial
     if (!isPending && actions.length) {
       const actionsToRun = uniqWith(actions, isEqual);
       actions = [];
-      setTimeout((type, actionsToRun) => {
-        if (log) {
-          log('run actions', type, actionsToRun);
-        }
-        dispatchActions(store, actionsToRun);
-      }, 0, action.type, actionsToRun);
+      setTimeout(
+        (type, actionsToRun) => {
+          if (log) {
+            log('run actions', type, actionsToRun);
+          }
+          dispatchActions(store, actionsToRun);
+        },
+        0,
+        action.type,
+        actionsToRun,
+      );
     }
     return result;
   };

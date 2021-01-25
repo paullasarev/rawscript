@@ -6,7 +6,7 @@ import { memoize } from 'lodash';
 type DropType = (src: string, dst: string) => void;
 
 export function useDragDrop(typeId: string, onDrop: DropType) {
-  const funcs = useRef({ dragProps: (srcId:string) => ({}), dropProps: (dstId:string) => ({}) });
+  const funcs = useRef({ dragProps: (srcId: string) => ({}), dropProps: (dstId: string) => ({}) });
 
   useEffect(() => {
     const type = `custom/${typeId}`;
@@ -15,7 +15,7 @@ export function useDragDrop(typeId: string, onDrop: DropType) {
         draggable: true,
         onDragStart: (e: DragEvent) => {
           if (!e.dataTransfer) return;
-          e.dataTransfer.setData(type, `${(srcId)}`);
+          e.dataTransfer.setData(type, `${srcId}`);
         },
       };
     });

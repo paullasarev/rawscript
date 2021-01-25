@@ -1,6 +1,8 @@
 // import { requestsReducer } from 'redux-saga-requests';
+// @ts-ignore
 import { requestsReducer } from 'redux-fetch-requests';
 import { persistReducer } from 'redux-persist';
+import { AnyAction, Reducer } from 'redux';
 import storage from 'redux-persist/lib/storage';
 
 import {
@@ -15,11 +17,12 @@ import {
   ApiState,
 } from '../../common/composite';
 import pathSchema from '../../models/path.schema';
-import type { PathArray } from '../../models/path.flow';
+import type { PathArray } from '../../models/path';
 import fileSchema from '../../models/file.schema';
 import type { File } from '../../models/file.flow';
 // import uploadFilesSchema from '../../models/upload-files.schema';
 
+import { arraySchema } from '../../models/common';
 import {
   GET_PATH_LIST,
   GET_FILE_ITEM,
@@ -28,19 +31,21 @@ import {
   getPathList,
   getFileItem,
   selectRouteItem,
-  Action, IMPORT_FILES, uploadFiles,
+  Action,
+  IMPORT_FILES,
+  uploadFiles,
 } from './actions';
-import { FileState, FileStateType } from './entities';
+import { FileState } from './entities';
 // import { fillDefaults } from '../../common/json-schema';
-import { arraySchema } from '../../models/common';
 
 export type State = {
-  viewState: FileStateType,
-  pathList: ApiState<PathArray>,
-  fileItem: ApiState<File>,
-  path: string,
-  file: string,
-}
+  viewState: FileState;
+  pathList: ApiState<PathArray>;
+  fileItem: ApiState<File>;
+  path: string;
+  file: string;
+  actions?: AnyAction[];
+};
 
 const initialState: State = {
   viewState: FileState.NOT_SELECTED,
@@ -56,10 +61,9 @@ export const selector = (state: StoreState) => state.file;
 
 function baseReducer(state: State, action: Action): State {
   switch (action.type) {
-
     case SELECT_ROUTE_ITEM: {
       const viewState = FileState.PATH_LIST;
-      const { path, name } = action.payload;
+      const { path } = action.payload;
       const actions = [getPathList(path)];
       return {
         ...state,
@@ -99,11 +103,12 @@ function baseReducer(state: State, action: Action): State {
       const { path, files } = action.payload;
 
       const formData = new FormData();
-      for (const file of files) {
+      for (const file of Array.from(files)) {
         // const { lastModifiedDate, size, name } = file;
         formData.append('file', file);
         // formData.append('info', { lastModifiedDate, size, name })
-        console.log('add file', file)
+        // eslint-disable-next-line no-console
+        console.log('add file', file);
       }
 
       const actions = [uploadFiles(path, formData)];
@@ -121,7 +126,6 @@ function baseReducer(state: State, action: Action): State {
 const reducer = pipeReducers<State, Action>(
   defaultReducer(initialState),
   combinePartialReducers({
-
     pathList: requestsReducer({
       actionType: GET_PATH_LIST,
       getDefaultData: getDefaultsByArraySchema(pathSchema),
@@ -137,13 +141,17 @@ const reducer = pipeReducers<State, Action>(
     //   getDefaultData: getDefaultsBySchema(uploadFilesSchema),
     //   getData: getDataBySchema(uploadFilesSchema),
     // }),
-
   }),
-  baseReducer,
+  baseReducer as Reducer<State, Action>,
 );
 
-export default persistReducer<State, Action>({
-  key: 'file',
-  storage,
-  whitelist: ['path', 'file'],
-}, reducer);
+export const file = persistReducer<State, Action>(
+  {
+    key: 'file',
+    storage,
+    whitelist: ['path', 'file'],
+  },
+  reducer,
+);
+
+export default file;

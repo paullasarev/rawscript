@@ -1,13 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, FunctionComponent } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useHtmlRef } from '../../hooks/use-html-ref';
 
 type PortalProps = {
-  onOutClick: (e: MouseEvent) => void
+  onOutClick: (e: MouseEvent) => void,
 };
 
-export default function Portal({ onOutClick, ...props }: PortalProps) {
+export const Portal: FunctionComponent<PortalProps> = ({ onOutClick, ...props }) => {
   const rootRef = useHtmlRef();
   const el = useRef(document.createElement('div'));
 
@@ -38,5 +38,7 @@ export default function Portal({ onOutClick, ...props }: PortalProps) {
     };
   }, [onOutClick, rootRef, el]);
 
-  return createPortal(<div { ...props } ref={ rootRef } />, el.current);
-}
+  return createPortal(<div {...props} ref={rootRef} />, el.current);
+};
+
+export default Portal;

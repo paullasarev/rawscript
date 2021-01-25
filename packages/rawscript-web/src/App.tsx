@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -14,12 +14,12 @@ const { store, persistor } = configureStore();
 
 const App: FunctionComponent = () => {
   return (
-    <Provider store={ store }>
-      <PersistGate loading={ null } persistor={ persistor }>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <Router>
           <Switch>
-            <Route path='/edit' component={ Edit } exact />
-            <Redirect from='/' to='/edit' />
+            <Route path="/edit" component={Edit} exact />
+            <Redirect from="/" to="/edit" />
           </Switch>
         </Router>
       </PersistGate>
