@@ -65,10 +65,10 @@ export function uploadFiles(path: string, formData: FormData) {
     request: {
       url: `/upload/${path}`,
       method: 'POST',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+      body: formData,
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      // },
     },
   } as const;
 }

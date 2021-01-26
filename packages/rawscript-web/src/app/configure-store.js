@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createLogger } from 'redux-logger';
 import { createMiddleware } from 'redux-fetch-requests';
-import hardSet from 'redux-persist/es/stateReconciler/hardSet';
+// import hardSet from 'redux-persist/es/stateReconciler/hardSet';
 import { get } from 'lodash';
 
 import { createActionsEnhancer } from '../common/action-enhancer';
@@ -20,8 +20,8 @@ const migrate = async (state, version) => {
 const persistConfig = {
   key: 'root',
   migrate,
-  stateReconciler: hardSet,
-  version: 5,
+  // stateReconciler: hardSet,
+  version: 6,
   storage,
   whitelist: ['edit', 'sidePanel'],
 };

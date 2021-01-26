@@ -1,0 +1,13 @@
+{
+  "name": "exiftool",
+  "version": "1.0.0",
+  "description": "```shell $ docker build -t exiftool . ```",
+  "main": "index.js",
+  "scripts": {
+    "build": "docker build -t exiftool .",
+    "prepare": "npm run build",
+    "start": "npm run build"
+  },
+  "author": "",
+  "license": "MIT"
+}

@@ -1,5 +1,6 @@
 {
   "packages": [
+    "packages/exiftool",
     "packages/server-f",
     "packages/rawscript-web"
   ],

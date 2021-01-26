@@ -1,6 +1,7 @@
 import { parse } from 'dotenv';
 import { readFileSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
+import os from 'os';
 
 export default function configure(filePath) {
   const envConfig = parse(readFileSync(filePath));
@@ -10,7 +11,7 @@ export default function configure(filePath) {
   mkdirSync(dataFolder, { recursive: true });
   const filesFolder = resolve(rootFolder, configDataFolder, 'files');
   mkdirSync(filesFolder, { recursive: true });
-  const uploadFolder = resolve(rootFolder, configDataFolder, 'uploads');
+  const uploadFolder = os.platform() === 'darwin' ? '/tmp/uploads' :resolve(rootFolder, configDataFolder, 'uploads');
   mkdirSync(uploadFolder, { recursive: true });
   return {
     envConfig,
