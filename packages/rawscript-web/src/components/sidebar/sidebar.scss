@@ -23,7 +23,7 @@
   &__tag {
     position: fixed;
     top: 0px;
-    height: 28.5px;
+    height: 28px;
     right: 0;
     width: 32px;
     border-left: 1px solid $color-border-tab;
@@ -32,9 +32,10 @@
     z-index: 1;
     cursor: pointer;
     transition: width $transition-time ease;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
 
     &--collapsed {
-      border-bottom-left-radius: 4px;
       transition: width $transition-time ease;
       .sidebar__tag-label {
         transition: transform $transition-time ease;
