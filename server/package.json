@@ -32,7 +32,7 @@
     "koa-static": "^5.0.0",
     "koa2-cors": "^2.0.6",
     "koa2-swagger-ui": "^2.12.2",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "lodb": "^0.5.2",
     "lowdb": "^1.0.0",
     "morgan": "^1.9.1",
