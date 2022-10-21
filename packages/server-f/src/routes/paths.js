@@ -1,13 +1,14 @@
-import { map, compose } from 'lodash/fp';
+import map from 'lodash/fp/map.js';
+import compose from 'lodash/fp/compose.js';
 import { resolve } from 'path';
 
-import { fillDefaults } from '../utils/json-schema';
-import pathSchema from '../models/path.schema';
-import fotoSchema from '../models/foto.schema';
-import { readDirWithTypes } from '../utils/read-dir';
-import { fileInfo } from '../utils/file-info';
-import { makePath } from '../utils/path';
-import { arraySchema } from '../models/common';
+import { fillDefaults } from '../utils/json-schema.js';
+import pathSchema from '../models/path.schema.js';
+import fotoSchema from '../models/foto.schema.js';
+import { readDirWithTypes } from '../utils/read-dir.js';
+import { fileInfo } from '../utils/file-info.js';
+import { makePath } from '../utils/path.js';
+import { arraySchema } from '../models/common.js';
 
 const fillEntry = fillDefaults(pathSchema)
 const fillList = compose(

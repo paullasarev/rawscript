@@ -137,7 +137,7 @@ export const Tabs: FunctionComponent<TabsProps> = (props) => {
 
   const hiddenTabs: DropdownItem[] = makeHiddenTabs(tabsComponents, lastVisible)(tabs);
   const onShowTab = useCallback(
-    (tabId) => {
+    (tabId: any) => {
       showTab(tabId, lastVisible);
     },
     [showTab, lastVisible],

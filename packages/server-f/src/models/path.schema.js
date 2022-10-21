@@ -1,4 +1,4 @@
-import { stringSchema, requiredSchema, booleanSchema } from './common';
+import { stringSchema, requiredSchema, booleanSchema } from './common.js';
 
 const schema = requiredSchema({
   type: 'object',

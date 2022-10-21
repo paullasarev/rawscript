@@ -1,13 +1,17 @@
 import 'dotenv/config';
 import fastify from 'fastify';
-import cors from 'fastify-cors';
-import swagger from 'fastify-swagger';
-import fastStatic from 'fastify-static';
-import { join, resolve } from 'path';
+import cors from '@fastify/cors';
+import swagger from '@fastify/swagger';
+import swaggerUi from '@fastify/swagger-ui';
+import fastStatic from '@fastify/static';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-import createRoutes from './routes/index';
-import configure  from './configure';
+import createRoutes from './routes/index.js';
+import configure  from './configure.js';
+import { appendFile } from 'fs';
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const config = configure(`config.${process.env.NODE_ENV || 'development'}.env`);
 const dataFolder = config.dataFolder;
 
@@ -20,8 +24,6 @@ const port = config.get('API_PORT');
 app.register(cors,{});
 
 app.register(swagger, {
-    routePrefix: '/api/doc', // host at /swagger instead of default /docs
-    exposeRoute: true,
     swagger: {
       info: {
         title: 'rawscript API',
@@ -29,6 +31,9 @@ app.register(swagger, {
         version: '1.0.2',
       },
     },
+});
+app.register(swaggerUi, {
+  routePrefix: '/docs', // host at /swagger instead of default /docs
 });
 
 app.register(createRoutes(config), {
@@ -53,4 +58,4 @@ app.get('/*', function (req, reply) {
 console.log('the server is started');
 console.log( { port, dataFolder });
 
-app.listen(port);
+app.listen({port});

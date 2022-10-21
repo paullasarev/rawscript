@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -17,10 +17,10 @@ const App: FunctionComponent = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Router>
-          <Switch>
-            <Route path="/edit" component={Edit} exact />
-            <Redirect from="/" to="/edit" />
-          </Switch>
+          <Routes>
+            <Route path="/edit" element={<Edit/>} />
+            <Route path="/" element={<Navigate replace to="/edit"/>} />
+          </Routes>
         </Router>
       </PersistGate>
     </Provider>

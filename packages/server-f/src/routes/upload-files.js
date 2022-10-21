@@ -1,13 +1,16 @@
-import { map, filter, padCharsStart, compose } from 'lodash/fp';
+import map from 'lodash/fp/map.js';
+import filter from 'lodash/fp/filter.js';
+import padCharsStart from 'lodash/fp/padCharsStart.js';
+import compose from 'lodash/fp/compose.js';
 import { resolve } from 'path';
 import { isValid, parse } from 'date-fns';
 import { mkdir, writeFile } from 'fs';
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import moveFile from 'move-file';
+import { moveFile } from 'move-file';
 import sanitize from 'sanitize-filename';
 
-import { getFirst } from '../utils/path';
+import { getFirst } from '../utils/path.js';
 
 const asyncExec = promisify(exec);
 const asyncMkdir = promisify(mkdir);

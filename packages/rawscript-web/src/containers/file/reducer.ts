@@ -1,8 +1,9 @@
 // import { requestsReducer } from 'redux-saga-requests';
 // @ts-ignore
-import { requestsReducer } from 'redux-fetch-requests';
+import { requestsReducer, makeSuccessType } from 'redux-fetch-requests';
 import { persistReducer } from 'redux-persist';
 import { AnyAction, Reducer } from 'redux';
+import { Dictionary } from 'lodash';
 import storage from 'redux-persist/lib/storage';
 
 import {
@@ -19,7 +20,7 @@ import {
 import pathSchema from '../../models/path.schema';
 import type { PathArray } from '../../models/path';
 import fileSchema from '../../models/file.schema';
-import type { File } from '../../models/file.flow';
+import type { File } from '../../models/file.types';
 // import uploadFilesSchema from '../../models/upload-files.schema';
 
 import { arraySchema } from '../../models/common';
@@ -45,6 +46,13 @@ export type State = {
   path: string;
   file: string;
   actions?: AnyAction[];
+  fstat: Dictionary<{
+    isFile: boolean,
+    isDirectory: boolean,
+    name: string,
+    path: string,
+  }>,
+  fileInfo?: File,
 };
 
 const initialState: State = {
@@ -53,8 +61,10 @@ const initialState: State = {
   fileItem: getDefaultApiState<File>(fileSchema),
   path: '',
   file: '',
+  fstat: {},
 };
 
+const GET_FILE_ITEM_SUCCESS = makeSuccessType(GET_FILE_ITEM);
 export const section = 'file';
 export type StoreState = { file: State };
 export const selector = (state: StoreState) => state.file;
@@ -64,12 +74,17 @@ function baseReducer(state: State, action: Action): State {
     case SELECT_ROUTE_ITEM: {
       const viewState = FileState.PATH_LIST;
       const { path } = action.payload;
-      const actions = [getPathList(path)];
+      const fstat = state.fstat[path];
+      const actions = fstat?.isFile
+         ? [ getFileItem(fstat?.path, fstat?.name)]
+         : [ getPathList(path)];
       return {
         ...state,
         viewState,
         pathList: initialState.pathList,
+        path,
         actions,
+        fileInfo: undefined,
       };
     }
 
@@ -79,13 +94,18 @@ function baseReducer(state: State, action: Action): State {
       const paths = folder ? folder.split('/') : [];
       let path = paths.join(':');
       let actions;
+      let itemPath;
       let fileName = '';
       if (isFile) {
         actions = [getFileItem(path, name)];
+        itemPath = path;
+        paths.push(name);
+        path = paths.join(':');
         fileName = name;
       } else if (isDirectory) {
         paths.push(name);
         path = paths.join(':');
+        itemPath = path;
         actions = [selectRouteItem(path, '')];
       } else {
         return state;
@@ -96,6 +116,11 @@ function baseReducer(state: State, action: Action): State {
         actions,
         path,
         file: fileName,
+        fstat: {
+          ...state.fstat,
+          [path]: { isFile, isDirectory, path: itemPath, name },
+        },
+        fileInfo: undefined,
       };
     }
 
@@ -115,6 +140,14 @@ function baseReducer(state: State, action: Action): State {
       return {
         ...state,
         actions,
+      };
+    }
+
+    case GET_FILE_ITEM_SUCCESS: {
+      const fileInfo = (action as any).data as File;
+      return {
+        ...state,
+        fileInfo,
       };
     }
 

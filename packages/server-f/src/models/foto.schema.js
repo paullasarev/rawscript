@@ -1,4 +1,4 @@
-import { stringSchema, numberSchema } from './common';
+import { stringSchema, numberSchema } from './common.js';
 
 const schema = {
   type: 'object',

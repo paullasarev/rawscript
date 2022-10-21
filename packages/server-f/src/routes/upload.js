@@ -1,7 +1,7 @@
 import multer from 'fastify-multer';
 
-import { makePath } from '../utils/path';
-import { uploadFiles } from './upload-files';
+import { makePath } from '../utils/path.js';
+import { uploadFiles } from './upload-files.js';
 
 const post = (uploadFolder, dataFolder) => async (request, reply) => {
   const path = makePath(request.params.path);

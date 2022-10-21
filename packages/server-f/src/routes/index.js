@@ -1,5 +1,5 @@
-import pathsRoute from './paths';
-import uploadRoute from './upload';
+import pathsRoute from './paths.js';
+import uploadRoute from './upload.js';
 
 export default function createRoute(config) {
   return function (fastify, opts, done) {

@@ -9,11 +9,30 @@
   justify-content: flex-start;
   align-items: flex-start;
 
+  &__info {
+    margin-top: 16px;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+    row-gap: 15px;
+
+    font-size: 14px;
+    &-key {
+      font-weight: 400;
+      text-align: end;
+    }
+    &-val {
+      font-weight: 600;
+    }
+  }
+
   &__route {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
+    flex-wrap: wrap;
 
     &-item {
       display: block;
@@ -29,7 +48,7 @@
 
       &--path {
         padding: 3px 0;
-        background-color: $color-path-delimiter;
+        // background-color: $color-path-delimiter;
       }
     }
   }

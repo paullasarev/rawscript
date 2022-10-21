@@ -1,4 +1,5 @@
-import { has, get } from 'lodash';
+import has from 'lodash/has.js';
+import get from 'lodash/get.js';
 
 export function makePath(path = '') {
   path = path.replace(/::+/g, ':');

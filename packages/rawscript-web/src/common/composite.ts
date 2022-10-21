@@ -1,5 +1,5 @@
 import { each, keys, pick } from 'lodash/fp';
-import { Action, AnyAction, combineReducers } from 'redux';
+import { Action, AnyAction, combineReducers, CombinedState } from 'redux';
 // import { CommonReducerConfig, requestsReducer } from 'redux-saga-requests';
 
 import { fillDefaults } from './fill-defaults';
@@ -40,7 +40,7 @@ export function combinePartialReducers<S, A extends Action>(
   const reducer = combineReducers(reducers);
   const pickByKeys = pick(baseKeys);
   return (state: S, action: A, rootState?: any) => {
-    const partialState = pickByKeys(state) as S;
+    const partialState = pickByKeys(state) as CombinedState<{ [x: string]: any; }> | undefined;
     const newState = reducer(partialState, action);
     if (newState !== partialState) {
       return {

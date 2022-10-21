@@ -1,4 +1,4 @@
-import {keys} from 'lodash';
+import keys from 'lodash/keys.js';
 
 export const schemaDefault = (schema, defaultValue) => ({ ...schema, default: defaultValue });
 

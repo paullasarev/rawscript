@@ -1,4 +1,5 @@
-import { forOwn, curry } from 'lodash/fp';
+import forOwn from 'lodash/fp/forOwn.js';
+import curry from 'lodash/fp/curry.js';
 
 const forOwnC = forOwn.convert({cap: false});
 

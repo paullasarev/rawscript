@@ -11,6 +11,7 @@ import UploadButton from '../../components/buttons/upload-button';
 import { useActions } from '../../hooks/use-actions';
 import { AnAction } from '../../common/types';
 import { ApiState } from '../../common/composite';
+import { File } from '../../models/file.types';
 import { PathArray } from '../../models/path';
 import FileRouteItem from './file-route-item';
 import FileList from './file-list';
@@ -24,9 +25,19 @@ function renderRoutes(props: { path: string; file: string; selectRouteItem: AnAc
   const paths = path ? path.split(':') : [];
   return (
     <div className="file__route">
+      <FileRouteItem
+            name={'catalog'}
+            path={''}
+            key={'catalog'}
+            action={selectRouteItem}
+            placeholder="<path>"
+      />
       {flatMap(paths, (pathItem, index: number) => {
-        const itemPath = slice(paths, 0, index).join(':');
+        const itemPath = slice(paths, 0, index + 1).join(':');
         return [
+          <div className="file__route-item file__route-item--path" key={`${itemPath}-path`}>
+            /
+          </div>,
           <FileRouteItem
             name={pathItem}
             path={itemPath}
@@ -34,12 +45,8 @@ function renderRoutes(props: { path: string; file: string; selectRouteItem: AnAc
             action={selectRouteItem}
             placeholder="<path>"
           />,
-          <div className="file__route-item file__route-item--path" key={`${itemPath}-path`}>
-            /
-          </div>,
         ];
       })}
-      <FileRouteItem name={file} path={path} action={selectRouteItem} placeholder="<select>" />
     </div>
   );
 }
@@ -68,11 +75,49 @@ function renderButtons(props: { path: string; importFiles: AnAction }) {
   );
 }
 
+function renderFileInfo(props: { fileInfo?: File}) {
+  const { fileInfo } = props;
+  if (!fileInfo) {
+    return null;
+  }
+  return (
+    <div className="file__info">
+      <div className="file__info-key">name</div>
+      <div className="file__info-val">{fileInfo.name}</div>
+
+      <div className="file__info-key">ext</div>
+      <div className="file__info-val">{fileInfo.ext}</div>
+
+      <div className="file__info-key">ctime</div>
+      <div className="file__info-val">
+        {new Date(fileInfo.ctime).toLocaleDateString()}
+        {' '}
+        {new Date(fileInfo.ctime).toLocaleTimeString()}
+      </div>
+
+      <div className="file__info-key">mtime</div>
+      <div className="file__info-val">
+        {new Date(fileInfo.mtime).toLocaleDateString()}
+        {' '}
+        {new Date(fileInfo.mtime).toLocaleTimeString()}
+      </div>
+
+      <div className="file__info-key">size</div>
+      <div className="file__info-val">
+        {Number(fileInfo.size).toLocaleString('fr', {
+          style: 'decimal',
+          useGrouping: true,
+          })}
+        </div>
+    </div>
+  );
+}
+
 export interface FileProps {
   className?: string;
 }
 
-const File: FunctionComponent<FileProps> = ({ className }) => {
+const FilePage: FunctionComponent<FileProps> = ({ className }) => {
   const stateProps = useSelector(selector);
   const actions = useActions({ selectPathList, selectRouteItem, importFiles });
   const props = { ...stateProps, ...actions };
@@ -82,8 +127,9 @@ const File: FunctionComponent<FileProps> = ({ className }) => {
       {renderButtons(props)}
       {renderRoutes(props)}
       {renderList(props)}
+      {renderFileInfo(props)}
     </div>
   );
 };
 
-export default File;
+export default FilePage;
