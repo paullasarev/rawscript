@@ -55,7 +55,7 @@
     }
   }
   &__tab {
-
+    height: calc(100% - 28px);
   }
 
   &__resizer {
@@ -74,4 +74,6 @@
 
 .tab {
   margin: 10px 10px;
+  height: calc(100% - 20px);
+  overflow: auto;
 }

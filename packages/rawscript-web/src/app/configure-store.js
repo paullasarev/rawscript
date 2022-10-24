@@ -23,7 +23,7 @@ const persistConfig = {
   // stateReconciler: hardSet,
   version: 6,
   storage,
-  whitelist: ['edit', 'sidePanel'],
+  whitelist: ['edit', 'sidePanel', 'file'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

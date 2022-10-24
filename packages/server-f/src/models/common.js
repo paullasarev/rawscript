@@ -23,3 +23,11 @@ export function requiredSchema(schema) {
     required: keys(schema.properties),
   };
 }
+
+export function objectSchema(properties, id = undefined) {
+  return {
+    type: 'object',
+    id,
+    properties,
+  };
+}

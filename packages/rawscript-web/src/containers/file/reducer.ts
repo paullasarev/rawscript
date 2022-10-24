@@ -27,6 +27,7 @@ import { arraySchema } from '../../models/common';
 import {
   GET_PATH_LIST,
   GET_FILE_ITEM,
+  GET_FILE_CONTENT,
   SELECT_PATH_LIST,
   SELECT_ROUTE_ITEM,
   getPathList,
@@ -35,6 +36,8 @@ import {
   Action,
   IMPORT_FILES,
   uploadFiles,
+  getFileByPathContent,
+  getFileContent,
 } from './actions';
 import { FileState } from './entities';
 // import { fillDefaults } from '../../common/json-schema';
@@ -53,6 +56,7 @@ export type State = {
     path: string,
   }>,
   fileInfo?: File,
+  exif?: Dictionary<string>,
 };
 
 const initialState: State = {
@@ -65,6 +69,7 @@ const initialState: State = {
 };
 
 const GET_FILE_ITEM_SUCCESS = makeSuccessType(GET_FILE_ITEM);
+const GET_FILE_CONTENT_SUCCESS = makeSuccessType(GET_FILE_CONTENT);
 export const section = 'file';
 export type StoreState = { file: State };
 export const selector = (state: StoreState) => state.file;
@@ -75,9 +80,12 @@ function baseReducer(state: State, action: Action): State {
       const viewState = FileState.PATH_LIST;
       const { path } = action.payload;
       const fstat = state.fstat[path];
-      const actions = fstat?.isFile
+      const actions: any[] = fstat?.isFile
          ? [ getFileItem(fstat?.path, fstat?.name)]
          : [ getPathList(path)];
+      if (fstat?.isFile && fstat?.name === 'info.json') {
+        actions.push(getFileByPathContent(path));
+      };
       return {
         ...state,
         viewState,
@@ -85,6 +93,7 @@ function baseReducer(state: State, action: Action): State {
         path,
         actions,
         fileInfo: undefined,
+        exif: undefined,
       };
     }
 
@@ -93,11 +102,14 @@ function baseReducer(state: State, action: Action): State {
       const { isFile, isDirectory, name, folder } = action.payload;
       const paths = folder ? folder.split('/') : [];
       let path = paths.join(':');
-      let actions;
+      let actions: any[];
       let itemPath;
       let fileName = '';
       if (isFile) {
         actions = [getFileItem(path, name)];
+        if (name === 'info.json') {
+          actions.push(getFileContent(path, name));
+        }
         itemPath = path;
         paths.push(name);
         path = paths.join(':');
@@ -148,6 +160,14 @@ function baseReducer(state: State, action: Action): State {
       return {
         ...state,
         fileInfo,
+      };
+    }
+
+    case GET_FILE_CONTENT_SUCCESS: {
+      const exif = (action as any).data?.exif;
+      return {
+        ...state,
+        exif,
       };
     }
 

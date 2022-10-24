@@ -2,6 +2,7 @@ import type { Path } from '../../models/path';
 
 export const GET_PATH_LIST = 'GET_PATH_LIST';
 export const GET_FILE_ITEM = 'GET_FILE_ITEM';
+export const GET_FILE_CONTENT = 'GET_FILE_CONTENT';
 export const SELECT_PATH_LIST = 'SELECT_PATH_LIST';
 export const SELECT_ROUTE_ITEM = 'SELECT_ROUTE_ITEM';
 export const IMPORT_FILES = 'IMPORT_FILES';
@@ -27,6 +28,31 @@ export function getFileItem(path: string, file: string) {
     meta: {
       path,
       file,
+    },
+  } as const;
+}
+
+export function getFileContent(path: string, file: string) {
+  return {
+    type: GET_FILE_CONTENT,
+    request: {
+      url: `/file/${path}:${file}`,
+    },
+    meta: {
+      path,
+      file,
+    },
+  } as const;
+}
+
+export function getFileByPathContent(path: string) {
+  return {
+    type: GET_FILE_CONTENT,
+    request: {
+      url: `/file/${path}`,
+    },
+    meta: {
+      path,
     },
   } as const;
 }
@@ -76,6 +102,8 @@ export function uploadFiles(path: string, formData: FormData) {
 export type Action =
   | ReturnType<typeof getPathList>
   | ReturnType<typeof getFileItem>
+  | ReturnType<typeof getFileContent>
+  | ReturnType<typeof getFileByPathContent>
   | ReturnType<typeof selectPathList>
   | ReturnType<typeof selectRouteItem>
   | ReturnType<typeof importFiles>

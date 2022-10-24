@@ -1,5 +1,6 @@
 import multer from 'fastify-multer';
 
+import { objectSchema, stringSchema } from '../models/common.js';
 import { makePath } from '../utils/path.js';
 import { uploadFiles } from './upload-files.js';
 
@@ -25,6 +26,11 @@ export default function createRouter(config) {
       url: '/:path',
       preHandler: upload.array('file'),
       handler: post(uploadFolder, filesFolder),
+      schema: {
+        params: objectSchema({
+          path: stringSchema ,
+        }),
+      },
     });
 
     done();

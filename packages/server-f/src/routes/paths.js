@@ -8,7 +8,7 @@ import fotoSchema from '../models/foto.schema.js';
 import { readDirWithTypes } from '../utils/read-dir.js';
 import { fileInfo } from '../utils/file-info.js';
 import { makePath } from '../utils/path.js';
-import { arraySchema } from '../models/common.js';
+import { arraySchema, objectSchema, stringSchema } from '../models/common.js';
 
 const fillEntry = fillDefaults(pathSchema)
 const fillList = compose(
@@ -64,6 +64,9 @@ export default function createRouter(config) {
 
     fastify.get('/:path', {
       schema: {
+        params: objectSchema({
+          path: stringSchema,
+        }),
         response: {
           200: arraySchema(pathSchema),
         },
@@ -72,6 +75,10 @@ export default function createRouter(config) {
 
     fastify.get('/:path/:file', {
       schema: {
+        params: objectSchema({
+          path: stringSchema,
+          file: stringSchema,
+        }),
         response: {
           200: fotoSchema,
         },
