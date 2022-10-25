@@ -57,15 +57,20 @@
       // height: 30px;
       // min-width: 40px;
       background-color: $color-route-background;
+      color: $color-route-foreground;
+      border-radius: 10px;
+      transition: background-color 0.5s;
 
       &:hover {
         cursor: pointer;
         // background-color: rgba(0,0,0,0.05);
-        background-color: lighten($color-route-background, 10%);
+        background-color: darken($color-route-background, 5%);
+        transition: background-color 0.5s;
       }
 
       &--path {
         padding: 3px 0;
+        background-color: transparent;
         // background-color: $color-path-delimiter;
       }
     }
